@@ -21,21 +21,27 @@ class Header extends Component{
         return(
             <React.Fragment>
                 <Navbar color="dark" dark expand="md">
-                    <div className="container">
                         <NavbarToggler onClick={this.toggleNav}/>
-                        <NavbarBrand className="mr-auto" href="/">
-                            <img src="#" height="30" width="41"
+                        <NavbarBrand className="mr-auto ml-2" href="/">
+                            <img src="/logo192.png" height="30" width="41"
                                 alt="Logo" />
                         </NavbarBrand>
                         <Collapse isOpen={this.state.isNavOpen} navbar>
-                        <Nav navbar>
+                        <Nav navbar className = "ml-auto mr-2">
                             <NavItem>
                                 <NavLink className="nav-link" to="/home">
                                     <span className="fa fa-home fa-lg"></span> Home
                                 </NavLink>
                             </NavItem>
                         </Nav>
-                        <Nav className="ml-auto" navbar>
+                        <Nav navbar>
+                            <NavItem>
+                                <NavLink className="nav-link">
+                                    <span className="fa fa-address-book fa-lg"></span> Contact Us
+                                </NavLink>
+                            </NavItem>
+                        </Nav>
+                        <Nav className="" navbar>
                             <NavItem>
                                 <Button outline onClick={this.toggleModal}>
                                     <span className="fa fa-sign-in fa-lg"></span> Login
@@ -43,7 +49,6 @@ class Header extends Component{
                             </NavItem>
                         </Nav>
                         </Collapse>
-                    </div>
                 </Navbar>
             </React.Fragment>
         )
