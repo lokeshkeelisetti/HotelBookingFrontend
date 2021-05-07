@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Navbar,NavbarToggler,NavbarBrand,Collapse,Nav,NavItem,NavLink,Button, 
-    Modal, ModalHeader, ModalBody, FormGroup, Form,Input,Label} from 'reactstrap';
+    Modal, ModalHeader, ModalBody, FormGroup, Form,Input,Label,UncontrolledDropdown,
+    DropdownItem,DropdownToggle,DropdownMenu} from 'reactstrap';
 
 class Header extends Component{
 
@@ -9,12 +10,18 @@ class Header extends Component{
         this.state = {
             isNavOpen : false,
             isModalOpen : false,
-            isLogin : true
+            isLogin : true,
+            isLoggedIn : false
         };
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.toggleLogin = this.toggleLogin.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    handleLogout(){
+        console.log('logged out');
     }
 
     toggleLogin(){
@@ -71,6 +78,29 @@ class Header extends Component{
                                 </NavLink>
                             </NavItem>
                         </Nav>
+                        {this.state.isLoggedIn && (
+                        <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle>
+                                <Nav navbar>
+                                    <NavItem>
+                                    <span className="fa fa-user-circle fa-lg"></span>
+                                    </NavItem>
+                                </Nav>
+                            </DropdownToggle>
+                            <DropdownMenu right>
+                              <DropdownItem>
+                                    <NavLink className="nav-link">
+                                        Profile  
+                                    </NavLink>
+                              </DropdownItem>
+                              <DropdownItem onClick={this.handleLogout}>
+                                Logout
+                              </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                        )}
+                        { !(this.state.isLoggedIn) &&
+                        (
                         <Nav className="" navbar>
                             <NavItem>
                                 <Button outline onClick={this.toggleModal}>
@@ -78,6 +108,8 @@ class Header extends Component{
                                 </Button>
                             </NavItem>
                         </Nav>
+                        )
+                        }
                         </Collapse>
                 </Navbar>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
