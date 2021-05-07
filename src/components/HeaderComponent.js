@@ -61,7 +61,6 @@ class Header extends Component{
                         <NavbarBrand className="mr-auto ml-2" href="/">
                             <img src="/logo192.png" height="30" width="41"
                                 alt="Logo" />
-                                Pack Your Bags
                         </NavbarBrand>
                         <Collapse isOpen={this.state.isNavOpen} navbar>
                         <Nav navbar className = "ml-auto mr-2">

@@ -50,3 +50,13 @@ address{
   margin:0px;
   color:#0f0f0f;
 }
+
+
+.location-icon{
+  color: blue;
+  height: 25%
+}
+
+input[type='date']:after {
+  content: attr(placeholder)
+}

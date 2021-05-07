@@ -1,5 +1,6 @@
 import React,{ Component } from 'react';
-import { Carousel, CarouselItem , CarouselCaption,CarouselIndicators,CarouselControl } from 'reactstrap';
+import { Carousel, CarouselItem , CarouselCaption,CarouselIndicators,CarouselControl, Jumbotron, Container, Input,
+     FormGroup ,Form,Button} from 'reactstrap';
 
 const items = [
     {
@@ -22,7 +23,8 @@ class Home extends Component{
         super(props);
         this.state = {
             activeIndex : 0,
-            animating : false
+            animating : false,
+            userType: 'customer'
         }
         this.setActiveIndex = this.setActiveIndex.bind(this);
         this.setAnimating = this.setAnimating.bind(this);
@@ -70,14 +72,39 @@ class Home extends Component{
         })
 
         return(
-            <Carousel activeIndex={this.state.activeIndex} 
-                next={next}
-                previous={prev}>
-                <CarouselIndicators items={items} activeIndex={this.state.activeIndex} onClickHandler={goToIndex} />
-                {slides}
-                <CarouselControl direction="prev" directionText="Previous" onClickHandler={prev} />
-                <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
-            </Carousel>
+            <React.Fragment>
+                {this.state.userType === 'customer' && 
+                    (
+                        <Jumbotron>
+                            <h1>Title</h1>
+                            <p>The place you find your Stay</p>
+                            <Container>
+                                <Form onSubmit={this.handleSearch} inline>
+                                        <FormGroup>
+                                            <Input type="text" id="location" placeholder="Enter search location" />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Input type="date" id="checkIn" placeholder="check-in" />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Input type="date" id="checkOut" placeholder="check-out" />
+                                        </FormGroup>
+                                        <Button type="submit" value="submit" className="bg-primary" color="primary">Search</Button>
+                                </Form>
+                            </Container>
+                            
+                        </Jumbotron>
+                    )
+                }
+                <Carousel activeIndex={this.state.activeIndex} 
+                    next={next}
+                    previous={prev}>
+                    <CarouselIndicators items={items} activeIndex={this.state.activeIndex} onClickHandler={goToIndex} />
+                    {slides}
+                    <CarouselControl direction="prev" directionText="Previous" onClickHandler={prev} />
+                    <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+                </Carousel>
+            </React.Fragment>
         )
     }
 
