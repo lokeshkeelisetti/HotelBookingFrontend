@@ -28,6 +28,12 @@ class Home extends Component{
         }
         this.setActiveIndex = this.setActiveIndex.bind(this);
         this.setAnimating = this.setAnimating.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+    }
+
+    handleSearch(event){
+        event.preventDefault();
+        console.log('Searching for hotel in '+this.location.value+' between '+this.checkIn.value+' and '+this.checkOut.value);
     }
 
     setActiveIndex = (index) => {
@@ -81,13 +87,16 @@ class Home extends Component{
                             <Container>
                                 <Form onSubmit={this.handleSearch} inline>
                                         <FormGroup>
-                                            <Input type="text" id="location" placeholder="Enter search location" />
+                                            <Input type="text" id="location" placeholder="Enter search location"
+                                                innerRef = {(location) => this.location = location} />
                                         </FormGroup>
                                         <FormGroup>
-                                            <Input type="date" id="checkIn" placeholder="check-in" />
+                                            <Input type="date" id="checkIn" placeholder="check-in"
+                                                innerRef = {(checkIn) => this.checkIn = checkIn} />
                                         </FormGroup>
                                         <FormGroup>
-                                            <Input type="date" id="checkOut" placeholder="check-out" />
+                                            <Input type="date" id="checkOut" placeholder="check-out"
+                                                innerRef = {(checkOut) => this.checkOut = checkOut} />
                                         </FormGroup>
                                         <Button type="submit" value="submit" className="bg-primary" color="primary">Search</Button>
                                 </Form>

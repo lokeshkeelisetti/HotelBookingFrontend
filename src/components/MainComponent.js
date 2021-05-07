@@ -4,6 +4,7 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 import Header from './HeaderComponent';
 import Home from './HomeComponent';
 import Footer from './FooterComponent';
+import Search from './SearchComponent';
 
 
 class Main extends Component {
@@ -13,8 +14,8 @@ class Main extends Component {
                 <Header />
                 <TransitionGroup>
                     <Switch>
-                        <Route path='/' component= {Home} />
-                        <Route path='/searchResults' />
+                        <Route exact path='/' component= {Home} />
+                        <Route exact path='/searchResults' component={Search} />
                         <Route path='/hotel/:hotelId' />
                         <Route path='/hotel/:hotelId/roomId' />
                         <Redirect to='/' />
