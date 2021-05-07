@@ -17,7 +17,7 @@ class Main extends Component {
                         <Route exact path='/' component= {Home} />
                         <Route exact path='/searchResults' component={Search} />
                         <Route path='/hotel/:hotelId' />
-                        <Route path='/hotel/:hotelId/roomId' />
+                        <Route path='/hotel/:hotelId/:roomId' />
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>
