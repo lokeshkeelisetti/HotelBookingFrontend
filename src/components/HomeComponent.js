@@ -1,6 +1,6 @@
 import React,{ Component } from 'react';
 import { Carousel, CarouselItem , CarouselCaption,CarouselIndicators,CarouselControl, Jumbotron, Container, Input,
-     FormGroup ,Form,Button} from 'reactstrap';
+     FormGroup ,Form,Button, Label} from 'reactstrap';
 
 const items = [
     {
@@ -24,8 +24,17 @@ class Home extends Component{
         this.state = {
             activeIndex : 0,
             animating : false,
-            isLogged : false,
-            userType: 'customer'
+            isLogged : true,
+            userType: 'receptionist',
+            userInfo : {
+                name : 'bhaggi',
+                hotel : 'Sitara'
+            },
+            rooms : [
+                {
+
+                }
+            ]
         }
         this.setActiveIndex = this.setActiveIndex.bind(this);
         this.setAnimating = this.setAnimating.bind(this);
@@ -80,8 +89,8 @@ class Home extends Component{
 
         return(
             <React.Fragment>
-                {this.state.userType === 'customer' && 
-                    (
+                {(this.state.userType === 'customer' || !this.state.isLogged) && 
+                    (<>
                         <Jumbotron>
                             <Container>
                                 <h3>OYO</h3>
@@ -106,18 +115,45 @@ class Home extends Component{
                             </Container>
                             
                         </Jumbotron>
+                        <Container>
+                            <Carousel className="mb-5" activeIndex={this.state.activeIndex} 
+                                next={next}
+                                previous={prev}>
+                                <CarouselIndicators items={items} activeIndex={this.state.activeIndex} onClickHandler={goToIndex} />
+                                {slides}
+                                <CarouselControl direction="prev" directionText="Previous" onClickHandler={prev} />
+                                <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+                            </Carousel>
+                        </Container>
+                    </>
                     )
                 }
-                <Container>
-                <Carousel className="mb-5" activeIndex={this.state.activeIndex} 
-                    next={next}
-                    previous={prev}>
-                    <CarouselIndicators items={items} activeIndex={this.state.activeIndex} onClickHandler={goToIndex} />
-                    {slides}
-                    <CarouselControl direction="prev" directionText="Previous" onClickHandler={prev} />
-                    <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
-                </Carousel>
-                </Container>
+                { (this.state.userType == 'receptionist') &&
+                    <>
+                        <Jumbotron>
+                            <Container>
+                                <h3>Welcome to Hotel</h3>
+                                <Form className="w-50 offset-1" onSubmit={this.handleCheckAvailability}>
+                                    <FormGroup>
+                                        <Label htmlFor="timeOfStay">Duration of Stay</Label>
+                                        <Input name="timeOfStay" type="text" id="timeOfStay" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label htmlFor="typeOfRoom">Type Of Room</Label>
+                                        <Input name="typeOfRoom" type="select" id="typeOfRoom">
+                                            <option selected value="AC Deluxe">AC Deluxe</option>
+                                            <option selected value="Non AC Deluxe">Non AC Deluxe</option>
+                                        </Input>
+                                    </FormGroup>
+                                    <Button type="submit" className="btn btn-primary" color="primary">Check Availabilty</Button>
+                                </Form>
+                            </Container>
+                        </Jumbotron>
+                        <Container style={{minHeight:'50vh'}}>
+                            {}
+                        </Container>
+                    </>
+                }
             </React.Fragment>
         )
     }

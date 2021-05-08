@@ -11,8 +11,8 @@ class Header extends Component{
             isNavOpen : false,
             isModalOpen : false,
             isLogin : true,
-            isLoggedIn : true,
-            userType : 'customer'
+            isLoggedIn : false,
+            userType : ''
         };
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
