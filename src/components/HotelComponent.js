@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Container,Row } from 'reactstrap';
+import { Button, Container,ListGroup,ListGroupItem } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 class Hotel extends Component{
    
@@ -10,12 +11,13 @@ class Hotel extends Component{
             return (
                 props.rooms.map((room) => {
                     return(
-                        <div key={room.id} className="col-6 col-sm-3">
-                            <h1>{room.name}</h1>
+                        <ListGroupItem key={room.id} className="col-12 d-flex">
+                            <h3>Room No:{room.name}</h3>
                             <p>{room.AC ? 'AC' : 'Non-AC'}</p>
-                            <p>{room.status}</p>
-                            <Button>Book Room</Button>
-                        </div>
+                            <Link className="ml-auto" to={`/hotel/${props.hotelId}/${room.id}`}>
+                                <Button>Book Room</Button>
+                            </Link>
+                        </ListGroupItem>
                     )
                 })
             )
@@ -23,9 +25,9 @@ class Hotel extends Component{
 
         return(
             <Container>
-                <Row>
-                    <RenderRooms rooms = {this.props.hotel.rooms}/>
-                </Row>
+                <ListGroup className="row mt-5 mb-5">
+                    <RenderRooms rooms = {this.props.hotel.rooms} hotelId={this.props.hotel.id}/>
+                </ListGroup>
             </Container>
         )
     }

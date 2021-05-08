@@ -7,6 +7,7 @@ import Footer from './FooterComponent';
 import Search from './SearchComponent';
 import Hotel from './HotelComponent';
 import hotels from '../shared/hotels';
+import Booking from './BookingComponent';
 
 
 class Main extends Component {
@@ -21,6 +22,13 @@ class Main extends Component {
                 />
             )
         }
+
+        const bookWithId = ({match}) => {
+            return (
+                <Booking hotel = {hotels.filter((hotel) => hotel.id === parseInt(match.params.hotelId))[0]} roomId = {match.params.roomId} />
+            )
+        }
+
         return (
             <div style={{minHeight:"100vh"}}>
                 <Header />
@@ -28,8 +36,8 @@ class Main extends Component {
                     <Switch>
                         <Route exact path='/' component= {Home} />
                         <Route exact path='/searchResults' component={Search} />
-                        <Route path='/hotel/:hotelId' component={hotelWithId}/>
-                        <Route path='/hotel/:hotelId/:roomId' />
+                        <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
+                        <Route path='/hotel/:hotelId/:roomId' component={bookWithId}/>
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>

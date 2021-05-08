@@ -10,11 +10,13 @@ let hotels = [
                 name:201,
                 AC:false,
                 beds: 2,
+                status:'available',
                 price : 1000
             },{
                 id:2,
                 name:202,
                 AC:true,
+                status:'available',
                 beds:3,
                 price:2000
             }
