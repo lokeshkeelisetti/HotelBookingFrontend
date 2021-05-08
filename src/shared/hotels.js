@@ -60,6 +60,25 @@ let hotels = [
                 price:2000
             }
         ]
+    },{
+        id :4 ,
+        name : 'Orange',
+        image : 'assets/images/hotel1.jpeg',
+        rooms : [
+            {
+                id:1,
+                name:201,
+                AC:false,
+                beds: 2,
+                price : 1000
+            },{
+                id:2,
+                name:202,
+                AC:true,
+                beds:3,
+                price:2000
+            }
+        ]
     }
 ]
 
