@@ -33,6 +33,11 @@ class Search extends Component {
         this.state = {
             hotels : hotels
         }
+        this.handleSearch = this.handleSearch.bind(this);
+    }
+
+    handleSearch(event){
+        event.preventDefault();
     }
 
     render(){

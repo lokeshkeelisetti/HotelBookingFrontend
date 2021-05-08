@@ -128,7 +128,7 @@ class Header extends Component{
                                     innerRef = {(password) => this.password = password} />
                             </FormGroup>
                             <Button type="submit" value="submit" className="bg-primary" color="primary">Login</Button>
-                            <Button onClick={this.toggleLogin} color="link">Register</Button>
+                            <Button color='link' className="btn btn-link" onClick={this.toggleLogin}>Register</Button>
                         </Form>
                     </ModalBody>) : (
                         <ModalBody>
@@ -144,7 +144,7 @@ class Header extends Component{
                                         innerRef={(lastname) => this.lastname = lastname} />
                                 </FormGroup>
                                 <Button type="submit" value="submit" className="bg-primary" color="primary">Register</Button>
-                                <Button onClick={this.toggleLogin} color="link">Already have a account</Button>
+                                <Button color='link' className="btn btn-link" onClick={this.toggleLogin}>Already have a account</Button>
                             </Form>
                         </ModalBody>
                     )

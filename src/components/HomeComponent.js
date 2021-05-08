@@ -105,6 +105,7 @@ class Home extends Component{
                         </Jumbotron>
                     )
                 }
+                <Container>
                 <Carousel activeIndex={this.state.activeIndex} 
                     next={next}
                     previous={prev}>
@@ -113,6 +114,7 @@ class Home extends Component{
                     <CarouselControl direction="prev" directionText="Previous" onClickHandler={prev} />
                     <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
                 </Carousel>
+                </Container>
             </React.Fragment>
         )
     }
