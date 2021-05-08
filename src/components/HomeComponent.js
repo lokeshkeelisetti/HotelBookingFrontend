@@ -1,6 +1,10 @@
 import React,{ Component } from 'react';
 import { Carousel, CarouselItem , CarouselCaption,CarouselIndicators,CarouselControl, Jumbotron, Container, Input,
-     FormGroup ,Form,Button, Label} from 'reactstrap';
+     FormGroup ,Form,Button, Label,Row,Card,CardBody,CardImg,CardTitle,CardSubtitle,CardText} from 'reactstrap';
+import Rating from '@material-ui/lab/Rating';
+import { Link } from 'react-router-dom';
+
+
 
 const items = [
     {
@@ -30,15 +34,23 @@ class Home extends Component{
                 name : 'bhaggi',
                 hotel : 'Sitara'
             },
-            rooms : [
-                {
-
-                }
-            ]
+            rooms : [],
+            availableRooms : [{
+                id : 1,
+                image : 'assets/images/hotel1.jpeg',
+                rating : 3,
+                name : 'violet'
+            }]
         }
         this.setActiveIndex = this.setActiveIndex.bind(this);
         this.setAnimating = this.setAnimating.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleCheckAvailability = this.handleCheckAvailability.bind(this);
+    }
+
+    handleCheckAvailability(event){
+        event.preventDefault();
+        console.log(`Checking availbility for ${this.timeOfStay.value} days of ${this.typeOfRoom.value} Stay`);
     }
 
     handleSearch(event){
@@ -128,19 +140,19 @@ class Home extends Component{
                     </>
                     )
                 }
-                { (this.state.userType == 'receptionist') &&
+                { (this.state.userType === 'receptionist') &&
                     <>
                         <Jumbotron>
                             <Container>
                                 <h3>Welcome to Hotel</h3>
                                 <Form className="w-50 offset-1" onSubmit={this.handleCheckAvailability}>
                                     <FormGroup>
-                                        <Label htmlFor="timeOfStay">Duration of Stay</Label>
-                                        <Input name="timeOfStay" type="text" id="timeOfStay" />
+                                        <Label htmlFor="timeOfStay">Duration of Stay in days</Label>
+                                        <Input name="timeOfStay" type="text" id="timeOfStay" innerRef={(timeOfStay) => this.timeOfStay = timeOfStay}/>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label htmlFor="typeOfRoom">Type Of Room</Label>
-                                        <Input name="typeOfRoom" type="select" id="typeOfRoom">
+                                        <Input name="typeOfRoom" type="select" id="typeOfRoom" innerRef={(typeOfRoom) => this.typeOfRoom = typeOfRoom}>
                                             <option selected value="AC Deluxe">AC Deluxe</option>
                                             <option selected value="Non AC Deluxe">Non AC Deluxe</option>
                                         </Input>
@@ -149,8 +161,25 @@ class Home extends Component{
                                 </Form>
                             </Container>
                         </Jumbotron>
-                        <Container style={{minHeight:'50vh'}}>
-                            {}
+                        <Container style={{minHeight:'30vh'}}>
+                        <Row className="mt-5 mb-5">
+                            {this.state.availableRooms.map((room) => {
+                                return(
+                                    <Card key={room.id} className="col-12 col-sm-3">
+                                        <CardImg width="50%" src={room.image} alt="hotelImage"/>
+                                        <CardBody>
+                                            <CardTitle tag="h5">{room.name}</CardTitle>
+                                            <Rating name="read-only" value={room.rating} readOnly />
+                                            <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
+                                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                                            <Link to={`/hotel/${room.id}`}>
+                                                <Button>Book a room</Button>
+                                            </Link>
+                                        </CardBody>
+                                    </Card>
+                                )
+                            })}
+                        </Row>
                         </Container>
                     </>
                 }
