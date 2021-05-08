@@ -11,7 +11,8 @@ class Header extends Component{
             isNavOpen : false,
             isModalOpen : false,
             isLogin : true,
-            isLoggedIn : false
+            isLoggedIn : true,
+            userType : 'customer'
         };
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
@@ -70,13 +71,14 @@ class Header extends Component{
                                 </NavLink>
                             </NavItem>
                         </Nav>
-                        <Nav navbar>
-                            <NavItem>
-                                <NavLink className="nav-link">
-                                    <span className="fa fa-address-book fa-lg"></span> Contact Us
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
+                        {this.state.userType === 'customer' && (
+                                <Nav navbar>
+                                    <NavLink className="nav-link">
+                                        Bookings
+                                    </NavLink>
+                                </Nav>
+                            )
+                        }
                         {this.state.isLoggedIn && (
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle>
@@ -93,7 +95,9 @@ class Header extends Component{
                                     </NavLink>
                               </DropdownItem>
                               <DropdownItem onClick={this.handleLogout}>
-                                Logout
+                                  <NavLink className="nav-link" href='/'>
+                                  Logout
+                                  </NavLink>
                               </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>

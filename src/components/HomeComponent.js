@@ -24,6 +24,7 @@ class Home extends Component{
         this.state = {
             activeIndex : 0,
             animating : false,
+            isLogged : false,
             userType: 'customer'
         }
         this.setActiveIndex = this.setActiveIndex.bind(this);
@@ -82,8 +83,10 @@ class Home extends Component{
                 {this.state.userType === 'customer' && 
                     (
                         <Jumbotron>
-                            <h1>Title</h1>
-                            <p>The place you find your Stay</p>
+                            <Container>
+                                <h3>OYO</h3>
+                                <h5>A place to find your every stay</h5>
+                            </Container>
                             <Container>
                                 <Form onSubmit={this.handleSearch} inline>
                                         <FormGroup>
@@ -106,7 +109,7 @@ class Home extends Component{
                     )
                 }
                 <Container>
-                <Carousel activeIndex={this.state.activeIndex} 
+                <Carousel className="mb-5" activeIndex={this.state.activeIndex} 
                     next={next}
                     previous={prev}>
                     <CarouselIndicators items={items} activeIndex={this.state.activeIndex} onClickHandler={goToIndex} />
