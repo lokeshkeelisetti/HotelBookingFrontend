@@ -82,7 +82,7 @@ class Main extends Component {
                         {/* profile root */}
                         <Route exact path='/searchResults' component={Search} />
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
-                        <Route exact path = '/test' component = {Room} />
+                        <Route exact path = '/test' component = {AdminRoom} />
                         <Route exact path = '/receptionists' component= {AdminReceptionists} />
                         <Redirect to='/' />
                     </Switch>
