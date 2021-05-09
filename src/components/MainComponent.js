@@ -13,6 +13,7 @@ import AdminRoom from './AdminRoomComponent';
 import hotels from '../shared/hotels';
 import ProfileComponent from './ProfileComponent';
 import AdminReceptionists from './AdminReceptionists';
+import MaintainerHotels from './MaintainerHotels';
 
 
 class Main extends Component {
@@ -84,6 +85,7 @@ class Main extends Component {
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
                         <Route exact path = '/test' component = {Room} />
                         <Route exact path = '/receptionists' component= {AdminReceptionists} />
+                        <Route exact path = '/admins' component= {MaintainerHotels} />
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>

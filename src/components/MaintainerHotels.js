@@ -1,12 +1,12 @@
-import React,{ useState }  from 'react';
-import receptionists from '../shared/receptionists';
+import React, { useState } from 'react'
+import hoteladmins from '../shared/hoteladmins';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import {Input,FormGroup ,Form,Button, Container, Table} from 'reactstrap';
 
 
-function AdminReceptionists() {
-    <br />
+function MaintainerHotels() {
+    
     const [activeTab, setActiveTab] = useState('1');
     const toggle = tab => {
         if(activeTab !== tab) setActiveTab(tab);
@@ -28,7 +28,7 @@ function AdminReceptionists() {
                     className={classnames({ active: activeTab === '2' })}
                     onClick={() => { toggle('2'); }}
                 >
-                    Add new receptionist
+                    Add new hotel
                 </NavLink>
             </NavItem>
         </Nav>
@@ -41,19 +41,21 @@ function AdminReceptionists() {
             <Table className="col-md-8 offset-md-2">
                 <thead>
                     <tr>
-                        <th>receptionists id</th>
+                        <th>Admin id</th>
                         <th>Name</th>
+                        <th>Hotel Name</th>
                         <th>Email</th>
                         <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {receptionists.map((receptionist) => {
+                    {hoteladmins.map((hoteladmin) => {
                         return (
                         <tr>
-                            <td>{receptionist.id}</td>
-                            <td>{receptionist.name}</td>
-                            <td>{receptionist.email}</td>
+                            <td>{hoteladmin.id}</td>
+                            <td>{hoteladmin.name}</td>
+                            <td>{hoteladmin.hotelName}</td>
+                            <td>{hoteladmin.email}</td>
                             <td><span class="fa fa-trash"></span></td>
                         </tr>
                         )
@@ -67,30 +69,41 @@ function AdminReceptionists() {
         </TabPane>
         <TabPane tabId="2">
             <Container>
-                <br />
-                <br />
                 <Form>
+                    <br />
                     <FormGroup>
-                        <Input type="text" id="receptionistFirstName" placeholder="enter first name of receptionist" className="col-md-6" />
+                        <Input type="text" id="FirstNameOfAdmin" placeholder="enter first name of admin" className="col-md-6"/>
                     </FormGroup>
                     <FormGroup>
-                        <Input type="text" id="receptionistLastName" placeholder="enter last name of receptionist" className="col-md-6" />
+                        <Input type="text" id="LastNameOfAdmin" placeholder="enter last name of admin" className="col-md-6"/>
                     </FormGroup>
                     <FormGroup>
-                        <Input type="email" id="receptionistEmail" placeholder="enter email of receptionist" className="col-md-6" />
+                        <Input type="text" id="NameofHotel" placeholder="enter name of hotel" className="col-md-6"/>
                     </FormGroup>
                     <FormGroup>
-                        <Input type="password" id="receptionistPassword" placeholder="enter password for receptionist" className="col-md-6" />
+                        <Input type="email" id="EmailOfAdmin" placeholder="enter email of admin" className="col-md-6"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Input type="text" id="HotelCity" placeholder="enter Hotel city" className="col-md-6"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Input type="text" id="HotelStreet" placeholder="enter Hotel street" className="col-md-6"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Input type="text" id="HotelPincode" placeholder="enter Hotel pincode" className="col-md-6"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Input type="password" id="adminPassword" placeholder="password for Hotel admin" className="col-md-6"/>
                     </FormGroup>
                     <Button type="submit" value="submit" className="bg-primary" color="primary">Add hotel</Button>
                 </Form>
+                <br />
+                <br />
             </Container>
         </TabPane>
         </TabContent>
-
-        <br />
         </>
     )
 }
 
-export default AdminReceptionists
+export default MaintainerHotels
