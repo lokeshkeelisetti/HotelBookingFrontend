@@ -9,6 +9,7 @@ import Hotel from './HotelComponent';
 import hotels from '../shared/hotels';
 import baseUrl from '../shared/baseUrl';
 import axios from 'axios';
+import Room from './RoomComponent';
 
 
 class Main extends Component {
@@ -56,7 +57,7 @@ class Main extends Component {
         }
 
         return (
-            <div style={{minHeight:"100vh"}}>
+            <div>
                 <Header 
                     isLoggedin={this.state.isLoggedin} setLoggedin = {this.setLoggedin} 
                     userType = {this.state.userType}  setUserType = {this.setUserType}
@@ -66,6 +67,7 @@ class Main extends Component {
                         <Route exact path='/' component= {Home} />
                         <Route exact path='/searchResults' component={Search} />
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
+                        <Route exact path = '/test' component = {Room} />
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>

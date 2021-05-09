@@ -51,8 +51,8 @@ class Home extends Component{
         this.state = {
             activeIndex : 0,
             animating : false,
-            isLogged : true,
-            userType: 'admin',
+            isLogged : false,
+            userType: '',
             userInfo : {
                 name : 'bhaggi',
                 hotel : 'Sitara'
