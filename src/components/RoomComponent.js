@@ -20,6 +20,11 @@ class Room extends Component{
                 status : 'Available'
             }
         }
+        this.handleBooking = this.handleBooking.bind(this);
+    }
+
+    handleBooking(){
+        console.log('lokesh');
     }
 
     render(){
@@ -41,7 +46,7 @@ class Room extends Component{
             <Container className="mb-5 ml-auto mr-auto p-4">
                 <p style={{color:"green"}}>{this.state.room.status}</p>
                 <p>Price Rs.{this.state.room.type.price}/- per day</p>
-                <Button>Book Room</Button>
+                <Button onClick={this.handleBooking}>Book Room</Button>
             </Container>
             </>
         )

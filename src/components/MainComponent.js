@@ -6,10 +6,10 @@ import Home from './HomeComponent';
 import Footer from './FooterComponent';
 import Search from './SearchComponent';
 import Hotel from './HotelComponent';
-import hotels from '../shared/hotels';
 import baseUrl from '../shared/baseUrl';
 import axios from 'axios';
 import Room from './RoomComponent';
+import AdminRoom from './AdminRoomComponent';
 
 
 class Main extends Component {
@@ -41,8 +41,12 @@ class Main extends Component {
 
     componentDidMount(){
         axios.get(baseUrl)
-            .then((response) => response)
-            .then((response) => console.log(response.data))
+            .then((response) => {
+                console.log(response.data);
+                this.setState({
+                    hotels : response.data
+                })
+            })
             .catch((err) => console.log(err));
     }
 
@@ -51,8 +55,14 @@ class Main extends Component {
 
         const hotelWithId = ({match}) => {
             return(
-                <Hotel hotel = {hotels.filter((hotel) => hotel.id === parseInt(match.params.hotelId,10))[0]}
+                <Hotel hotel = {this.state.hotels.filter((hotel) => hotel.id === parseInt(match.params.hotelId,10))[0]}
                 />
+            )
+        }
+
+        const SearchHotels = () => {
+            return (
+                <Search hotels = {this.state.hotels} />
             )
         }
 
@@ -65,9 +75,9 @@ class Main extends Component {
                 <TransitionGroup className="mb-auto">
                     <Switch>
                         <Route exact path='/' component= {Home} />
-                        <Route exact path='/searchResults' component={Search} />
+                        <Route exact path='/searchResults' component={SearchHotels} />
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
-                        <Route exact path = '/test' component = {Room} />
+                        <Route exact path = '/test' component = {AdminRoom} />
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>
