@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav,NavItem,NavLink,Container,TabContent,TabPane,Row,Col,CardTitle,Card,CardText,Button, ListGroup,
+import { Nav,NavItem,NavLink,Container,TabContent,TabPane,Row,Button, ListGroup,
         Media, Form,FormGroup,Label,ListGroupItem,Input} from 'reactstrap';
 
 function RenderRooms(props){
