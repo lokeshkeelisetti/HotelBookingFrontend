@@ -14,7 +14,7 @@ function MaintainerHotels() {
 
     return ( 
         <>
-        <Nav tabs>
+        <Nav tabs className="mt-5">
             <NavItem>
                 <NavLink
                     className={classnames({ active: activeTab === '1' })}
