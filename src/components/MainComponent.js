@@ -8,9 +8,7 @@ import Search from './SearchComponent';
 import Hotel from './HotelComponent';
 import baseUrl from '../shared/baseUrl';
 import axios from 'axios';
-import Room from './RoomComponent';
 import AdminRoom from './AdminRoomComponent';
-import hotels from '../shared/hotels';
 import ProfileComponent from './ProfileComponent';
 import AdminReceptionists from './AdminReceptionists';
 import MaintainerHotels from './MaintainerHotels';
@@ -24,38 +22,80 @@ class Main extends Component {
             hotels: [],
             error : null,
             isLoggedin : false,
-            userType : ''
+            userType : '',
+            userInfo : null
         }
-        this.setHotels = this.setHotels.bind(this);
-        this.setLoggedin = this.setLoggedin.bind(this);
-        this.setUserType = this.setUserType.bind(this);
-    }
-
-    setUserType(){
-        return;
-    }
-
-    setLoggedin(){
-        return;
-    }
-
-    setHotels(){
-        return;
+        this.handleLogin = this.handleLogin.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
     }
 
     componentDidMount(){
-        axios.get(baseUrl)
+        if(!this.state.isLoggedin || this.state.userType === 'customer' || this.state.userType === 'maintainer'){
+            axios.get(baseUrl)
             .then((response) => {
-                console.log(response.data);
                 this.setState({
                     hotels : response.data
                 })
             })
             .catch((err) => console.log(err));
+        }
+        else{
+
+        }
+    }
+
+    handleLogin(event){
+        let email = event.target.elements['email'].value;
+        let password = event.target.elements['password'].value;
+        let body = {
+            "email":email,
+            "password":password
+        }
+        axios({
+            method : 'POST',
+            url : baseUrl + '/login',
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            data : body
+        })
+        .then((response) => console.log(response.data))
+        .catch((err) => console.log(err));
+    }
+
+    handleRegister(event){
+        let firstName = event.target.elements["firstname"].value;
+        let lastName = event.target.elements["lastname"].value;
+        let email = event.target.elements["email"].value;
+        let password = event.target.elements["password"].value;
+        let body = {
+            "name" : {
+                "firstName" : firstName,
+                "lastName" : lastName,
+            },
+            "email" : email,
+            "password":password
+        }
+
+        axios({
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            data : body
+        })
+        .then((response) => console.log(response))
+        .catch((err) => console.log(err))
     }
 
 
     render(){
+
+        const HomeWithDetails = () => {
+            return (
+                <Home isLoggedin = {this.state.isLoggedin} userInfo = {this.state.userInfo} userType={this.state.userType} />
+            )
+        }
 
         const hotelWithId = ({match}) => {
             return(
@@ -76,10 +116,12 @@ class Main extends Component {
                 <Header 
                     isLoggedin={this.state.isLoggedin} setLoggedin = {this.setLoggedin} 
                     userType = {this.state.userType}  setUserType = {this.setUserType}
+                    handleLogin = {this.handleLogin}
+                    handleRegister = {this.handleRegister}
                 />
                 <TransitionGroup className="mb-auto flex-grow-1">
                     <Switch>
-                        <Route exact path='/' component= {Home} />
+                        <Route exact path='/' component= {HomeWithDetails} />
                         <Route exact path='/profile' component= {ProfileComponent} />
                         {/* profile root */}
                         <Route exact path='/searchResults' component={SearchHotels} />

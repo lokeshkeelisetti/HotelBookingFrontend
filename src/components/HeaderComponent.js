@@ -15,7 +15,7 @@ class Header extends Component{
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.toggleLogin = this.toggleLogin.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
+        this.handleLoginTemp = this.handleLoginTemp.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
     }
 
@@ -41,14 +41,15 @@ class Header extends Component{
         })
     }
 
-    handleLogin(event){
+    handleLoginTemp(event){
         event.preventDefault();
         this.toggleModal();
         if(this.state.isLogin){
-            alert('Username: '+this.username.value+' Password: '+this.password.value);
+            this.props.handleLogin(event);
+            
         }
         else{
-            alert('Firstname: '+this.firstname.value+ ' Lastname: '+this.lastname.value);
+            this.props.handleRegister(event);
         }
     }
 
@@ -124,8 +125,9 @@ class Header extends Component{
                     <ModalHeader toggle={this.toggleModal}>
                         {this.state.isLogin ? 'Login' : 'Register'}
                     </ModalHeader>
-                   {this.state.isLogin ? ( <ModalBody>
-                        <Form onSubmit = {this.handleLogin}>
+                   {this.state.isLogin ? ( 
+                   <ModalBody>
+                        <Form onSubmit = {this.handleLoginTemp}>
                             <FormGroup>
                                 <Label htmlFor="email">Email</Label> 
                                 <Input type="email" id="email" name="email"
@@ -141,7 +143,7 @@ class Header extends Component{
                         </Form>
                     </ModalBody>) : (
                         <ModalBody>
-                            <Form onSubmit = {this.handleLogin}>
+                            <Form onSubmit = {this.handleLoginTemp}>
                                 <FormGroup>
                                     <Label htmlFor="firstname">First Name</Label>
                                     <Input type="text" id="firstname" name="firstname"

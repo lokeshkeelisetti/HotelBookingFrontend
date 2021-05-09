@@ -1,3 +1,2 @@
-let baseUrl = 'https://hotelbookingbackend.herokuapp.com/';
-
+let baseUrl ='https://hotelbookingbackend.herokuapp.com';
 export default baseUrl;

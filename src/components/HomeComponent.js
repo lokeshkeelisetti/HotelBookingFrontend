@@ -51,8 +51,6 @@ class Home extends Component{
         this.state = {
             activeIndex : 0,
             animating : false,
-            isLogged : false,
-            userType: '',
             userInfo : {
                 name : 'bhaggi',
                 hotel : 'Sitara'
@@ -127,7 +125,7 @@ class Home extends Component{
 
         return(
             <React.Fragment>
-                {(this.state.userType === 'customer' || !this.state.isLogged) && 
+                {(this.props.userType === 'customer' || !this.props.isLoggedin) && 
                     (<>
                         <Jumbotron>
                             <Container>
@@ -164,7 +162,7 @@ class Home extends Component{
                         </Container>
                     </>)
                 }
-                { (this.state.userType === 'receptionist') &&
+                { (this.props.userType === 'receptionist') &&
                     <>
                         <Jumbotron>
                             <Container>
@@ -192,7 +190,7 @@ class Home extends Component{
                         </Container>
                     </>
                 }
-                {this.state.userType === 'admin' &&
+                {this.props.userType === 'admin' &&
                     (   <Container className="mt-5 mb-5">
                             <Row>
                                 <RenderAvailableRooms availableRooms = {this.state.availableRooms} />
@@ -200,7 +198,7 @@ class Home extends Component{
                         </Container>
                     )
                 }
-                {this.state.userType === 'maintainer' &&
+                {this.props.userType === 'maintainer' &&
                     (
                         <Container className="mt-5 mb-5">
                             <Row>

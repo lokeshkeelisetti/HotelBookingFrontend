@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Nav,NavItem,NavLink,Container,TabContent,TabPane,Row,Button, ListGroup,
         Media, Form,FormGroup,Label,ListGroupItem,Input} from 'reactstrap';
+import classnames from 'classnames';
 
 function RenderRooms(props){
     return(
@@ -136,6 +137,7 @@ class AdminRoom extends Component{
                     <NavItem>
                         <NavLink
                             onClick={() => { this.setActiveTab('1'); }}
+                            className={classnames({ active: this.state.activeTab === '1' })}
                         >
                             Room Details
                         </NavLink>
@@ -143,12 +145,14 @@ class AdminRoom extends Component{
                     <NavItem>
                         <NavLink
                             onClick={() => { this.setActiveTab('2'); }}
+                            className={classnames({ active: this.state.activeTab === '2' })}
                         >
                             Add Room
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink 
+                            className={classnames({ active: this.state.activeTab === '3' })}
                             onClick={() => {this.setActiveTab('3')}}>
                                 Add Room Type
                         </NavLink>
