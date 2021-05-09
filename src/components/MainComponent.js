@@ -10,6 +10,9 @@ import baseUrl from '../shared/baseUrl';
 import axios from 'axios';
 import Room from './RoomComponent';
 import AdminRoom from './AdminRoomComponent';
+import hotels from '../shared/hotels';
+import ProfileComponent from './ProfileComponent';
+import AdminReceptionists from './AdminReceptionists';
 
 
 class Main extends Component {
@@ -75,9 +78,12 @@ class Main extends Component {
                 <TransitionGroup className="mb-auto">
                     <Switch>
                         <Route exact path='/' component= {Home} />
-                        <Route exact path='/searchResults' component={SearchHotels} />
+                        <Route exact path='/profile' component= {ProfileComponent} />
+                        {/* profile root */}
+                        <Route exact path='/searchResults' component={Search} />
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
-                        <Route exact path = '/test' component = {AdminRoom} />
+                        <Route exact path = '/test' component = {Room} />
+                        <Route exact path = '/receptionists' component= {AdminReceptionists} />
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>

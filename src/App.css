@@ -64,3 +64,8 @@ input[type='date']:after {
   content: attr(placeholder)
 }
 
+.profile__image
+{
+  height: 35vh;
+  margin-bottom: 25px;
+}
