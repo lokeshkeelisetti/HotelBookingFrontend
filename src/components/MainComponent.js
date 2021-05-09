@@ -7,10 +7,43 @@ import Footer from './FooterComponent';
 import Search from './SearchComponent';
 import Hotel from './HotelComponent';
 import hotels from '../shared/hotels';
+import baseUrl from '../shared/baseUrl';
+import axios from 'axios';
 
 
 class Main extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            hotels: [],
+            error : null,
+            isLoggedin : false,
+            userType : ''
+        }
+        this.setHotels = this.setHotels.bind(this);
+        this.setLoggedin = this.setLoggedin.bind(this);
+        this.setUserType = this.setUserType.bind(this);
+    }
+
+    setUserType(){
+        return;
+    }
+
+    setLoggedin(){
+        return;
+    }
+
+    setHotels(){
+        return;
+    }
+
+    componentDidMount(){
+        axios.get(baseUrl)
+            .then((response) => response)
+            .then((response) => console.log(response.data))
+            .catch((err) => console.log(err));
+    }
 
 
     render(){
@@ -24,7 +57,10 @@ class Main extends Component {
 
         return (
             <div style={{minHeight:"100vh"}}>
-                <Header />
+                <Header 
+                    isLoggedin={this.state.isLoggedin} setLoggedin = {this.setLoggedin} 
+                    userType = {this.state.userType}  setUserType = {this.setUserType}
+                />
                 <TransitionGroup className="mb-auto">
                     <Switch>
                         <Route exact path='/' component= {Home} />

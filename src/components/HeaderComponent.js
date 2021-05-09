@@ -10,9 +10,7 @@ class Header extends Component{
         this.state = {
             isNavOpen : false,
             isModalOpen : false,
-            isLogin : true,
-            isLoggedIn : true,
-            userType : 'customer'
+            isLogin : true
         };
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
@@ -71,7 +69,7 @@ class Header extends Component{
                                 </NavLink>
                             </NavItem>
                         </Nav>
-                        {this.state.userType === 'customer' && (
+                        {this.props.userType === 'customer' && (
                             <>
                                 <Nav navbar>
                                     <NavLink className="nav-link">
@@ -86,7 +84,7 @@ class Header extends Component{
                             </>
                             )
                         }
-                        {this.state.isLoggedIn && (
+                        {this.props.isLoggedIn && (
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle>
                                 <Nav navbar>
@@ -109,7 +107,7 @@ class Header extends Component{
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         )}
-                        { !(this.state.isLoggedIn) &&
+                        { !(this.props.isLoggedIn) &&
                         (
                         <Nav className="" navbar>
                             <NavItem>
