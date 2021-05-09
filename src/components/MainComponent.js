@@ -7,6 +7,7 @@ import Footer from './FooterComponent';
 import Search from './SearchComponent';
 import Hotel from './HotelComponent';
 import hotels from '../shared/hotels';
+import ProfileComponent from './ProfileComponent';
 
 
 class Main extends Component {
@@ -28,6 +29,8 @@ class Main extends Component {
                 <TransitionGroup className="mb-auto">
                     <Switch>
                         <Route exact path='/' component= {Home} />
+                        <Route exact path='/profile' component= {ProfileComponent} />
+                        {/* profile root */}
                         <Route exact path='/searchResults' component={Search} />
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
                         <Redirect to='/' />
