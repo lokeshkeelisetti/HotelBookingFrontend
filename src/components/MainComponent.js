@@ -71,24 +71,26 @@ class Main extends Component {
         }
 
         return (
-            <div>
+            <div style={{minHeight:'100vh',position:'relative'}}>
+                <div style={{paddingBottom:'10rem'}}>
                 <Header 
                     isLoggedin={this.state.isLoggedin} setLoggedin = {this.setLoggedin} 
                     userType = {this.state.userType}  setUserType = {this.setUserType}
                 />
-                <TransitionGroup className="mb-auto">
+                <TransitionGroup className="mb-auto flex-grow-1">
                     <Switch>
                         <Route exact path='/' component= {Home} />
                         <Route exact path='/profile' component= {ProfileComponent} />
                         {/* profile root */}
-                        <Route exact path='/searchResults' component={Search} />
+                        <Route exact path='/searchResults' component={SearchHotels} />
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
-                        <Route exact path = '/test' component = {Room} />
+                        <Route exact path = '/test' component = {AdminRoom} />
                         <Route exact path = '/receptionists' component= {AdminReceptionists} />
                         <Route exact path = '/admins' component= {MaintainerHotels} />
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>
+                </div>
                 <Footer />
             </div>
         )
