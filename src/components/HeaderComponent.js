@@ -10,9 +10,7 @@ class Header extends Component{
         this.state = {
             isNavOpen : false,
             isModalOpen : false,
-            isLogin : true,
-            isLoggedIn : false,
-            userType : ''
+            isLogin : true
         };
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
@@ -71,15 +69,22 @@ class Header extends Component{
                                 </NavLink>
                             </NavItem>
                         </Nav>
-                        {this.state.userType === 'customer' && (
+                        {this.props.userType === 'customer' && (
+                            <>
                                 <Nav navbar>
                                     <NavLink className="nav-link">
-                                        Bookings
+                                        Previous Bookings
                                     </NavLink>
                                 </Nav>
+                                <Nav navbar>
+                                    <NavLink className="nav-link">
+                                        Upcoming Bookings
+                                    </NavLink>
+                                </Nav>
+                            </>
                             )
                         }
-                        {this.state.isLoggedIn && (
+                        {this.props.isLoggedIn && (
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle>
                                 <Nav navbar>
@@ -102,7 +107,7 @@ class Header extends Component{
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         )}
-                        { !(this.state.isLoggedIn) &&
+                        { !(this.props.isLoggedIn) &&
                         (
                         <Nav className="" navbar>
                             <NavItem>
@@ -146,6 +151,16 @@ class Header extends Component{
                                     <Label htmlFor="lastname">Last Name</Label>
                                     <Input type="text" id="lastname" name="lastname"
                                         innerRef={(lastname) => this.lastname = lastname} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label htmlFor="email">email</Label>
+                                    <Input type="email" id="email" name="email"
+                                        innerRef={(email) => this.email = email} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label htmlFor="password">password</Label>
+                                    <Input type="password" id="password" name="password"
+                                        innerRef={(password) => this.password = password} />
                                 </FormGroup>
                                 <Button type="submit" value="submit" className="bg-primary" color="primary">Register</Button>
                                 <Button color='link' className="btn btn-link" onClick={this.toggleLogin}>Already have a account</Button>

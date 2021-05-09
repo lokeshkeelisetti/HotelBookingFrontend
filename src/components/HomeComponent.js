@@ -3,7 +3,30 @@ import { Carousel, CarouselItem , CarouselCaption,CarouselIndicators,CarouselCon
      FormGroup ,Form,Button, Label,Row,Card,CardBody,CardImg,CardTitle,CardSubtitle,CardText} from 'reactstrap';
 import Rating from '@material-ui/lab/Rating';
 import { Link } from 'react-router-dom';
+import hotels from '../shared/hotels';
 
+function RenderAvailableRooms(props){
+    return(
+        <>
+        {props.availableRooms.map((room) => {
+            return(
+                <Card key={room.id} className="col-12 col-sm-3">
+                    <CardImg width="50%" src={room.image} alt="hotelImage"/>
+                    <CardBody>
+                        <CardTitle tag="h5">{room.name}</CardTitle>
+                        <Rating name="read-only" value={room.rating} readOnly />
+                        <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
+                        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                        <Link to={`/hotel/${room.id}`}>
+                            <Button>Book a room</Button>
+                        </Link>
+                    </CardBody>
+                </Card>
+            )
+        })}
+        </>
+    )
+}
 
 
 const items = [
@@ -28,13 +51,14 @@ class Home extends Component{
         this.state = {
             activeIndex : 0,
             animating : false,
-            isLogged : true,
-            userType: 'receptionist',
+            isLogged : false,
+            userType: '',
             userInfo : {
                 name : 'bhaggi',
                 hotel : 'Sitara'
             },
             rooms : [],
+            hotels: hotels,
             availableRooms : [{
                 id : 1,
                 image : 'assets/images/hotel1.jpeg',
@@ -99,6 +123,8 @@ class Home extends Component{
             )
         })
 
+        
+
         return(
             <React.Fragment>
                 {(this.state.userType === 'customer' || !this.state.isLogged) && 
@@ -124,8 +150,7 @@ class Home extends Component{
                                         </FormGroup>
                                         <Button type="submit" value="submit" className="bg-primary" color="primary">Search</Button>
                                 </Form>
-                            </Container>
-                            
+                            </Container>    
                         </Jumbotron>
                         <Container>
                             <Carousel className="mb-5" activeIndex={this.state.activeIndex} 
@@ -137,8 +162,7 @@ class Home extends Component{
                                 <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
                             </Carousel>
                         </Container>
-                    </>
-                    )
+                    </>)
                 }
                 { (this.state.userType === 'receptionist') &&
                     <>
@@ -162,26 +186,28 @@ class Home extends Component{
                             </Container>
                         </Jumbotron>
                         <Container style={{minHeight:'30vh'}}>
-                        <Row className="mt-5 mb-5">
-                            {this.state.availableRooms.map((room) => {
-                                return(
-                                    <Card key={room.id} className="col-12 col-sm-3">
-                                        <CardImg width="50%" src={room.image} alt="hotelImage"/>
-                                        <CardBody>
-                                            <CardTitle tag="h5">{room.name}</CardTitle>
-                                            <Rating name="read-only" value={room.rating} readOnly />
-                                            <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
-                                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                            <Link to={`/hotel/${room.id}`}>
-                                                <Button>Book a room</Button>
-                                            </Link>
-                                        </CardBody>
-                                    </Card>
-                                )
-                            })}
-                        </Row>
+                            <Row className="mt-5 mb-5">
+                                <RenderAvailableRooms availableRooms={this.state.availableRooms} />
+                            </Row>
                         </Container>
                     </>
+                }
+                {this.state.userType === 'admin' &&
+                    (   <Container className="mt-5 mb-5">
+                            <Row>
+                                <RenderAvailableRooms availableRooms = {this.state.availableRooms} />
+                            </Row>
+                        </Container>
+                    )
+                }
+                {this.state.userType === 'maintainer' &&
+                    (
+                        <Container className="mt-5 mb-5">
+                            <Row>
+                                <RenderAvailableRooms availableRooms={this.state.availableRooms} />
+                            </Row>
+                        </Container>
+                    )
                 }
             </React.Fragment>
         )
