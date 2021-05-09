@@ -125,7 +125,7 @@ class Home extends Component{
 
         return(
             <React.Fragment>
-                {(this.props.userType === 'customer' || !this.props.isLoggedin) && 
+                {(this.props.userType === 'Customer' || !this.props.isLoggedin) && 
                     (<>
                         <Jumbotron>
                             <Container>
@@ -190,7 +190,7 @@ class Home extends Component{
                         </Container>
                     </>
                 }
-                {this.props.userType === 'admin' &&
+                {this.props.userType === 'hotelAdministration' &&
                     (   <Container className="mt-5 mb-5">
                             <Row>
                                 <RenderAvailableRooms availableRooms = {this.state.availableRooms} />

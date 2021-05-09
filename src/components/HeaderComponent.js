@@ -70,7 +70,7 @@ class Header extends Component{
                                 </NavLink>
                             </NavItem>
                         </Nav>
-                        {this.props.userType === 'customer' && (
+                        {this.props.userType === 'Customer' && (
                             <>
                                 <Nav navbar>
                                     <NavLink className="nav-link">
@@ -85,7 +85,7 @@ class Header extends Component{
                             </>
                             )
                         }
-                        {this.props.isLoggedIn && (
+                        {this.props.isLoggedin && (
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle>
                                 <Nav navbar>
@@ -108,7 +108,7 @@ class Header extends Component{
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         )}
-                        { !(this.props.isLoggedIn) &&
+                        { !(this.props.isLoggedin) &&
                         (
                         <Nav className="" navbar>
                             <NavItem>

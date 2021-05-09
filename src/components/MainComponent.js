@@ -59,7 +59,14 @@ class Main extends Component {
             },
             data : body
         })
-        .then((response) => console.log(response.data))
+        .then((response) => {
+            if(response.data.type){
+                this.setState({
+                    isLoggedin : true,
+                    userType : response.data.type
+                })
+            }
+        })
         .catch((err) => console.log(err));
     }
 
@@ -69,22 +76,25 @@ class Main extends Component {
         let email = event.target.elements["email"].value;
         let password = event.target.elements["password"].value;
         let body = {
-            "name" : {
-                "firstName" : firstName,
-                "lastName" : lastName,
-            },
-            "email" : email,
-            "password":password
+            firstName : firstName,
+            lastName : lastName,
+            email : email,
+            password:password
         }
 
         axios({
             method : "POST",
+            url: baseUrl+'/registerCustomer',
             headers : {
                 "Content-Type" : "application/json"
             },
             data : body
         })
-        .then((response) => console.log(response))
+        .then((response) => {
+            if(response.status === 200){
+                alert('Account Successfully Created');
+            }
+        })
         .catch((err) => console.log(err))
     }
 
@@ -114,8 +124,8 @@ class Main extends Component {
             <div style={{minHeight:'100vh',position:'relative'}}>
                 <div style={{paddingBottom:'10rem'}}>
                 <Header 
-                    isLoggedin={this.state.isLoggedin} setLoggedin = {this.setLoggedin} 
-                    userType = {this.state.userType}  setUserType = {this.setUserType}
+                    isLoggedin={this.state.isLoggedin}
+                    userType = {this.state.userType}
                     handleLogin = {this.handleLogin}
                     handleRegister = {this.handleRegister}
                 />
