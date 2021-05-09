@@ -11,6 +11,7 @@ import ProfileComponent from './ProfileComponent';
 import baseUrl from '../shared/baseUrl';
 import axios from 'axios';
 import Room from './RoomComponent';
+import AdminReceptionists from './AdminReceptionists';
 
 
 class Main extends Component {
@@ -71,6 +72,7 @@ class Main extends Component {
                         <Route exact path='/searchResults' component={Search} />
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
                         <Route exact path = '/test' component = {Room} />
+                        <Route exact path = '/receptionists' component= {AdminReceptionists} />
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
-import {Input,FormGroup ,Form,Button, container, Table} from 'reactstrap';
+import {Input,FormGroup ,Form,Button, Container, Table} from 'reactstrap';
 
 function ProfileComponent() {
 
@@ -59,7 +59,7 @@ function ProfileComponent() {
           </Row>
         </TabPane>
         <TabPane tabId="2">
-        <container>
+        <Container>
             <Form>
                 <br />
                 <FormGroup>
@@ -73,7 +73,7 @@ function ProfileComponent() {
                 </FormGroup>
                 <Button type="submit" value="submit" className="bg-primary" color="primary">Change Password</Button>
             </Form>
-        </container>
+        </Container>
         </TabPane>
       </TabContent>
     </div>
