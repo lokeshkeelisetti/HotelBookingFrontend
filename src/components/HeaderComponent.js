@@ -39,7 +39,7 @@ class Header extends Component{
 
     handleLoginTemp(event){
         event.preventDefault();
-        this.toggleModal();
+        console.log(event);
         if(this.state.isLogin){
             this.props.handleLogin(event);
             
@@ -47,6 +47,7 @@ class Header extends Component{
         else{
             this.props.handleRegister(event);
         }
+        this.toggleModal();
     }
 
     render(){

@@ -75,6 +75,9 @@ class Main extends Component {
                     userType : response.data.type
                 })
             }
+            else if(response.data.error){
+                alert(response.data.error);
+            }
         })
         .catch((err) => console.log(err));
     }
