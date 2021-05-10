@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TransitionGroup } from 'react-transition-group';
-import {Redirect, Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch,withRouter} from 'react-router-dom';
 import Header from './HeaderComponent';
 import Home from './HomeComponent';
 import Footer from './FooterComponent';
@@ -23,17 +23,20 @@ class Main extends Component {
             error : null,
             isLoggedin : false,
             userType : '',
-            userInfo : null
+            userInfo : null,
+            searchHotelResults : []
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleSearchHotel = this.handleSearchHotel.bind(this);
     }
 
     componentDidMount(){
         if(!this.state.isLoggedin || this.state.userType === 'customer' || this.state.userType === 'maintainer'){
             axios.get(baseUrl)
             .then((response) => {
+                console.log(response.data);
                 this.setState({
                     hotels : response.data
                 })
@@ -43,6 +46,47 @@ class Main extends Component {
         else{
 
         }
+    }
+
+    handleSearchHotel(event){
+        event.preventDefault();
+        console.log(event);
+        let body = {};
+        let startDate = event.target.elements["checkIn"].value;
+        let endDate = event.target.elements["checkOut"].value;
+        if(event.target.elements["searchBy"].value === 'location'){
+            let city = event.target.elements["location"].value;
+            body = {
+                city : city,
+                startDate : startDate,
+                endDate : endDate
+            }
+        }
+        else{
+            let hotelName = event.target.elements["location"].value;
+            body = {
+                hotelName : hotelName,
+                startDate : startDate,
+                endDate : endDate
+            }
+        }
+        console.log(body);
+        axios({
+            method: "POST",
+            url : baseUrl + '/customer/findHotel',
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            data : body
+        })
+        .then((response) => console.log(response))
+        .catch((err) => {
+            this.setState({
+                searchHotelResults : []
+            })
+            this.props.history.push('/searchResults');
+            alert('No Hotel matching with your filters');
+        })
     }
 
     handleLogout(){
@@ -115,7 +159,8 @@ class Main extends Component {
 
         const HomeWithDetails = () => {
             return (
-                <Home isLoggedin = {this.state.isLoggedin} userInfo = {this.state.userInfo} userType={this.state.userType} />
+                <Home isLoggedin = {this.state.isLoggedin} userInfo = {this.state.userInfo} userType={this.state.userType}
+                    handleSearchHotel={this.handleSearchHotel} />
             )
         }
 
@@ -128,7 +173,7 @@ class Main extends Component {
 
         const SearchHotels = () => {
             return (
-                <Search hotels = {this.state.hotels} />
+                <Search hotels = {this.state.searchHotelResults} handleSearchHotel={this.handleSearchHotel} />
             )
         }
 
@@ -162,4 +207,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default withRouter(Main);

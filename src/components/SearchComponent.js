@@ -27,39 +27,42 @@ function RenderHotels(props){
 }
 
 class Search extends Component {
-    constructor(props){
-        super(props);
-        this.handleSearch = this.handleSearch.bind(this);
-    }
-
-    handleSearch(event){
-        event.preventDefault();
-    }
-
+    
     render(){
         return(
         <>
         <Jumbotron>
-            <Form onSubmit={this.handleSearch} inline>
-                <FormGroup>
-                    <Input type="text" id="location" placeholder="Enter search location"
-                        innerRef = {(location) => this.location = location} />
-                </FormGroup>
-                <FormGroup>
-                    <Input type="date" id="checkIn" placeholder="check-in"
-                        innerRef = {(checkIn) => this.checkIn = checkIn} />
-                </FormGroup>
-                <FormGroup>
-                    <Input type="date" id="checkOut" placeholder="check-out"
-                        innerRef = {(checkOut) => this.checkOut = checkOut} />
-                </FormGroup>
-                <Button type="submit" value="submit" className="bg-primary" color="primary">Search</Button>
-            </Form>
+            <Container>
+                <Form className="row" onSubmit={this.props.handleSearchHotel}>
+                        <FormGroup className="col-5 col-md-3">
+                            <Input type="select" id="searchBy" name="searchBy" defaultValue="searchBy">
+                                <option value="location">location</option>
+                                <option value="hotel">Hotel Name</option>
+                            </Input>
+                        </FormGroup>
+                        <FormGroup className="col-7 col-md-7">
+                            <Input type="text" id="location" name="location" placeholder="Enter keyword"
+                                innerRef = {(location) => this.location = location} />
+                        </FormGroup>
+                        <FormGroup className="col-6 col-md-3">
+                            <Input type="date" id="checkIn" placeholder="check in" name="checkIn"
+                                innerRef = {(checkIn) => this.checkIn = checkIn} />
+                        </FormGroup>
+                        <FormGroup className="col-6 col-md-3">
+                            <Input type="date" id="checkOut" placeholder="check out" name="checkOut"
+                                innerRef = {(checkOut) => this.checkOut = checkOut} />
+                        </FormGroup>
+                        <Button type="submit" value="submit" className="btn btn-primary col-4 col-md-1 mb-3" color="primary">Search</Button>
+                </Form>
+            </Container>   
         </Jumbotron>
         <Container>
             <Row className="mb-2">
                 <RenderHotels hotels = {this.props.hotels}/>
             </Row>
+            {this.props.hotels.length === 0 && (
+                <h1 className="align-self-center">No hotel matched with the search</h1>
+            )}
         </Container>
         </>
         )

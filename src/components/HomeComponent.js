@@ -66,7 +66,6 @@ class Home extends Component{
         }
         this.setActiveIndex = this.setActiveIndex.bind(this);
         this.setAnimating = this.setAnimating.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
         this.handleCheckAvailability = this.handleCheckAvailability.bind(this);
     }
 
@@ -75,10 +74,6 @@ class Home extends Component{
         console.log(`Checking availbility for ${this.timeOfStay.value} days of ${this.typeOfRoom.value} Stay`);
     }
 
-    handleSearch(event){
-        event.preventDefault();
-        console.log('Searching for hotel in '+this.location.value+' between '+this.checkIn.value+' and '+this.checkOut.value);
-    }
 
     setActiveIndex = (index) => {
         this.setState({
@@ -133,7 +128,7 @@ class Home extends Component{
                                 <h5>A place to find your every stay</h5>
                             </Container>
                             <Container>
-                                <Form className="row" onSubmit={this.handleSearch}>
+                                <Form className="row" onSubmit={this.props.handleSearchHotel}>
                                         <FormGroup className="col-5 col-md-3">
                                             <Input type="select" id="searchBy" name="searchBy" defaultValue="searchBy">
                                                 <option value="location">location</option>
@@ -141,15 +136,15 @@ class Home extends Component{
                                             </Input>
                                         </FormGroup>
                                         <FormGroup className="col-7 col-md-7">
-                                            <Input type="text" id="location" placeholder="Enter keyword"
+                                            <Input type="text" id="location" name="location" placeholder="Enter keyword"
                                                 innerRef = {(location) => this.location = location} />
                                         </FormGroup>
                                         <FormGroup className="col-6 col-md-3">
-                                            <Input type="date" id="checkIn" placeholder="check in"
+                                            <Input type="date" id="checkIn" placeholder="check in" name="checkIn"
                                                 innerRef = {(checkIn) => this.checkIn = checkIn} />
                                         </FormGroup>
                                         <FormGroup className="col-6 col-md-3">
-                                            <Input type="date" id="checkOut" placeholder="check out"
+                                            <Input type="date" id="checkOut" placeholder="check out" name="checkOut"
                                                 innerRef = {(checkOut) => this.checkOut = checkOut} />
                                         </FormGroup>
                                         <Button type="submit" value="submit" className="btn btn-primary col-4 col-md-1 mb-3" color="primary">Search</Button>
