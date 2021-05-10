@@ -73,7 +73,9 @@ class Header extends Component{
                             <>
                                 <Nav navbar>
                                     <NavLink className="nav-link">
-                                        Previous Bookings
+                                        <Link to="/customer/previousBookings">
+                                            Previous Bookings
+                                        </Link>
                                     </NavLink>
                                 </Nav>
                                 <Nav navbar>

@@ -1,6 +1,6 @@
 import Rating from '@material-ui/lab/Rating';
 import React, { Component } from 'react';
-import { Card, CardImg, Container,Row,Form, FormGroup, Label, Input } from 'reactstrap';
+import { CardBody,CardTitle,Button,Card,CardSubtitle,CardText, CardImg, Container,Row,Form, FormGroup, Label, Input } from 'reactstrap';
 
 function RenderPreviousBookings(props){
     return(
@@ -36,20 +36,21 @@ function RenderPreviousBookings(props){
 }
 
 class PreviousBookings extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            bookings : []
-        }
-    }
 
     render(){
         return(
             <Container>
                 <Row>
-                    <RenderPreviousBookings bookings={this.state.bookings} />
+                    <RenderPreviousBookings bookings={this.props.bookings} />
+                    { this.props.bookings.length === 0 &&
+                        (
+                            <h1 className="align-self-center">No previous Bookings</h1>
+                        )
+                    }
                 </Row>
             </Container>
         )
     }
 }
+
+export default PreviousBookings;
