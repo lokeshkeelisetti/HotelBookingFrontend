@@ -1,3 +1,9 @@
+/*  Component to give UI for hotel admin to see and edit rooms
+    Functionalities
+        ->see details of rooms
+        ->add and delete rooms in hotel 
+ */
+
 import React, { Component } from 'react';
 import { Nav,NavItem,NavLink,Container,TabContent,TabPane,Row,Button, ListGroup,
         Media, Form,FormGroup,Label,ListGroupItem,Input} from 'reactstrap';

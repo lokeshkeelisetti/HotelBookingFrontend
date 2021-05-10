@@ -1,3 +1,10 @@
+/*Component to Render the recpetionist page for 
+        Hotel Admin 
+        Functionalities:
+            ->Can see all recpetionist details
+            -> add/delete recpetionist
+        */
+
 import React,{ useState }  from 'react';
 import receptionists from '../shared/receptionists';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
@@ -7,13 +14,17 @@ import {Input,FormGroup ,Form,Button, Container, Table} from 'reactstrap';
 
 function AdminReceptionists() {
     <br />
+    // using state Hook to keep track of tabs
     const [activeTab, setActiveTab] = useState('1');
+
+    //function to change tab
     const toggle = tab => {
         if(activeTab !== tab) setActiveTab(tab);
     }
 
     return ( 
         <>
+        {/* Using tabs for navigation of details and editing receptionists */}
         <Nav tabs className="mt-5">
             <NavItem>
                 <NavLink
@@ -69,6 +80,7 @@ function AdminReceptionists() {
             <Container>
                 <br />
                 <br />
+                {/* Form for adding recpetionist */}
                 <Form>
                     <FormGroup>
                         <Input type="text" id="receptionistFirstName" placeholder="enter first name of receptionist" className="col-md-6" />

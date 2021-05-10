@@ -41,7 +41,7 @@ class Main extends Component {
 
     componentDidMount(){
         this.setState({
-            availableRooms : rooms
+            availableRooms : this.state.rooms
         });
         if(!this.state.isLoggedin || this.state.userType === 'customer' || this.state.userType === 'maintainer'){
             axios.get(baseUrl)
@@ -60,7 +60,7 @@ class Main extends Component {
 
     handleCheckAvailability(event){
         this.setState({
-            availableRooms : rooms
+            availableRooms : this.state.rooms
         })
     }
 
