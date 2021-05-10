@@ -51,28 +51,13 @@ class Home extends Component{
         this.state = {
             activeIndex : 0,
             animating : false,
-            userInfo : {
-                name : 'bhaggi',
-                hotel : 'Sitara'
-            },
             rooms : [],
             hotels: hotels,
-            availableRooms : [{
-                id : 1,
-                image : 'assets/images/hotel1.jpeg',
-                rating : 3,
-                name : 'violet'
-            }]
         }
         this.setActiveIndex = this.setActiveIndex.bind(this);
         this.setAnimating = this.setAnimating.bind(this);
-        this.handleCheckAvailability = this.handleCheckAvailability.bind(this);
     }
 
-    handleCheckAvailability(event){
-        event.preventDefault();
-        console.log(`Checking availbility for ${this.timeOfStay.value} days of ${this.typeOfRoom.value} Stay`);
-    }
 
 
     setActiveIndex = (index) => {
@@ -168,7 +153,7 @@ class Home extends Component{
                         <Jumbotron>
                             <Container>
                                 <h3>Welcome to Hotel</h3>
-                                <Form className="w-50 offset-1" onSubmit={this.handleCheckAvailability}>
+                                <Form className="w-50 offset-1" onSubmit={this.props.handleCheckAvailability}>
                                     <FormGroup>
                                         <Label htmlFor="timeOfStay">Duration of Stay in days</Label>
                                         <Input name="timeOfStay" type="text" id="timeOfStay" innerRef={(timeOfStay) => this.timeOfStay = timeOfStay}/>
@@ -186,7 +171,7 @@ class Home extends Component{
                         </Jumbotron>
                         <Container style={{minHeight:'30vh'}}>
                             <Row className="mt-5 mb-5">
-                                <RenderAvailableRooms availableRooms={this.state.availableRooms} />
+                                <RenderAvailableRooms availableRooms={this.props.availableRooms} />
                             </Row>
                         </Container>
                     </>

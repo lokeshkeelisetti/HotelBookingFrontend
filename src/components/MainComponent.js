@@ -28,15 +28,21 @@ class Main extends Component {
             userInfo : null,
             searchHotelResults : [],
             previousBookings : [],
-            upcomingBookings : []
+            upcomingBookings : [],
+            availableRooms : [],
+            rooms : []
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.handleSearchHotel = this.handleSearchHotel.bind(this);
+        this.handleCheckAvailability = this.handleCheckAvailability.bind(this);
     }
 
     componentDidMount(){
+        this.setState({
+            availableRooms : rooms
+        });
         if(!this.state.isLoggedin || this.state.userType === 'customer' || this.state.userType === 'maintainer'){
             axios.get(baseUrl)
             .then((response) => {
@@ -50,6 +56,12 @@ class Main extends Component {
         else{
 
         }
+    }
+
+    handleCheckAvailability(event){
+        this.setState({
+            availableRooms : rooms
+        })
     }
 
     handleSearchHotel(event){
@@ -164,7 +176,8 @@ class Main extends Component {
         const HomeWithDetails = () => {
             return (
                 <Home isLoggedin = {this.state.isLoggedin} userInfo = {this.state.userInfo} userType={this.state.userType}
-                    handleSearchHotel={this.handleSearchHotel} />
+                    handleSearchHotel={this.handleSearchHotel} availableRooms = {this.state.availableRooms} 
+                    handleCheckAvailability={this.handleCheckAvailability}/>
             )
         }
 
