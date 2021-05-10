@@ -13,6 +13,7 @@ import Profile from './ProfileComponent';
 import AdminReceptionists from './AdminReceptionists';
 import MaintainerHotels from './MaintainerHotels';
 import PreviousBookings from './PreviousBookingComponent';
+import UpcomingBooking from './UpcomingBookingsComponent';
 
 
 class Main extends Component {
@@ -26,7 +27,8 @@ class Main extends Component {
             userType : '',
             userInfo : null,
             searchHotelResults : [],
-            previousBookings : []
+            previousBookings : [],
+            upcomingBookings : []
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
@@ -185,6 +187,12 @@ class Main extends Component {
             )
         }
 
+        const RenderUpcomingBookings = () => {
+            return (
+                <UpcomingBooking bookings={this.state.upcomingBookings} />
+            )
+        }
+
         return (
             <div style={{minHeight:'100vh',position:'relative'}}>
                 <div style={{paddingBottom:'10rem'}}>
@@ -206,6 +214,7 @@ class Main extends Component {
                         <Route exact path = '/receptionists' component= {AdminReceptionists} />
                         <Route exact path = '/admins' component= {MaintainerHotels} />
                         <Route exact path = '/customer/previousBookings' component={RenderPreviousBookings} />
+                        <Route exact path = '/customer/upcomingBookings' component={RenderUpcomingBookings} />
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>

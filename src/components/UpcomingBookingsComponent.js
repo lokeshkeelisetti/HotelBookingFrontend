@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { CardText, Container, Row } from 'reactstrap';
+import { CardText, Container, Row,Card,CardImg,CardBody,CardTitle,Button,CardSubtitle } from 'reactstrap';
 
-function RenderPreviousBookings(props){
+function RenderUpcomingBookings(props){
     return(
         props.bookings.map((booking) => {
             return(
@@ -21,20 +21,22 @@ function RenderPreviousBookings(props){
 }
 
 class UpcomingBooking extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            bookings : []
-        }
-    }
 
     render(){
         return(
             <Container>
                 <Row>
-                    <RenderUpcomingBookings bookings={this.state.bookings} />
+                    <RenderUpcomingBookings bookings={this.props.bookings} />
+                    { this.props.bookings &&
+                        (
+                            <h1>No upcoming bookings</h1>
+                        )
+
+                    }
                 </Row>
             </Container>
         )
     }
 }
+
+export default UpcomingBooking;

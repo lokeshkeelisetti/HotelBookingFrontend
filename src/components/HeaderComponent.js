@@ -80,7 +80,9 @@ class Header extends Component{
                                 </Nav>
                                 <Nav navbar>
                                     <NavLink className="nav-link">
-                                        Upcoming Bookings
+                                        <Link to="/customer/upcomingBookings">
+                                            Upcoming Bookings
+                                        </Link>
                                     </NavLink>
                                 </Nav>
                             </>
