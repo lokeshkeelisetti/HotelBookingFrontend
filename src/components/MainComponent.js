@@ -9,7 +9,7 @@ import Hotel from './HotelComponent';
 import baseUrl from '../shared/baseUrl';
 import axios from 'axios';
 import AdminRoom from './AdminRoomComponent';
-import ProfileComponent from './ProfileComponent';
+import Profile from './ProfileComponent';
 import AdminReceptionists from './AdminReceptionists';
 import MaintainerHotels from './MaintainerHotels';
 
@@ -27,6 +27,7 @@ class Main extends Component {
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
     componentDidMount(){
@@ -42,6 +43,14 @@ class Main extends Component {
         else{
 
         }
+    }
+
+    handleLogout(){
+        this.setState({
+            isLoggedin : false,
+            userType : '',
+            userInfo : null
+        })
     }
 
     handleLogin(event){
@@ -128,11 +137,12 @@ class Main extends Component {
                     userType = {this.state.userType}
                     handleLogin = {this.handleLogin}
                     handleRegister = {this.handleRegister}
+                    handleLogout = {this.handleLogout}
                 />
                 <TransitionGroup className="mb-auto flex-grow-1">
                     <Switch>
                         <Route exact path='/' component= {HomeWithDetails} />
-                        <Route exact path='/profile' component= {ProfileComponent} />
+                        <Route exact path='/profile' component= {Profile} />
                         {/* profile root */}
                         <Route exact path='/searchResults' component={SearchHotels} />
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>

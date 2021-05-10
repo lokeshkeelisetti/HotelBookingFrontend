@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {Navbar,NavbarToggler,NavbarBrand,Collapse,Nav,NavItem,NavLink,Button, 
     Modal, ModalHeader, ModalBody, FormGroup, Form,Input,Label,UncontrolledDropdown,
     DropdownItem,DropdownToggle,DropdownMenu} from 'reactstrap';
@@ -16,11 +17,6 @@ class Header extends Component{
         this.toggleModal = this.toggleModal.bind(this);
         this.toggleLogin = this.toggleLogin.bind(this);
         this.handleLoginTemp = this.handleLoginTemp.bind(this);
-        this.handleLogout = this.handleLogout.bind(this);
-    }
-
-    handleLogout(){
-        console.log('logged out');
     }
 
     toggleLogin(){
@@ -65,8 +61,10 @@ class Header extends Component{
                         <Collapse isOpen={this.state.isNavOpen} navbar>
                         <Nav navbar className = "ml-auto mr-2">
                             <NavItem>
-                                <NavLink className="nav-link" href="/">
-                                    <span className="fa fa-home fa-lg"></span> Home
+                                <NavLink className="nav-link">
+                                    <Link to="/">
+                                        <span className="fa fa-home fa-lg"></span> Home
+                                    </Link>
                                 </NavLink>
                             </NavItem>
                         </Nav>
@@ -97,10 +95,12 @@ class Header extends Component{
                             <DropdownMenu right>
                               <DropdownItem>
                                     <NavLink className="nav-link">
-                                        Profile  
+                                        <Link to="/profile">
+                                            Profile  
+                                        </Link>
                                     </NavLink>
                               </DropdownItem>
-                              <DropdownItem onClick={this.handleLogout}>
+                              <DropdownItem onClick={this.props.handleLogout}>
                                   <NavLink className="nav-link" href='/'>
                                   Logout
                                   </NavLink>

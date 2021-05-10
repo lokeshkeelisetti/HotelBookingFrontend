@@ -3,7 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap
 import classnames from 'classnames';
 import {Input,FormGroup ,Form,Button, Container, Table} from 'reactstrap';
 
-function ProfileComponent() {
+function Profile() {
 
     const [activeTab, setActiveTab] = useState('1');
     const toggle = tab => {
@@ -12,7 +12,7 @@ function ProfileComponent() {
 
     return (
     <>
-    <img src="assets/images/profile.jpeg" alt="profile" class="profile__image"/>
+    <img src="assets/images/profile.jpeg" alt="profile" className="profile__image"/>
     <div>
       <Nav tabs>
         <NavItem>
@@ -68,7 +68,7 @@ function ProfileComponent() {
                 <FormGroup>
                     <Input type="password" id="newPassword" placeholder="Enter the new password" />
                 </FormGroup>
-                    <Input type="password" id="newPassword" placeholder="Confirm the new password" />
+                    <Input type="password" id="newConfirmPassword" placeholder="Confirm the new password" />
                 <FormGroup>
                 </FormGroup>
                 <Button type="submit" value="submit" className="bg-primary" color="primary">Change Password</Button>
@@ -81,4 +81,4 @@ function ProfileComponent() {
     )
 }
 
-export default ProfileComponent
+export default Profile

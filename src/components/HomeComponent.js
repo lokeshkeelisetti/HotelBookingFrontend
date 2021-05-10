@@ -133,20 +133,26 @@ class Home extends Component{
                                 <h5>A place to find your every stay</h5>
                             </Container>
                             <Container>
-                                <Form onSubmit={this.handleSearch} inline>
-                                        <FormGroup>
-                                            <Input type="text" id="location" placeholder="Enter search location"
+                                <Form className="row" onSubmit={this.handleSearch}>
+                                        <FormGroup className="col-5 col-md-3">
+                                            <Input type="select" id="searchBy" name="searchBy" defaultValue="searchBy">
+                                                <option value="location">location</option>
+                                                <option value="hotel">Hotel Name</option>
+                                            </Input>
+                                        </FormGroup>
+                                        <FormGroup className="col-7 col-md-7">
+                                            <Input type="text" id="location" placeholder="Enter keyword"
                                                 innerRef = {(location) => this.location = location} />
                                         </FormGroup>
-                                        <FormGroup>
-                                            <Input type="date" id="checkIn" placeholder="check-in"
+                                        <FormGroup className="col-6 col-md-3">
+                                            <Input type="date" id="checkIn" placeholder="check in"
                                                 innerRef = {(checkIn) => this.checkIn = checkIn} />
                                         </FormGroup>
-                                        <FormGroup>
-                                            <Input type="date" id="checkOut" placeholder="check-out"
+                                        <FormGroup className="col-6 col-md-3">
+                                            <Input type="date" id="checkOut" placeholder="check out"
                                                 innerRef = {(checkOut) => this.checkOut = checkOut} />
                                         </FormGroup>
-                                        <Button type="submit" value="submit" className="bg-primary" color="primary">Search</Button>
+                                        <Button type="submit" value="submit" className="btn btn-primary col-4 col-md-1 mb-3" color="primary">Search</Button>
                                 </Form>
                             </Container>    
                         </Jumbotron>
