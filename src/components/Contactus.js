@@ -9,14 +9,14 @@ export const Contactus = () => {
 			<br />
 
 			<div style={{ textAlign: "center" }}>
-				<p>Contactus via phone or email</p>
+				<p>Contact Us via phone or email</p>
 				<i className="fa fa-phone fa-lg"></i>: +852 1234 5678
 				<br />
 				<i className="fa fa-envelope fa-lg"></i>:{" "}
 				<a href="mailto:confusion@food.net">hotels@india.net</a>
 				<br />
 				<br />
-				<p>write a query we will respond</p>
+				<p>Go with your query and we'll resopond as soon as we can!!</p>
 				<Form className="col-md-8 contactform">
 					<br />
 					<FormGroup>
