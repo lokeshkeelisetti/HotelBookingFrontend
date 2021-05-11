@@ -99,6 +99,7 @@ export const Home = (props) => {
 	const [endDate, setendDate] = useState("");
 	const [keyWord, setkeyWord] = useState("");
 	const [sortedHotelRoomTypes, setsortedHotelRoomTypes] = useState([]);
+	const [sortedHotels, setsortedHotels] = useState([]);
 
 	const handleSearchHotel = (event) => {
 		setNoSearch(false);
@@ -120,8 +121,10 @@ export const Home = (props) => {
 			data: body,
 		})
 			.then((res) => {
-				console.log(res.data);
-				setsortedHotelRoomTypes(res.data);
+				console.log(res.data.hotelRoomTypes);
+				console.log(res.data.hotelDetails);
+				setsortedHotels(res.data.hotelDetails);
+				setsortedHotelRoomTypes(res.data.hotelRoomTypes);
 			})
 			.catch((err) => console.log(err));
 	};
@@ -281,11 +284,8 @@ export const Home = (props) => {
 			)}
 			{(props.userType == "customer" || !props.isLoggedin) && !nosearch && (
 				<Search
-					hotels={props.hotels}
+					hotels={sortedHotels}
 					hotelRoomTypes={sortedHotelRoomTypes}
-					hotelRooms={props.hotelRooms}
-					startDate={startDate}
-					endDate={endDate}
 					keyWord={keyWord}
 				/>
 			)}
