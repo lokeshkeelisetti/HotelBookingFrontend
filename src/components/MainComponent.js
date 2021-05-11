@@ -8,7 +8,7 @@ import Hotel from "./HotelComponent";
 import baseUrl from "../shared/baseUrl";
 import axios from "axios";
 import Profile from "./ProfileComponent";
-import AdminReceptionists from "./AdminReceptionists";
+import { AdminReceptionists } from "./AdminReceptionists";
 import MaintainerHotels from "./MaintainerHotels";
 import PreviousBookings from "./PreviousBookingComponent";
 import UpcomingBooking from "./UpcomingBookingsComponent";
