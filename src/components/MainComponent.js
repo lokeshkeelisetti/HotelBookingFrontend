@@ -14,6 +14,7 @@ import AdminReceptionists from './AdminReceptionists';
 import MaintainerHotels from './MaintainerHotels';
 import PreviousBookings from './PreviousBookingComponent';
 import UpcomingBooking from './UpcomingBookingsComponent';
+import Contactus from './Contactus';
 
 
 class Main extends Component {
@@ -228,6 +229,7 @@ class Main extends Component {
                         <Route exact path = '/admins' component= {MaintainerHotels} />
                         <Route exact path = '/customer/previousBookings' component={RenderPreviousBookings} />
                         <Route exact path = '/customer/upcomingBookings' component={RenderUpcomingBookings} />
+                        <Route exact path = '/contactus' component= {Contactus} />
                         <Redirect to='/' />
                     </Switch>
                 </TransitionGroup>
