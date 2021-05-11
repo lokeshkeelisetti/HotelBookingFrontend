@@ -359,30 +359,29 @@ export const Main = () => {
 		let max_no_of_people = event.target.elements["noOfPeople"].value;
 
 		let body = {
-			type : type,
-			price : price,
-			ac_or_not : ac_or_not,
-			wifi_or_not : wifi_or_not,
-			max_no_of_people : max_no_of_people,
-			hotelId : hotels._id,
-			hotelAdminId : userId
-		}
+			type: type,
+			price: price,
+			ac_or_not: ac_or_not,
+			wifi_or_not: wifi_or_not,
+			max_no_of_people: max_no_of_people,
+			hotelId: hotels._id,
+			hotelAdminId: userId,
+		};
 
 		axios({
-			method : "POST",
-			url : baseUrl + '/hotelAdministration/addHotelType',
-			headers : {
-				usertype : userType,
-				usersecret : secret
+			method: "POST",
+			url: baseUrl + "/hotelAdministration/addHotelType",
+			headers: {
+				usertype: userType,
+				usersecret: secret,
 			},
-			data : body
+			data: body,
 		})
-		.then((response) => {
-			console.log(response);
-		})
-		.catch((err) => console.log(err));
-
-	}
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((err) => console.log(err));
+	};
 
 	const hotelWithId = ({ match }) => {
 		return (
@@ -390,6 +389,36 @@ export const Main = () => {
 				hotel={hotels.filter((hotel) => hotel.id === parseInt(match.params.hotelId, 10))[0]}
 			/>
 		);
+	};
+
+	const bookRoom = (startDate, endDate, hotelRoomTypeId, hotelId) => {
+		var body = {
+			startDate,
+			endDate,
+			hotelRoomTypeId,
+			hotelId,
+			customerId: userId,
+		};
+		var d = new Date(startDate);
+		console.log(d);
+		console.log(body);
+		axios({
+			method: "POST",
+			url: baseUrl + "/customer/bookRoom",
+			headers: {
+				"Content-Type": "application/json",
+				usertype: userType,
+				usersecret: secret,
+			},
+			data: body,
+		})
+			.then((response) => {
+				if (response.data.success) {
+					alert("Room Booked Successfully!");
+				}
+				console.log(response.data);
+			})
+			.catch((err) => console.log(err));
 	};
 
 	return (
@@ -421,6 +450,8 @@ export const Main = () => {
 									receptionists={receptionists}
 									addRoomType = {addRoomType}
 									addRoom = {addRoom}
+									bookRoom={bookRoom}
+									addRoomType={addRoomType}
 								/>
 							);
 						}}
