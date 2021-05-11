@@ -72,6 +72,8 @@ const RenderAdmin = (props) => {
                     <TabPane tabId="1">
                         <AdminRoom rooms={props.rooms}
                             addRoomType = {props.addRoomType}
+                            hotelRoomTypes = {props.hotelRoomTypes}
+                            addRoom = {props.addRoom}
                         />
                     </TabPane>
                     <TabPane tabId="2">
@@ -325,6 +327,8 @@ export const Home = (props) => {
 				<RenderAdmin rooms={props.hotelRooms} 
                     receptionists={props.receptionists} 
                     addRoomType={props.addRoomType}
+                    hotelRoomTypes = {props.hotelRoomTypes}
+                    addRoom = {props.addRoom}
                 />
 			)}
 			{props.userType === "maintainer" && (

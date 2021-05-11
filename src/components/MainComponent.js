@@ -324,6 +324,37 @@ export const Main = () => {
 			});
 	};
 
+	const addRoom = (event) => {
+		event.preventDefault();
+		let hotelRoomTypeId = event.target.elements["roomType"];
+		let roomNo = event.target.elements["roomNo"];
+		if(hotelRoomTypeId !== 'none'){
+			let body = {
+				hotelRoomTypeId : hotelRoomTypeId,
+				hotelId : hotels._id,
+				hotelAdminId : userId,
+				roomNo : roomNo
+			}
+
+			axios({
+				method : "POST",
+				url : baseUrl + '/hotelAdministration/addRoom',
+				headers : {
+					usertype : userType,
+					usersecret : secret
+				},
+				data : body
+			})
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+
+		}
+	}
+
 	const addRoomType = (event) => {
 		event.preventDefault();
 		let type = event.target.elements["newRoomType"].value;
@@ -396,6 +427,8 @@ export const Main = () => {
 									hotelRooms={hotelRooms}
 									receptionists={receptionists}
 									addRoomType = {addRoomType}
+									hotelRoomTypes = {hotelRoomTypes}
+									addRoom = {addRoom}
 								/>
 							);
 						}}
