@@ -267,8 +267,8 @@ export const Main = () => {
 							hotels = response[1].data;
 						console.log(response);
 						setisLoggedin(true);
-						sethotelAdmins(hotelAdmins);
 						sethotels(hotels);
+						sethotelAdmins(hotelAdmins);
 					})
 				)
 				.catch((err) => console.log(err));
