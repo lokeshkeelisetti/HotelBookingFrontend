@@ -332,6 +332,36 @@ export const Main = () => {
 		);
 	};
 
+	const bookRoom = (startDate, endDate, hotelRoomTypeId, hotelId) => {
+		var body = {
+			startDate,
+			endDate,
+			hotelRoomTypeId,
+			hotelId,
+			customerId: userId,
+		};
+		var d = new Date(startDate);
+		console.log(d);
+		console.log(body);
+		axios({
+			method: "POST",
+			url: baseUrl + "/customer/bookRoom",
+			headers: {
+				"Content-Type": "application/json",
+				usertype: userType,
+				usersecret: secret,
+			},
+			data: body,
+		})
+			.then((response) => {
+				if (response.data.success) {
+					alert("Room Booked Successfully!");
+				}
+				console.log(response.data);
+			})
+			.catch((err) => console.log(err));
+	};
+
 	return (
 		<div style={{ minHeight: "100vh", position: "relative" }}>
 			<div style={{ paddingBottom: "10rem" }}>
@@ -361,6 +391,7 @@ export const Main = () => {
 									hotelRoomTypes={hotelRoomTypes}
 									hotelRooms={hotelRooms}
 									receptionists={receptionists}
+									bookRoom={bookRoom}
 								/>
 							);
 						}}

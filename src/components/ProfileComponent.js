@@ -91,7 +91,7 @@ export const Profile = () => {
 			<div>
 				<Container>
 					<Nav tabs>
-						<NavItem>
+						<NavItem style={{ cursor: "pointer" }}>
 							<NavLink
 								className={classnames({ active: activeTab === "1" })}
 								onClick={() => {
@@ -101,7 +101,7 @@ export const Profile = () => {
 								Info
 							</NavLink>
 						</NavItem>
-						<NavItem>
+						<NavItem style={{ cursor: "pointer" }}>
 							<NavLink
 								className={classnames({ active: activeTab === "2" })}
 								onClick={() => {

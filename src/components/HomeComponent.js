@@ -20,11 +20,11 @@ import {
 	CardTitle,
 	CardSubtitle,
 	CardText,
-    Nav,
-    NavLink,
-    NavItem,
-    TabContent,
-    TabPane,
+	Nav,
+	NavLink,
+	NavItem,
+	TabContent,
+	TabPane,
 } from "reactstrap";
 import Rating from "@material-ui/lab/Rating";
 import { Link } from "react-router-dom";
@@ -37,16 +37,15 @@ import { AdminRoom } from "./AdminRoomComponent";
 import { AdminReceptionists } from "./AdminReceptionists";
 
 const RenderAdmin = (props) => {
-
-    const [activeTab, setActiveTab] = useState("1");
+	const [activeTab, setActiveTab] = useState("1");
 
 	const toggle = (tab) => {
 		if (activeTab !== tab) setActiveTab(tab);
 	};
 
-    return (
-        <div>
-            <Nav tabs className="mt-5">
+	return (
+		<div>
+			<Nav tabs className="mt-5">
 				<NavItem>
 					<NavLink
 						className={classnames({ active: activeTab === "1" })}
@@ -68,17 +67,17 @@ const RenderAdmin = (props) => {
 					</NavLink>
 				</NavItem>
 			</Nav>
-            <TabContent activeTab={activeTab}>
-                    <TabPane tabId="1">
-                        <AdminRoom rooms={props.rooms}/>
-                    </TabPane>
-                    <TabPane tabId="2">
-                        <AdminReceptionists receptionists={props.receptionists}/>
-                    </TabPane>
-            </TabContent>
-        </div>
-    )
-}
+			<TabContent activeTab={activeTab}>
+				<TabPane tabId="1">
+					<AdminRoom rooms={props.rooms} />
+				</TabPane>
+				<TabPane tabId="2">
+					<AdminReceptionists receptionists={props.receptionists} />
+				</TabPane>
+			</TabContent>
+		</div>
+	);
+};
 
 const RenderAvailableRooms = (props) => {
 	return (
@@ -336,6 +335,9 @@ export const Home = (props) => {
 					hotelRoomTypes={sortedHotelRoomTypes}
 					keyWord={keyWord}
 					isLoggedin={props.isLoggedin}
+					bookRoom={props.bookRoom}
+					startDate={startDate}
+					endDate={endDate}
 				/>
 			)}
 		</React.Fragment>
