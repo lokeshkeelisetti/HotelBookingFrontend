@@ -148,3 +148,8 @@ input[type="date"]:after {
 .profile__image {
 	border-radius: 50%;
 }
+
+.pics{
+	margin-top: 70px;
+	margin-bottom: 100px;
+}

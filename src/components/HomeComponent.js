@@ -254,7 +254,7 @@ export const Home = (props) => {
 						</Container>
 					</Jumbotron>
 					{nosearch && (
-						<Container>
+						<Container className="pics">
 							<Carousel
 								className="mb-5"
 								activeIndex={activeIndex}
