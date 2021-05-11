@@ -52,19 +52,22 @@ function RenderPreviousBookings(props) {
 	});
 }
 
-class PreviousBookings extends Component {
-	render() {
-		return (
-			<Container>
-				<Row>
-					<RenderPreviousBookings bookings={this.props.bookings} />
-					{this.props.bookings.length === 0 && (
-						<h1 className="align-self-center">No previous Bookings</h1>
-					)}
-				</Row>
-			</Container>
-		);
-	}
+class PreviousBookings extends Component{
+
+    render(){
+        return(
+            <Container className="mt-5 pt-5">
+                <Row>
+                    <RenderPreviousBookings bookings={this.props.bookings} />
+                    { this.props.bookings.length === 0 &&
+                        (
+                            <h1>No previous Bookings</h1>
+                        )
+                    }
+                </Row>
+            </Container>
+        )
+    }
 }
 
 export default PreviousBookings;
