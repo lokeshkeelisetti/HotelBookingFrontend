@@ -3,7 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from "reactstrap
 import classnames from "classnames";
 import { Input, FormGroup, Form, Button, Container, Table } from "reactstrap";
 
-function MaintainerHotels(props) {
+export const MaintainerHotels = (props) => {
 	const [activeTab, setActiveTab] = useState("1");
 	const toggle = (tab) => {
 		if (activeTab !== tab) setActiveTab(tab);
@@ -171,6 +171,4 @@ function MaintainerHotels(props) {
 			</TabContent>
 		</>
 	);
-}
-
-export default MaintainerHotels;
+};

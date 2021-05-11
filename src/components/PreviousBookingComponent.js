@@ -1,5 +1,5 @@
 import Rating from "@material-ui/lab/Rating";
-import React, { Component } from "react";
+import React from "react";
 import {
 	CardBody,
 	CardTitle,
@@ -16,7 +16,7 @@ import {
 	Input,
 } from "reactstrap";
 
-function RenderPreviousBookings(props) {
+export const RenderPreviousBookings = (props) => {
 	return props.bookings.map((booking) => {
 		return (
 			<Card key={booking.id}>
@@ -50,24 +50,15 @@ function RenderPreviousBookings(props) {
 			</Card>
 		);
 	});
-}
+};
 
-class PreviousBookings extends Component{
-
-    render(){
-        return(
-            <Container className="mt-5 pt-5">
-                <Row>
-                    <RenderPreviousBookings bookings={this.props.bookings} />
-                    { this.props.bookings.length === 0 &&
-                        (
-                            <h1>No previous Bookings</h1>
-                        )
-                    }
-                </Row>
-            </Container>
-        )
-    }
-}
-
-export default PreviousBookings;
+export const PreviousBookings = (props) => {
+	return (
+		<Container className="mt-5 pt-5">
+			<Row>
+				<RenderPreviousBookings bookings={props.bookings} />
+				{props.bookings.length === 0 && <h1>No previous Bookings</h1>}
+			</Row>
+		</Container>
+	);
+};
