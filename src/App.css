@@ -73,3 +73,16 @@ input[type='date']:after {
   height: 35vh;
   margin-bottom: 25px;
 }
+
+.profile__image__div
+{
+  margin-top: 60px;
+  margin-left: 40%;
+  width: 200px;
+  align-items: center;
+}
+
+.profile__image
+{
+  border-radius: 50%;
+}
