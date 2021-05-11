@@ -1,3 +1,4 @@
+import MaintainerHotels from './MaintainerHotels';
 import React, { Component } from "react";
 import {
 	Carousel,
@@ -287,11 +288,7 @@ class Home extends Component {
 					</Container>
 				)}
 				{this.props.userType === "maintainer" && (
-					<Container className="mt-5 mb-5">
-						<Row>
-							<RenderAvailableRooms availableRooms={this.state.availableRooms} />
-						</Row>
-					</Container>
+					<MaintainerHotels hoteladmins = {this.props.hotelAdmins} hotels = {this.props.hotels}/>
 				)}
 			</React.Fragment>
 		);

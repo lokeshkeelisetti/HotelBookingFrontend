@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import hoteladmins from '../shared/hoteladmins';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import {Input,FormGroup ,Form,Button, Container, Table} from 'reactstrap';
 
 
-function MaintainerHotels() {
+function MaintainerHotels(props) {
     
     const [activeTab, setActiveTab] = useState('1');
     const toggle = tab => {
         if(activeTab !== tab) setActiveTab(tab);
     }
 
+    console.log(props);
     return ( 
         <>
         <Nav tabs className="mt-5">
@@ -33,74 +33,74 @@ function MaintainerHotels() {
             </NavItem>
         </Nav>
         <TabContent activeTab={activeTab}>
-        <TabPane tabId="1">
-          <Row>
-            <Col sm="12">
-                
-            <br />
-            <Table className="col-md-8 offset-md-2">
-                <thead>
-                    <tr>
-                        <th>Admin id</th>
-                        <th>Name</th>
-                        <th>Hotel Name</th>
-                        <th>Email</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {hoteladmins.map((hoteladmin) => {
-                        return (
+            <TabPane tabId="1">
+            <Row>
+                <Col sm="12">
+                <Table className="col-md-8 offset-md-2">
+                    <thead>
                         <tr>
-                            <td>{hoteladmin.id}</td>
-                            <td>{hoteladmin.name}</td>
-                            <td>{hoteladmin.hotelName}</td>
-                            <td>{hoteladmin.email}</td>
-                            <td><span class="fa fa-trash"></span></td>
+                            <th>Admin id</th>
+                            <th>Name</th>
+                            <th>Hotel Name</th>
+                            <th>Hotel location</th>
+                            <th>Email</th>
+                            <th>Edit</th>
                         </tr>
-                        )
-                    })}
-                    
-                </tbody>
-            </Table>
-            <br />
-            </Col>
-          </Row>
-        </TabPane>
-        <TabPane tabId="2">
-            <Container>
-                <Form>
-                    <br />
-                    <FormGroup>
-                        <Input type="text" id="FirstNameOfAdmin" placeholder="enter first name of admin" className="col-md-6"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Input type="text" id="LastNameOfAdmin" placeholder="enter last name of admin" className="col-md-6"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Input type="text" id="NameofHotel" placeholder="enter name of hotel" className="col-md-6"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Input type="email" id="EmailOfAdmin" placeholder="enter email of admin" className="col-md-6"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Input type="text" id="HotelCity" placeholder="enter Hotel city" className="col-md-6"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Input type="text" id="HotelStreet" placeholder="enter Hotel street" className="col-md-6"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Input type="text" id="HotelPincode" placeholder="enter Hotel pincode" className="col-md-6"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Input type="password" id="adminPassword" placeholder="password for Hotel admin" className="col-md-6"/>
-                    </FormGroup>
-                    <Button type="submit" value="submit" className="bg-primary" color="primary">Add hotel</Button>
-                </Form>
+                    </thead>
+                    <tbody>
+                        {props.hoteladmins.map((hoteladmin) => {
+                            //console.log(props)
+                            let hotel = props.hotels.filter((hotel) => hotel._id === hoteladmin.hotelId)[0];
+                            return (
+                            <tr key={hoteladmin._id}>
+                                <td>{hoteladmin._id}</td>
+                                <td>{hoteladmin.name.firstName}</td>
+                                <td>{hotel.hotelName}</td>
+                                <td>{hotel.address.city}</td>
+                                <td>{hoteladmin.email}</td>
+                                <td><Button className="btn btn-danger" onClick={() => {props.deleteHotel(hotel._id)}}><span className="fa fa-trash"></span></Button></td>
+                            </tr>
+                            )
+                        })}
+                        
+                    </tbody>
+                </Table>
                 <br />
-                <br />
-            </Container>
-        </TabPane>
+                </Col>
+            </Row>
+            </TabPane>
+            <TabPane tabId="2">
+                <Container>
+                    <Form onSubmit={props.addHotel}>
+                        <br />
+                        <FormGroup>
+                            <Input type="text" name="firsName" id="firstName" placeholder="enter first name of admin" className="col-md-6"/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Input type="text" name="lastName" id="lastName" placeholder="enter last name of admin" className="col-md-6"/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Input type="text" name="hotelName" id="hotelName" placeholder="enter name of hotel" className="col-md-6"/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Input type="email" id="email" name="email" placeholder="enter email of admin" className="col-md-6"/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Input type="text" id="city" name="city" placeholder="enter Hotel city" className="col-md-6"/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Input type="text" id="street" name="street" placeholder="enter Hotel street" className="col-md-6"/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Input type="text" id="pincode" name="pincode" placeholder="enter Hotel pincode" className="col-md-6"/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Input type="password" id="password" name="password" placeholder="password for Hotel admin" className="col-md-6"/>
+                        </FormGroup>
+                        <Button type="submit" value="submit" className="bg-primary" color="primary">Add hotel</Button>
+                    </Form>
+                </Container>
+            </TabPane>
         </TabContent>
         </>
     )

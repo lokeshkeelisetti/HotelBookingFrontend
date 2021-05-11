@@ -8,7 +8,6 @@ import Search from './SearchComponent';
 import Hotel from './HotelComponent';
 import baseUrl from '../shared/baseUrl';
 import axios from 'axios';
-import AdminRoom from './AdminRoomComponent';
 import Profile from './ProfileComponent';
 import AdminReceptionists from './AdminReceptionists';
 import MaintainerHotels from './MaintainerHotels';
@@ -22,40 +21,92 @@ class Main extends Component {
     constructor(props){
         super(props);
         this.state = {
-            hotels: [],
             error : null,
             isLoggedin : false,
             userType : '',
+            secret : '',
+            userId : null,
             userInfo : null,
             searchHotelResults : [],
             previousBookings : [],
             upcomingBookings : [],
             availableRooms : [],
-            rooms : []
+            rooms : [],
+            hotelAdmins : [],
+            hotels : [],
+            hotelRoomTypes : [],
+            hotelRooms : []
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.handleSearchHotel = this.handleSearchHotel.bind(this);
         this.handleCheckAvailability = this.handleCheckAvailability.bind(this);
+        this.deleteHotel = this.deleteHotel.bind(this);
+        this.addHotel = this.addHotel.bind(this);
     }
 
     componentDidMount(){
-        this.setState({
-            availableRooms : this.state.rooms
-        });
-        if(!this.state.isLoggedin || this.state.userType === 'customer' || this.state.userType === 'maintainer'){
-            axios.get(baseUrl)
-            .then((response) => {
-                console.log(response.data);
-                this.setState({
-                    hotels : response.data
-                })
+        let userDetails = JSON.parse(localStorage.getItem('userDetails'))
+        let type;
+        let id;
+        let secret;
+        if(userDetails){
+            type = userDetails.type;
+            id = userDetails.id;
+            secret = userDetails.secret;    
+        }
+        
+        if(type === 'customer'){
+            this.setState({
+                userType : type,
+                userId : id,
+                secret : secret,
+                isLoggedin : true,
+                userInfo : userDetails.customerDetails,
+                previousBookings : userDetails.pastBookings,
+                upcomingBookings : userDetails.upcomingBookings,
+                hotels : userDetails.hotels,
+                hotelRoomTypes : userDetails.hotelRoomTypes,
+                hotelRooms : userDetails.hotelRooms
             })
-            .catch((err) => console.log(err));
+        }
+        else if(type === 'hotelAdministration'){
+            this.setState({
+                userType : type,
+                userId : id,
+                secret : secret,
+                isLoggedin : true,
+            })
+        }
+        else if(type === 'receptionist'){
+            this.setState({
+                userType : type,
+                userId : id,
+                secret : secret,
+                isLoggedin : true,
+            })
+        }
+        else if(type === 'maintainer'){
+            let hotelAdmins = JSON.parse(localStorage.getItem('hotelAdmins'));
+            let hotels = JSON.parse(localStorage.getItem('hotels'));
+            this.setState({
+                userType : type,
+                userId : id,
+                secret : secret,
+                isLoggedin : true,
+                hotelAdmins : hotelAdmins,
+                hotels : hotels
+            });
+
         }
         else{
-
+            this.setState({
+                userType : '',
+                userId : null,
+                secret : '',
+                isLoggedin : false
+            })
         }
     }
 
@@ -102,7 +153,6 @@ class Main extends Component {
                 searchHotelResults : []
             })
             this.props.history.push('/searchResults');
-            alert('No Hotel matching with your filters');
         })
     }
 
@@ -110,8 +160,11 @@ class Main extends Component {
         this.setState({
             isLoggedin : false,
             userType : '',
-            userInfo : null
+            userInfo : null,
+            userId : null,
+            secret : ''
         })
+        localStorage.clear();
     }
 
     handleLogin(event){
@@ -131,10 +184,50 @@ class Main extends Component {
         })
         .then((response) => {
             if(response.data.type){
-                this.setState({
-                    isLoggedin : true,
-                    userType : response.data.type
-                })
+                localStorage.setItem('userDetails',JSON.stringify(response.data));
+                let userInfo,userType,userId,secret;
+                userType = response.data.type;
+                secret = response.data.secret;
+                userId = response.data.id;
+                if(userType === 'maintainer'){
+                    userInfo = response.data.maintainerDetails
+
+                    let req1 = axios({
+                        method : "GET",
+                        url: baseUrl+'/maintainer/hotelAdmin',
+                        headers: {
+                            userType : response.data.type,
+                            usersecret : response.data.secret
+                        }
+                    })
+
+                    let req2 = axios({
+                        method : "GET",
+                        url: baseUrl+'/maintainer/hotel',
+                        headers: {
+                            userType : response.data.type,
+                            usersecret : response.data.secret
+                        }
+                    })
+                    axios.all([req1,req2])
+                    .then(axios.spread((...response) => {
+                        localStorage.setItem("hotelAdmins",JSON.stringify(response[0].data));
+                        localStorage.setItem("hotels",JSON.stringify(response[1].data));
+                        let hotelAdmins = response[0].data,hotels = response[1].data;
+                        console.log(response);
+                        this.setState({
+                                isLoggedin : true,
+                                userType : userType,
+                                userId : userId,
+                                secret : secret,
+                                userInfo : userInfo,
+                                hotelAdmins : hotelAdmins,
+                                hotels : hotels
+                        })
+
+                    }))
+                    .catch((err) => console.log(err));
+                }
             }
             else if(response.data.error){
                 alert(response.data.error);
@@ -172,13 +265,133 @@ class Main extends Component {
     }
 
 
+    addHotel(event){
+        event.preventDefault();
+        console.log(event.target.elements);
+        let firstName = event.target.elements["firstName"].value;
+        let lastName = event.target.elements["lastName"].value;
+        let email = event.target.elements["email"].value;
+        let password = event.target.elements["email"].value;
+        let street = event.target.elements["street"].value;
+        let city = event.target.elements["city"].value;
+        let pincode = event.target.elements["pincode"].value;
+        let hotelName = event.target.elements["hotelName"].value;
+
+        let body = {
+            firstName : firstName,
+            lastName : lastName,
+            email : email,
+            password : password,
+            street : street,
+            city : city,
+            pinCode : pincode,
+            hotelName : hotelName
+        }
+
+        axios({
+            method:"POST",
+            url : baseUrl + '/maintainer/addNewHotel',
+            data : body,
+            headers : {
+                userType : this.state.userType,
+                usersecret : this.state.secret
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            let req1 = axios({
+                method : "GET",
+                url: baseUrl+'/maintainer/hotelAdmin',
+                headers: {
+                    userType : this.state.userType,
+                    usersecret : this.state.secret
+                }
+            })
+
+            let req2 = axios({
+                method : "GET",
+                url: baseUrl+'/maintainer/hotel',
+                headers: {
+                    userType : this.state.userType,
+                    usersecret : this.state.secret
+                }
+            })
+            axios.all([req1,req2])
+            .then(axios.spread((...response) => {
+                localStorage.setItem("hotelAdmins",JSON.stringify(response[0].data));
+                localStorage.setItem("hotels",JSON.stringify(response[1].data));
+                let hotelAdmins = response[0].data,hotels = response[1].data;
+                console.log(response);
+                this.setState({
+                        isLoggedin : true,
+                        hotelAdmins : hotelAdmins,
+                        hotels : hotels
+                })
+
+            }))
+            .catch((err) => console.log(err));
+        })
+    }
+
+    deleteHotel(hotelId){
+
+        axios({
+            method : "delete",
+            url : baseUrl+'/maintainer/removeHotel/'+hotelId+'/?'+hotelId,
+            headers : {
+                usertype : this.state.userType,
+                usersecret : this.state.secret
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            let req1 = axios({
+                method : "GET",
+                url: baseUrl+'/maintainer/hotelAdmin',
+                headers: {
+                    userType : this.state.userType,
+                    usersecret : this.state.secret
+                }
+            })
+
+            let req2 = axios({
+                method : "GET",
+                url: baseUrl+'/maintainer/hotel',
+                headers: {
+                    userType : this.state.userType,
+                    usersecret : this.state.secret
+                }
+            })
+            axios.all([req1,req2])
+            .then(axios.spread((...response) => {
+                localStorage.setItem("hotelAdmins",JSON.stringify(response[0].data));
+                localStorage.setItem("hotels",JSON.stringify(response[1].data));
+                let hotelAdmins = response[0].data,hotels = response[1].data;
+                console.log(response);
+                this.setState({
+                        isLoggedin : true,
+                        hotelAdmins : hotelAdmins,
+                        hotels : hotels
+                })
+
+            }))
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
+
     render(){
 
         const HomeWithDetails = () => {
             return (
                 <Home isLoggedin = {this.state.isLoggedin} userInfo = {this.state.userInfo} userType={this.state.userType}
                     handleSearchHotel={this.handleSearchHotel} availableRooms = {this.state.availableRooms} 
-                    handleCheckAvailability={this.handleCheckAvailability}/>
+                    handleCheckAvailability={this.handleCheckAvailability} deleteHotel={this.deleteHotel}
+                    hotelAdmins = {this.state.hotelAdmins} hotels={this.state.hotels}
+                    addHotel={this.addHotel}/>
             )
         }
 
@@ -207,6 +420,12 @@ class Main extends Component {
             )
         }
 
+        const LoadProfile = () => {
+            return (
+                <Profile />
+            )
+        }
+
         return (
             <div style={{minHeight:'100vh',position:'relative'}}>
                 <div style={{paddingBottom:'10rem'}}>
@@ -220,11 +439,9 @@ class Main extends Component {
                 <TransitionGroup className="mb-auto flex-grow-1">
                     <Switch>
                         <Route exact path='/' component= {HomeWithDetails} />
-                        <Route exact path='/profile' component= {Profile} />
-                        {/* profile root */}
+                        <Route exact path='/profile' component= {LoadProfile} />
                         <Route exact path='/searchResults' component={SearchHotels} />
                         <Route exact path='/hotel/:hotelId' component={hotelWithId}/>
-                        <Route exact path = '/test' component = {AdminRoom} />
                         <Route exact path = '/receptionists' component= {AdminReceptionists} />
                         <Route exact path = '/admins' component= {MaintainerHotels} />
                         <Route exact path = '/customer/previousBookings' component={RenderPreviousBookings} />
