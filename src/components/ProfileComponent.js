@@ -10,6 +10,16 @@ function Profile() {
         if(activeTab !== tab) setActiveTab(tab);
       }
 
+    let userInfo = JSON.parse(localStorage.getItem('userDetails'));
+    console.log(userInfo);
+
+    let name,email;
+
+    if(userInfo.type === 'maintainer'){
+      name = userInfo.maintainerDetails.name.firstName+' '+userInfo.maintainerDetails.name.lastName;
+      email = userInfo.maintainerDetails.email;
+    }
+
     return (
     <>
     <div className="profile__image__div">
@@ -52,11 +62,11 @@ function Profile() {
                     <tbody>
                         <tr>
                             <td>Name</td>
-                            <td>God</td>
+                            <td>{name}</td>
                         </tr>
                         <tr>
                             <td>Email</td>
-                            <td>god@google.com</td>
+                            <td>{email}</td>
                         </tr>
                         
                     </tbody>
