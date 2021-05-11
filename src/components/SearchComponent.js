@@ -51,23 +51,12 @@ class Search extends Component {
 				<Jumbotron>
 					<Container>
 						<Form className="row" onSubmit={this.props.handleSearchHotel}>
-							<FormGroup className="col-5 col-md-3">
-								<Input
-									type="select"
-									id="searchBy"
-									name="searchBy"
-									defaultValue="searchBy"
-								>
-									<option value="location">location</option>
-									<option value="hotel">Hotel Name</option>
-								</Input>
-							</FormGroup>
 							<FormGroup className="col-7 col-md-7">
 								<Input
 									type="text"
 									id="location"
 									name="location"
-									placeholder="Enter keyword"
+									placeholder="Search by city or hotel"
 									innerRef={(location) => (this.location = location)}
 								/>
 							</FormGroup>

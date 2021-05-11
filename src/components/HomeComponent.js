@@ -143,33 +143,39 @@ class Home extends Component {
 								color: "#fff",
 							}}
 						>
-							<Container>
+							<Container className="text-center mb-5">
 								<h3 className="font-ubuntu-700">Hotel Pedia</h3>
 								<h5 className="font-roboto">A place to find your every stay</h5>
 							</Container>
-							<Container>
-								<Form className="row" onSubmit={this.props.handleSearchHotel}>
-									<FormGroup className="col-5 col-md-3">
-										<Input
-											type="select"
-											id="searchBy"
-											name="searchBy"
-											defaultValue="searchBy"
-										>
-											<option value="location">location</option>
-											<option value="hotel">Hotel Name</option>
-										</Input>
-									</FormGroup>
-									<FormGroup className="col-7 col-md-7">
+							<Container
+								style={{
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+									flexWrap: "wrap",
+									width: "100%",
+								}}
+							>
+								<Form
+									className="row searchForm"
+									onSubmit={this.props.handleSearchHotel}
+									style={{
+										display: "flex",
+										flexWrap: "wrap",
+										width: "100%",
+										justifyContent: "center",
+									}}
+								>
+									<FormGroup>
 										<Input
 											type="text"
 											id="location"
 											name="location"
-											placeholder="Enter keyword"
+											placeholder="Search by City or Hotel"
 											innerRef={(location) => (this.location = location)}
 										/>
 									</FormGroup>
-									<FormGroup className="col-6 col-md-3">
+									<FormGroup>
 										<Input
 											type="date"
 											id="checkIn"
@@ -178,7 +184,7 @@ class Home extends Component {
 											innerRef={(checkIn) => (this.checkIn = checkIn)}
 										/>
 									</FormGroup>
-									<FormGroup className="col-6 col-md-3">
+									<FormGroup>
 										<Input
 											type="date"
 											id="checkOut"
@@ -190,8 +196,8 @@ class Home extends Component {
 									<Button
 										type="submit"
 										value="submit"
-										className="btn btn-primary col-4 col-md-1 mb-3"
-										color="primary"
+										className="btn btn-success col-4 col-md-1 mb-3"
+										color="success"
 									>
 										Search
 									</Button>

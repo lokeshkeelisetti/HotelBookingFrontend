@@ -6,6 +6,10 @@
 	--my-red: rgb(236, 23, 81);
 }
 
+.searchForm input {
+	border-radius: 0;
+}
+
 .userIcon {
 	color: var(--my-red);
 	border-color: var(--my-red);
