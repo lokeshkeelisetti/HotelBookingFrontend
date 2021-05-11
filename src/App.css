@@ -98,10 +98,10 @@ a:hover {
 	bottom: -20px;
 	height: 200px;
 	width: 100%;
-	background-color: rgb(236,23,81);
+	background-color: rgb(236, 23, 81);
 	margin: 0px auto;
 	padding: 20px 0px 20px 0px;
-	color:white !important;
+	color: white !important;
 	font-size: 1.2rem;
 }
 
@@ -110,7 +110,7 @@ a:hover {
 	font-size: 1rem;
 }
 
-.icons a{
+.icons a {
 	margin: 3px;
 }
 
@@ -134,12 +134,11 @@ input[type="date"]:after {
 	margin-bottom: 25px;
 }
 
-.profile__image__div
-{
-  margin-top: 80px;
-  margin-left: 40%;
-  width: 200px;
-  align-items: center;
+.profile__image__div {
+	margin-top: 80px;
+	margin-left: 40%;
+	width: 200px;
+	align-items: center;
 }
 
 .profile__image {
