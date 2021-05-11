@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link } from "react-router-dom";
 import {
 	Navbar,
@@ -22,51 +22,24 @@ import {
 	DropdownMenu,
 } from "reactstrap";
 
-class Header extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isNavOpen: false,
-			isModalOpen: false,
-			isLogin: true,
-		};
-		this.toggleNav = this.toggleNav.bind(this);
-		this.toggleModal = this.toggleModal.bind(this);
-		this.toggleLogin = this.toggleLogin.bind(this);
-		this.handleLoginTemp = this.handleLoginTemp.bind(this);
-	}
+function Header(props) {
 
-	toggleLogin() {
-		this.setState({
-			isLogin: !this.state.isLogin,
-		});
-	}
+    const [isNavOpen,setisNavOpen] = useState(false);
+    const [isModalOpen,setisModalOpen] = useState(false);
+    const [isLogin,setisLogin] = useState(true);
 
-	toggleNav() {
-		this.setState({
-			isNavOpen: !this.state.isNavOpen,
-		});
-	}
-
-	toggleModal() {
-		this.setState({
-			isModalOpen: !this.state.isModalOpen,
-		});
-	}
-
-	handleLoginTemp(event) {
+    function handleLoginTemp(event) {
 		event.preventDefault();
 		console.log(event);
-		if (this.state.isLogin) {
-			this.props.handleLogin(event);
+		if (isLogin) {
+			props.handleLogin(event);
 		} else {
-			this.props.handleRegister(event);
+			props.handleRegister(event);
 		}
-		this.toggleModal();
+		setisModalOpen(!isModalOpen);
 	}
 
-	render() {
-		return (
+        return (
 			<React.Fragment>
 				<Navbar color="light" light expand="md" className="fixed-top">
 					{/*fixed-top is responsible for sticky*/}
@@ -83,8 +56,8 @@ class Header extends Component {
 							HotelPedia
 						</h3>
 					</NavbarBrand>
-					<NavbarToggler onClick={this.toggleNav} />
-					<Collapse isOpen={this.state.isNavOpen} navbar>
+					<NavbarToggler onClick={() => setisNavOpen(!isNavOpen)} />
+					<Collapse isOpen={isNavOpen} navbar>
 						<Nav navbar className="ml-auto mr-2">
 							<NavItem>
 								<NavLink className="nav-link">
@@ -94,7 +67,7 @@ class Header extends Component {
 								</NavLink>
 							</NavItem>
 						</Nav>
-						{this.props.userType === "customer" && (
+						{props.userType === "customer" && (
 							<UncontrolledDropdown style={{ listStyleType: "none" }} nav inNavbar>
 								<DropdownToggle className="userIcon">
 									<Nav navbar>
@@ -123,7 +96,7 @@ class Header extends Component {
 											</Link>
 										</NavLink>
 									</DropdownItem>
-									<DropdownItem onClick={this.props.handleLogout}>
+									<DropdownItem onClick={props.handleLogout}>
 										<NavLink className="nav-link" href="/">
 											Logout
 										</NavLink>
@@ -131,7 +104,7 @@ class Header extends Component {
 								</DropdownMenu>
 							</UncontrolledDropdown>
 						)}
-						{this.props.isLoggedin && this.props.userType !== "customer" && (
+						{props.isLoggedin && props.userType !== "customer" && (
 							<UncontrolledDropdown style={{ listStyleType: "none" }} nav inNavbar>
 								<DropdownToggle className="userIcon">
 									<Nav navbar>
@@ -146,7 +119,7 @@ class Header extends Component {
 											<Link to="/profile">Profile</Link>
 										</NavLink>
 									</DropdownItem>
-									<DropdownItem onClick={this.props.handleLogout}>
+									<DropdownItem onClick={props.handleLogout}>
 										<NavLink className="nav-link" href="/">
 											Logout
 										</NavLink>
@@ -154,10 +127,10 @@ class Header extends Component {
 								</DropdownMenu>
 							</UncontrolledDropdown>
 						)}
-						{!this.props.isLoggedin && (
+						{!props.isLoggedin && (
 							<Nav className="" navbar>
 								<NavItem>
-									<Button outline onClick={this.toggleModal} className="spBtn">
+									<Button outline onClick={() => setisModalOpen(!isModalOpen)} className="spBtn">
 										<span className="fa fa-sign-in fa-lg"></span> Login
 									</Button>
 								</NavItem>
@@ -165,20 +138,19 @@ class Header extends Component {
 						)}
 					</Collapse>
 				</Navbar>
-				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-					<ModalHeader toggle={this.toggleModal}>
-						{this.state.isLogin ? "Login" : "Register"}
+				<Modal isOpen={isModalOpen} toggle={() => setisModalOpen(!isModalOpen)}>
+					<ModalHeader toggle={() => setisModalOpen(!isModalOpen)}>
+						{isLogin ? "Login" : "Register"}
 					</ModalHeader>
-					{this.state.isLogin ? (
+					{isLogin ? (
 						<ModalBody>
-							<Form onSubmit={this.handleLoginTemp}>
+							<Form onSubmit={handleLoginTemp}>
 								<FormGroup>
 									<Label htmlFor="email">Email</Label>
 									<Input
 										type="email"
 										id="email"
 										name="email"
-										innerRef={(input) => (this.username = input)}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -187,7 +159,6 @@ class Header extends Component {
 										type="password"
 										id="password"
 										name="password"
-										innerRef={(password) => (this.password = password)}
 									/>
 								</FormGroup>
 								<Button
@@ -204,7 +175,7 @@ class Header extends Component {
 								<Button
 									color="link"
 									className="btn btn-link"
-									onClick={this.toggleLogin}
+									onClick={() => setisLogin(!isLogin)}
 									style={{ color: "var(--my-red)" }}
 								>
 									Register
@@ -213,14 +184,13 @@ class Header extends Component {
 						</ModalBody>
 					) : (
 						<ModalBody>
-							<Form onSubmit={this.handleLoginTemp}>
+							<Form onSubmit={handleLoginTemp}>
 								<FormGroup>
 									<Label htmlFor="firstname">First Name</Label>
 									<Input
 										type="text"
 										id="firstname"
 										name="firstname"
-										innerRef={(firstname) => (this.firstname = firstname)}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -229,7 +199,6 @@ class Header extends Component {
 										type="text"
 										id="lastname"
 										name="lastname"
-										innerRef={(lastname) => (this.lastname = lastname)}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -238,7 +207,6 @@ class Header extends Component {
 										type="email"
 										id="email"
 										name="email"
-										innerRef={(email) => (this.email = email)}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -247,7 +215,6 @@ class Header extends Component {
 										type="password"
 										id="password"
 										name="password"
-										innerRef={(password) => (this.password = password)}
 									/>
 								</FormGroup>
 								<Button
@@ -261,7 +228,7 @@ class Header extends Component {
 								<Button
 									color="link"
 									className="btn btn-link"
-									onClick={this.toggleLogin}
+									onClick={() => setisLogin(!isLogin)}
 								>
 									Already have a account
 								</Button>
@@ -271,7 +238,6 @@ class Header extends Component {
 				</Modal>
 			</React.Fragment>
 		);
-	}
 }
 
 export default Header;
