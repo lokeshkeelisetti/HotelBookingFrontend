@@ -1,15 +1,31 @@
-# Getting Started with Create React App
+# The project is Hotel booking management system
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Satya Bhagavan, Lokesh, Kushaan, Shiva, Rohit
 
-## Available Scripts
+This project was done under Dr.Puneet Gupta and in observation of Anup Kumar Gupta under Software engineering course lab.
 
-In the project directory, you can run:
+# 1. Install
 
-### `yarn start`
+First clone repo using the fallowing command
+```bash
+git clone https://github.com/lokeshkeelisetti/HotelBookingFrontend.git
+```
+go to the directory where you cloned
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## installing dependencies
+run the command in the project directory
+```bash
+    npm install
+```
+
+now the required node modules are installed
+
+To start the app in development mode run
+
+```bash
+    npm start
+```
+Open [http://localhost:3000](http://localhost:3000) to view the development in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
