@@ -1,6 +1,6 @@
 # The project is Hotel booking management system
 
-## Satya Bhagavan, Lokesh, Kushaan, Shiva, Rohit
+## Satya Bhagavan, Lokesh, Kushaan, Shiva, Rohit, Abhinav Reddy
 
 This project was done under Dr.Puneet Gupta and in observation of Anup Kumar Gupta under Software engineering course lab.
 
