@@ -365,7 +365,7 @@ export const Main = () => {
 							);
 						}}
 					/>
-					<Route exact path="/profile" component={<Profile />} />
+					<Route exact path="/profile" component={Profile} />
 					<Route exact path="/hotel/:hotelId" component={hotelWithId} />
 					<Route exact path="/receptionists" component={AdminReceptionists} />
 					<Route exact path="/admins" component={MaintainerHotels} />
