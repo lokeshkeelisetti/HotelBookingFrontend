@@ -2,6 +2,32 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--my-red: rgb(236, 23, 81);
+}
+
+.userIcon {
+	color: var(--my-red);
+	border-color: var(--my-red);
+	background-color: #fff;
+}
+
+.userIcon:hover,
+.userIcon:hover .userIcon1 {
+	color: #fff !important;
+	background-color: var(--my-red) !important;
+}
+
+.form-control:focus {
+	border-color: var(--my-red);
+	box-shadow: 0 0 0 0.2rem rgba(236, 23, 81, 0.25);
+}
+
+.dropdown::marker {
+	width: 0;
+	display: none !important;
+}
+
 .font-ubuntu {
 	font-family: Ubuntu;
 	font-weight: 400;
@@ -25,7 +51,7 @@
 }
 
 a:hover {
-	text-decoration: none;
+	text-decoration: none !important;
 }
 
 .App {
