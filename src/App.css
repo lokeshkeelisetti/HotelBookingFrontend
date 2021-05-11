@@ -69,12 +69,23 @@ a:hover {
 
 .footer {
 	position: absolute;
-	bottom: 0;
-	height: 10rem;
+	bottom: -20px;
+	height: 200px;
 	width: 100%;
-	background-color: #d1c4e9;
+	background-color: rgb(236,23,81);
 	margin: 0px auto;
 	padding: 20px 0px 20px 0px;
+	color:white !important;
+	font-size: 1.2rem;
+}
+
+.footer a {
+	color: white !important;
+	font-size: 1rem;
+}
+
+.icons a{
+	margin: 3px;
 }
 
 address {
