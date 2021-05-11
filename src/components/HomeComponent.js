@@ -24,6 +24,9 @@ import {
 import Rating from "@material-ui/lab/Rating";
 import { Link } from "react-router-dom";
 import items from "../shared/HomepageItems";
+import { Search } from "./SearchComponent";
+import axios from "axios";
+import baseUrl from "../shared/baseUrl";
 
 export const RenderAvailableRooms = (props) => {
 	return (
@@ -91,6 +94,38 @@ export const Home = (props) => {
 		);
 	});
 
+	const [nosearch, setNoSearch] = useState(true);
+	const [startDate, setstartDate] = useState("");
+	const [endDate, setendDate] = useState("");
+	const [keyWord, setkeyWord] = useState("");
+	const [sortedHotelRoomTypes, setsortedHotelRoomTypes] = useState([]);
+
+	const handleSearchHotel = (event) => {
+		setNoSearch(false);
+		event.preventDefault();
+		console.log(event);
+		setstartDate(event.target.elements["checkIn"].value);
+		setendDate(event.target.elements["checkOut"].value);
+		setkeyWord(event.target.elements["location"].value);
+		var body = {
+			startDate: event.target.elements["checkIn"].value,
+			endDate: event.target.elements["checkOut"].value,
+		};
+		axios({
+			method: "POST",
+			url: baseUrl + "/findHotelRoomTypes",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: body,
+		})
+			.then((res) => {
+				console.log(res.data);
+				setsortedHotelRoomTypes(res.data);
+			})
+			.catch((err) => console.log(err));
+	};
+
 	return (
 		<React.Fragment>
 			{(props.userType === "customer" || !props.isLoggedin) && (
@@ -117,7 +152,7 @@ export const Home = (props) => {
 						>
 							<Form
 								className="row searchForm"
-								onSubmit={props.handleSearchHotel}
+								onSubmit={handleSearchHotel}
 								style={{
 									display: "flex",
 									flexWrap: "wrap",
@@ -127,6 +162,7 @@ export const Home = (props) => {
 							>
 								<FormGroup>
 									<Input
+										required
 										type="text"
 										id="location"
 										name="location"
@@ -135,6 +171,7 @@ export const Home = (props) => {
 								</FormGroup>
 								<FormGroup>
 									<Input
+										required
 										type="date"
 										id="checkIn"
 										placeholder="check in"
@@ -143,6 +180,7 @@ export const Home = (props) => {
 								</FormGroup>
 								<FormGroup>
 									<Input
+										required
 										type="date"
 										id="checkOut"
 										placeholder="check out"
@@ -160,31 +198,33 @@ export const Home = (props) => {
 							</Form>
 						</Container>
 					</Jumbotron>
-					<Container>
-						<Carousel
-							className="mb-5"
-							activeIndex={activeIndex}
-							next={next}
-							previous={prev}
-						>
-							<CarouselIndicators
-								items={items}
+					{nosearch && (
+						<Container>
+							<Carousel
+								className="mb-5"
 								activeIndex={activeIndex}
-								onClickHandler={goToIndex}
-							/>
-							{slides}
-							<CarouselControl
-								direction="prev"
-								directionText="Previous"
-								onClickHandler={prev}
-							/>
-							<CarouselControl
-								direction="next"
-								directionText="Next"
-								onClickHandler={next}
-							/>
-						</Carousel>
-					</Container>
+								next={next}
+								previous={prev}
+							>
+								<CarouselIndicators
+									items={items}
+									activeIndex={activeIndex}
+									onClickHandler={goToIndex}
+								/>
+								{slides}
+								<CarouselControl
+									direction="prev"
+									directionText="Previous"
+									onClickHandler={prev}
+								/>
+								<CarouselControl
+									direction="next"
+									directionText="Next"
+									onClickHandler={next}
+								/>
+							</Carousel>
+						</Container>
+					)}
 				</div>
 			)}
 			{props.userType === "receptionist" && (
@@ -237,6 +277,16 @@ export const Home = (props) => {
 					hotels={props.hotels}
 					addHotel={props.addHotel}
 					deleteHotel={props.deleteHotel}
+				/>
+			)}
+			{(props.userType == "customer" || !props.isLoggedin) && !nosearch && (
+				<Search
+					hotels={props.hotels}
+					hotelRoomTypes={sortedHotelRoomTypes}
+					hotelRooms={props.hotelRooms}
+					startDate={startDate}
+					endDate={endDate}
+					keyWord={keyWord}
 				/>
 			)}
 		</React.Fragment>

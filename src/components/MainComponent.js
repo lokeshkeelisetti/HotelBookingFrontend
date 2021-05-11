@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Header from "./HeaderComponent";
 import { Home } from "./HomeComponent";
 import Footer from "./FooterComponent";
-import { Search } from "./SearchComponent";
 import { Hotel } from "./HotelComponent";
 import baseUrl from "../shared/baseUrl";
 import axios from "axios";
@@ -20,7 +19,6 @@ export const Main = () => {
 	const [secret, setsecret] = useState("");
 	const [userId, setuserId] = useState("");
 	const [userInfo, setuserInfo] = useState("");
-	const [searchHotelResults, setsearchHotelResults] = useState([]);
 	const [previousBookings, setpreviousBookings] = useState([]);
 	const [upcomingBookings, setupcomingBookings] = useState([]);
 	const [availableRooms, setavailableRooms] = useState([]);
@@ -65,16 +63,6 @@ export const Main = () => {
 		setavailableRooms(rooms);
 	};
 
-	const handleSearchHotel = (event) => {
-		event.preventDefault();
-		console.log(event);
-		let startDate = event.target.elements["checkIn"].value;
-		let endDate = event.target.elements["checkOut"].value;
-		let location = event.target.elements["location"].value;
-
-		console.log(typeof startDate);
-	};
-
 	const handleLogout = () => {
 		setisLoggedin(false);
 		setuserType("");
@@ -103,12 +91,12 @@ export const Main = () => {
 			.then((response) => {
 				if (response.data.type) {
 					localStorage.setItem("userDetails", JSON.stringify(response.data));
-					let userInfo, userType, userId, secret;
-					userType = response.data.type;
-					secret = response.data.secret;
-					userId = response.data.id;
-					if (userType === "maintainer") {
-						userInfo = response.data.maintainerDetails;
+					let userInfo1, userType1, userId1, secret1;
+					userType1 = response.data.type;
+					secret1 = response.data.secret;
+					userId1 = response.data.id;
+					if (userType1 === "maintainer") {
+						userInfo1 = response.data.maintainerDetails;
 
 						let req1 = axios({
 							method: "GET",
@@ -139,38 +127,29 @@ export const Main = () => {
 										"hotels",
 										JSON.stringify(response[1].data)
 									);
-									let hotelAdmins = response[0].data,
-										hotels = response[1].data;
 									console.log(response);
 
 									setisLoggedin(true);
-									setuserType(userType);
-									setuserId(userId);
-									setsecret(secret);
-									setuserInfo(userInfo);
-									sethotelAdmins(hotelAdmins);
-									sethotels(hotels);
+									setuserType(userType1);
+									setuserId(userId1);
+									setsecret(secret1);
+									setuserInfo(userInfo1);
+									sethotelAdmins(response[0].data);
+									sethotels(response[1].data);
 								})
 							)
 							.catch((err) => console.log(err));
-					} else if (userType === "customer") {
-						userInfo = response.data.customerDetails;
-						let previousBookings = response.data.pastBookings;
-						let upcomingBookings = response.data.upcomingBookings;
-						let hotels = response.data.hotels;
-						let hotelRoomTypes = response.data.hotelRoomTypes;
-						let hotelRooms = response.data.hotelRooms;
-
+					} else if (userType1 === "customer") {
 						setisLoggedin(true);
-						setuserType(userType);
-						setuserId(userId);
-						setsecret(secret);
-						setuserInfo(userInfo);
-						setpreviousBookings(previousBookings);
-						setupcomingBookings(upcomingBookings);
-						sethotels(hotels);
-						sethotelRoomTypes(hotelRoomTypes);
-						sethotelRooms(hotelRooms);
+						setuserType(userType1);
+						setuserId(userId1);
+						setsecret(secret1);
+						setuserInfo(response.data.customerDetails);
+						setpreviousBookings(response.data.pastBookings);
+						setupcomingBookings(response.data.upcomingBookings);
+						sethotels(response.data.hotels);
+						sethotelRoomTypes(response.data.hotelRoomTypes);
+						sethotelRooms(response.data.hotelRooms);
 					}
 				} else if (response.data.error) {
 					console.log(response.data);
@@ -355,30 +334,19 @@ export const Main = () => {
 									isLoggedin={isLoggedin}
 									userInfo={userInfo}
 									userType={userType}
-									handleSearchHotel={handleSearchHotel}
 									availableRooms={availableRooms}
 									handleCheckAvailability={handleCheckAvailability}
 									deleteHotel={deleteHotel}
 									hotelAdmins={hotelAdmins}
 									hotels={hotels}
 									addHotel={addHotel}
+									hotelRoomTypes={hotelRoomTypes}
+									hotelRooms={hotelRooms}
 								/>
 							);
 						}}
 					/>
 					<Route exact path="/profile" component={<Profile />} />
-					<Route
-						exact
-						path="/searchResults"
-						component={() => {
-							return (
-								<Search
-									hotels={searchHotelResults}
-									handleSearchHotel={handleSearchHotel}
-								/>
-							);
-						}}
-					/>
 					<Route exact path="/hotel/:hotelId" component={hotelWithId} />
 					<Route exact path="/receptionists" component={AdminReceptionists} />
 					<Route exact path="/admins" component={MaintainerHotels} />
