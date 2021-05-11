@@ -19,11 +19,11 @@ const RenderHotels = ({ hotels, hotelRoomTypes, keyWord, isLoggedin }) => {
 	console.log(hotels);
 	return hotelRoomTypes.map((hotelRoomType) => {
 		return (
-			(hotels[hotelRoomType.hotelId].name.toLowerCase().indexOf(keyWord.toLowerCase()) !=
+			(hotels[hotelRoomType.hotelId].name.toLowerCase().indexOf(keyWord.toLowerCase()) !==
 				-1 ||
 				hotels[hotelRoomType.hotelId].address.street
 					.toLowerCase()
-					.indexOf(keyWord.toLowerCase()) != -1 ||
+					.indexOf(keyWord.toLowerCase()) !== -1 ||
 				hotels[hotelRoomType.hotelId].address.city
 					.toLowerCase()
 					.indexOf(keyWord.toLowerCase()) !== -1) && (

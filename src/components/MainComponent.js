@@ -21,8 +21,6 @@ export const Main = () => {
 	const [userInfo, setuserInfo] = useState("");
 	const [previousBookings, setpreviousBookings] = useState([]);
 	const [upcomingBookings, setupcomingBookings] = useState([]);
-	const [availableRooms, setavailableRooms] = useState([]);
-	const [rooms, setrooms] = useState([]);
 	const [hotelAdmins, sethotelAdmins] = useState([]);
 	const [hotels, sethotels] = useState([]);
 	const [hotelRoomTypes, sethotelRoomTypes] = useState([]);
@@ -66,9 +64,6 @@ export const Main = () => {
 		}
 	}, []);
 
-	const handleCheckAvailability = () => {
-		setavailableRooms(rooms);
-	};
 
 	const handleLogout = () => {
 		setisLoggedin(false);
@@ -417,8 +412,6 @@ export const Main = () => {
 									isLoggedin={isLoggedin}
 									userInfo={userInfo}
 									userType={userType}
-									availableRooms={availableRooms}
-									handleCheckAvailability={handleCheckAvailability}
 									deleteHotel={deleteHotel}
 									hotelAdmins={hotelAdmins}
 									hotels={hotels}
@@ -427,7 +420,6 @@ export const Main = () => {
 									hotelRooms={hotelRooms}
 									receptionists={receptionists}
 									addRoomType = {addRoomType}
-									hotelRoomTypes = {hotelRoomTypes}
 									addRoom = {addRoom}
 								/>
 							);

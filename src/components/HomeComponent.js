@@ -165,8 +165,8 @@ export const Home = (props) => {
 		setendDate(event.target.elements["checkOut"].value);
 		setkeyWord(event.target.elements["location"].value);
 		var body = {
-			startDate: event.target.elements["checkIn"].value,
-			endDate: event.target.elements["checkOut"].value,
+			startDate: startDate,
+			endDate: endDate,
 		};
 		axios({
 			method: "POST",

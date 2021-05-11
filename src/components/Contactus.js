@@ -17,7 +17,7 @@ export const Contactus = () => {
 				<br />
 				<br />
 				<p>write a query we will respond</p>
-				<Form className="col-md-8" className="contactform">
+				<Form className="col-md-8 contactform">
 					<br />
 					<FormGroup>
 						<Input type="text" id="namePerson" placeholder="Enter your name" />
