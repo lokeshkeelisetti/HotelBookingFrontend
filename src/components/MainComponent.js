@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Header from "./HeaderComponent";
 import Home from "./HomeComponent";
 import Footer from "./FooterComponent";
-import Search from "./SearchComponent";
+import { Search } from "./SearchComponent";
 import Hotel from "./HotelComponent";
 import baseUrl from "../shared/baseUrl";
 import axios from "axios";

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
 	Card,
@@ -17,9 +17,9 @@ import {
 } from "reactstrap";
 import Rating from "@material-ui/lab/Rating";
 
-function RenderHotels(props) {
-	console.log("lokesh");
-	return props.hotels.map((hotel) => {
+const RenderHotels = ({ hotels }) => {
+	// console.log("lokesh");
+	return hotels.map((hotel) => {
 		return (
 			<div className="col-sm-6" key={hotel._id}>
 				<Card>
@@ -42,75 +42,63 @@ function RenderHotels(props) {
 			</div>
 		);
 	});
-}
+};
 
-class Search extends Component {
-	render() {
-		return (
-			<>
-				<Jumbotron>
-					<Container>
-						<Form className="row" onSubmit={this.props.handleSearchHotel}>
-							<FormGroup className="col-5 col-md-3">
-								<Input
-									type="select"
-									id="searchBy"
-									name="searchBy"
-									defaultValue="searchBy"
-								>
-									<option value="location">location</option>
-									<option value="hotel">Hotel Name</option>
-								</Input>
-							</FormGroup>
-							<FormGroup className="col-7 col-md-7">
-								<Input
-									type="text"
-									id="location"
-									name="location"
-									placeholder="Search by city or hotel"
-									innerRef={(location) => (this.location = location)}
-								/>
-							</FormGroup>
-							<FormGroup className="col-6 col-md-3">
-								<Input
-									type="date"
-									id="checkIn"
-									placeholder="check in"
-									name="checkIn"
-									innerRef={(checkIn) => (this.checkIn = checkIn)}
-								/>
-							</FormGroup>
-							<FormGroup className="col-6 col-md-3">
-								<Input
-									type="date"
-									id="checkOut"
-									placeholder="check out"
-									name="checkOut"
-									innerRef={(checkOut) => (this.checkOut = checkOut)}
-								/>
-							</FormGroup>
-							<Button
-								type="submit"
-								value="submit"
-								className="btn btn-primary col-4 col-md-1 mb-3"
-								color="primary"
-							>
-								Search
-							</Button>
-						</Form>
-					</Container>
-				</Jumbotron>
+export const Search = ({ handleSearchHotel, hotels }) => {
+	return (
+		<div>
+			<Jumbotron>
 				<Container>
-					<Row className="mb-2">
-						<RenderHotels hotels={this.props.hotels} />
-					</Row>
-					{this.props.hotels.length === 0 && (
-						<h1 className="align-self-center">No hotel matched with the search</h1>
-					)}
+					<Form className="row" onSubmit={handleSearchHotel}>
+						<FormGroup className="col-5 col-md-3">
+							<Input
+								type="select"
+								id="searchBy"
+								name="searchBy"
+								defaultValue="searchBy"
+							>
+								<option value="location">location</option>
+								<option value="hotel">Hotel Name</option>
+							</Input>
+						</FormGroup>
+						<FormGroup className="col-7 col-md-7">
+							<Input
+								type="text"
+								id="location"
+								name="location"
+								placeholder="Search by city or hotel"
+							/>
+						</FormGroup>
+						<FormGroup className="col-6 col-md-3">
+							<Input type="date" id="checkIn" placeholder="check in" name="checkIn" />
+						</FormGroup>
+						<FormGroup className="col-6 col-md-3">
+							<Input
+								type="date"
+								id="checkOut"
+								placeholder="check out"
+								name="checkOut"
+							/>
+						</FormGroup>
+						<Button
+							type="submit"
+							value="submit"
+							className="btn btn-primary col-4 col-md-1 mb-3"
+							color="primary"
+						>
+							Search
+						</Button>
+					</Form>
 				</Container>
-			</>
-		);
-	}
-}
-
-export default Search;
+			</Jumbotron>
+			<Container>
+				<Row className="mb-2">
+					<RenderHotels hotels={hotels} />
+				</Row>
+				{hotels.length === 0 && (
+					<h1 className="align-self-center">No hotel matched with the search</h1>
+				)}
+			</Container>
+		</div>
+	);
+};
