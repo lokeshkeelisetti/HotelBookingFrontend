@@ -101,11 +101,11 @@ class Home extends Component{
             )
         })
 
-        
+
 
         return(
             <React.Fragment>
-                {(this.props.userType === 'Customer' || !this.props.isLoggedin) && 
+                {(this.props.userType === 'Customer' || !this.props.isLoggedin) &&
                     (<>
                         <Jumbotron>
                             <Container>
@@ -134,10 +134,10 @@ class Home extends Component{
                                         </FormGroup>
                                         <Button type="submit" value="submit" className="btn btn-primary col-4 col-md-1 mb-3" color="primary">Search</Button>
                                 </Form>
-                            </Container>    
+                            </Container>
                         </Jumbotron>
                         <Container>
-                            <Carousel className="mb-5" activeIndex={this.state.activeIndex} 
+                            <Carousel className="mb-5" activeIndex={this.state.activeIndex}
                                 next={next}
                                 previous={prev}>
                                 <CarouselIndicators items={items} activeIndex={this.state.activeIndex} onClickHandler={goToIndex} />
