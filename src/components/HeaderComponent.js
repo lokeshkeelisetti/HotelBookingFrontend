@@ -95,28 +95,47 @@ class Header extends Component {
 							</NavItem>
 						</Nav>
 						{this.props.userType === "customer" && (
-							<>
-								<Nav navbar>
-									<NavLink className="nav-link">
-										<Link to="/customer/previousBookings">
-											Previous Bookings
-										</Link>
-									</NavLink>
-								</Nav>
-								<Nav navbar>
-									<NavLink className="nav-link">
-										<Link to="/customer/upcomingBookings">
-											Upcoming Bookings
-										</Link>
-									</NavLink>
-								</Nav>
-							</>
-						)}
-						{this.props.isLoggedin && (
-							<UncontrolledDropdown nav inNavbar>
-								<DropdownToggle>
+							<UncontrolledDropdown style={{ listStyleType: "none" }} nav inNavbar>
+								<DropdownToggle className="userIcon">
 									<Nav navbar>
-										<NavItem>
+										<NavItem className="userIcon1">
+											<span className="fa fa-user-circle fa-lg"></span>
+										</NavItem>
+									</Nav>
+								</DropdownToggle>
+								<DropdownMenu right>
+									<DropdownItem>
+										<NavLink className="nav-link">
+											<Link to="/profile">Profile</Link>
+										</NavLink>
+									</DropdownItem>
+									<DropdownItem>
+										<NavLink className="nav-link">
+											<Link to="/customer/upcomingBookings">
+												Upcoming Bookings
+											</Link>
+										</NavLink>
+									</DropdownItem>
+									<DropdownItem>
+										<NavLink className="nav-link">
+											<Link to="/customer/previousBookings">
+												Previous Bookings
+											</Link>
+										</NavLink>
+									</DropdownItem>
+									<DropdownItem onClick={this.props.handleLogout}>
+										<NavLink className="nav-link" href="/">
+											Logout
+										</NavLink>
+									</DropdownItem>
+								</DropdownMenu>
+							</UncontrolledDropdown>
+						)}
+						{this.props.isLoggedin && this.props.userType !== "customer" && (
+							<UncontrolledDropdown style={{ listStyleType: "none" }} nav inNavbar>
+								<DropdownToggle className="userIcon">
+									<Nav navbar>
+										<NavItem className="userIcon1">
 											<span className="fa fa-user-circle fa-lg"></span>
 										</NavItem>
 									</Nav>
@@ -174,8 +193,11 @@ class Header extends Component {
 								<Button
 									type="submit"
 									value="submit"
-									className="bg-primary"
-									color="primary"
+									style={{
+										color: "#fff",
+										backgroundColor: "var(--my-red)",
+										borderColor: "var(--my-red)",
+									}}
 								>
 									Login
 								</Button>
@@ -183,6 +205,7 @@ class Header extends Component {
 									color="link"
 									className="btn btn-link"
 									onClick={this.toggleLogin}
+									style={{ color: "var(--my-red)" }}
 								>
 									Register
 								</Button>

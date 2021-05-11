@@ -1,4 +1,4 @@
-import MaintainerHotels from './MaintainerHotels';
+import MaintainerHotels from "./MaintainerHotels";
 import React, { Component } from "react";
 import {
 	Carousel,
@@ -27,7 +27,7 @@ import hotels from "../shared/hotels";
 
 function RenderAvailableRooms(props) {
 	return (
-		<>
+		<div>
 			{props.availableRooms.map((room) => {
 				return (
 					<Card key={room.id} className="col-12 col-sm-3">
@@ -49,7 +49,7 @@ function RenderAvailableRooms(props) {
 					</Card>
 				);
 			})}
-		</>
+		</div>
 	);
 }
 
@@ -135,7 +135,7 @@ class Home extends Component {
 		return (
 			<React.Fragment>
 				{(this.props.userType === "customer" || !this.props.isLoggedin) && (
-					<>
+					<div>
 						<Jumbotron
 							style={{
 								backgroundColor: "rgb(236,23,81)",
@@ -223,10 +223,10 @@ class Home extends Component {
 								/>
 							</Carousel>
 						</Container>
-					</>
+					</div>
 				)}
 				{this.props.userType === "receptionist" && (
-					<>
+					<div>
 						<Jumbotron>
 							<Container>
 								<h3>Welcome to Hotel</h3>
@@ -278,7 +278,7 @@ class Home extends Component {
 								<RenderAvailableRooms availableRooms={this.props.availableRooms} />
 							</Row>
 						</Container>
-					</>
+					</div>
 				)}
 				{this.props.userType === "hotelAdministration" && (
 					<Container className="mt-5 mb-5">

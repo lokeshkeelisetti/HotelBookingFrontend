@@ -2,6 +2,32 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--my-red: rgb(236, 23, 81);
+}
+
+.userIcon {
+	color: var(--my-red);
+	border-color: var(--my-red);
+	background-color: #fff;
+}
+
+.userIcon:hover,
+.userIcon:hover .userIcon1 {
+	color: #fff !important;
+	background-color: var(--my-red) !important;
+}
+
+.form-control:focus {
+	border-color: var(--my-red);
+	box-shadow: 0 0 0 0.2rem rgba(236, 23, 81, 0.25);
+}
+
+.dropdown::marker {
+	width: 0;
+	display: none !important;
+}
+
 .font-ubuntu {
 	font-family: Ubuntu;
 	font-weight: 400;
@@ -25,7 +51,7 @@
 }
 
 a:hover {
-	text-decoration: none;
+	text-decoration: none !important;
 }
 
 .App {
@@ -69,12 +95,41 @@ a:hover {
 
 .footer {
 	position: absolute;
-	bottom: 0;
-	height: 10rem;
+	bottom: -20px;
+	height: 200px;
 	width: 100%;
-	background-color: #d1c4e9;
+	background-color: rgb(236, 23, 81);
 	margin: 0px auto;
 	padding: 20px 0px 20px 0px;
+	color: white !important;
+	font-size: 1.2rem;
+}
+
+.footer a {
+	color: white !important;
+	font-size: 1rem;
+}
+
+.icons a {
+	margin: 3px;
+}
+
+
+.row Input{
+	background-color: rgb(236,23,81) !important;
+	color: white !important;
+	border-color:   rgb(236,23,81) !important;
+	border-bottom-color: white !important;
+
+}
+
+.row ::placeholder {
+  color: white !important;
+}
+
+.row button{
+	color: rgb(236,23,81) !important;
+	background-color: white;
 }
 
 address {
@@ -98,7 +153,7 @@ input[type="date"]:after {
 }
 
 .profile__image__div {
-	margin-top: 60px;
+	margin-top: 80px;
 	margin-left: 40%;
 	width: 200px;
 	align-items: center;

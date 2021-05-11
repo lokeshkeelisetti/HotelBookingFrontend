@@ -6,16 +6,15 @@ import axios from 'axios';
 import baseUrl from '../shared/baseUrl';
 
 function Profile() {
+	const [activeTab, setActiveTab] = useState("1");
+	const toggle = (tab) => {
+		if (activeTab !== tab) setActiveTab(tab);
+	};
 
-    const [activeTab, setActiveTab] = useState('1');
-    const [error,setError] = useState('');
-    const [success,setSuccess] = useState('');
-    const toggle = tab => {
-        if(activeTab !== tab) setActiveTab(tab);
-      }
+	let userInfo = JSON.parse(localStorage.getItem("userDetails"));
+	console.log(userInfo);
 
-    let userInfo = JSON.parse(localStorage.getItem('userDetails'));
-    console.log(userInfo);
+	let name, email;
 
 
     function changePassword(event){
@@ -169,4 +168,4 @@ function Profile() {
     )
 }
 
-export default Profile
+export default Profile;
