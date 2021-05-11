@@ -27,27 +27,25 @@ export const Room = () => {
 					className="mr-auto col-12 col-md-6"
 					style={{ width: "50vw" }}
 					object
-					src={this.state.room.type.image}
+					src={room.type.image}
 				/>
 				<Container className="ml-auto col-md-4">
-					<h3>{this.state.room.type.type}</h3>
+					<h3>{room.type.type}</h3>
 					<br />
 					<h5>Facilities</h5>
 					<ListGroup>
+						<ListGroupItem>{room.type.facilities.AC ? "AC" : "Non-AC"}</ListGroupItem>
+						<ListGroupItem>{`No of People ${room.type.facilities.noOfPeople}`}</ListGroupItem>
 						<ListGroupItem>
-							{this.state.room.type.facilities.AC ? "AC" : "Non-AC"}
-						</ListGroupItem>
-						<ListGroupItem>{`No of People ${this.state.room.type.facilities.noOfPeople}`}</ListGroupItem>
-						<ListGroupItem>
-							{this.state.room.type.facilities.Wifi ? "Wifi" : "Non-Wifi"}
+							{room.type.facilities.Wifi ? "Wifi" : "Non-Wifi"}
 						</ListGroupItem>
 					</ListGroup>
 				</Container>
 			</Container>
 			<Container className="mb-5 ml-auto mr-auto p-4">
-				<p style={{ color: "green" }}>{this.state.room.status}</p>
-				<p>Price Rs.{this.state.room.type.price}/- per day</p>
-				<Button onClick={this.handleBooking}>Book Room</Button>
+				<p style={{ color: "green" }}>{room.status}</p>
+				<p>Price Rs.{room.type.price}/- per day</p>
+				<Button onClick={handleBooking}>Book Room</Button>
 			</Container>
 		</>
 	);
