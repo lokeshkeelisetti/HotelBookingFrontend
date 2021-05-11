@@ -20,6 +20,11 @@ import {
 	CardTitle,
 	CardSubtitle,
 	CardText,
+    Nav,
+    NavLink,
+    NavItem,
+    TabContent,
+    TabPane,
 } from "reactstrap";
 import Rating from "@material-ui/lab/Rating";
 import { Link } from "react-router-dom";
@@ -27,8 +32,55 @@ import items from "../shared/HomepageItems";
 import { Search } from "./SearchComponent";
 import axios from "axios";
 import baseUrl from "../shared/baseUrl";
+import classnames from "classnames";
+import { AdminRoom } from "./AdminRoomComponent";
+import { AdminReceptionists } from "./AdminReceptionists";
 
-export const RenderAvailableRooms = (props) => {
+const RenderAdmin = (props) => {
+
+    const [activeTab, setActiveTab] = useState("1");
+
+	const toggle = (tab) => {
+		if (activeTab !== tab) setActiveTab(tab);
+	};
+
+    return (
+        <div>
+            <Nav tabs className="mt-5">
+				<NavItem>
+					<NavLink
+						className={classnames({ active: activeTab === "1" })}
+						onClick={() => {
+							toggle("1");
+						}}
+					>
+						Hotel Rooms Section
+					</NavLink>
+				</NavItem>
+				<NavItem>
+					<NavLink
+						className={classnames({ active: activeTab === "2" })}
+						onClick={() => {
+							toggle("2");
+						}}
+					>
+						Receptionists section
+					</NavLink>
+				</NavItem>
+			</Nav>
+            <TabContent activeTab={activeTab}>
+                    <TabPane tabId="1">
+                        <AdminRoom rooms={props.rooms}/>
+                    </TabPane>
+                    <TabPane tabId="2">
+                        <AdminReceptionists receptionists={props.receptionists}/>
+                    </TabPane>
+            </TabContent>
+        </div>
+    )
+}
+
+const RenderAvailableRooms = (props) => {
 	return (
 		<div>
 			{props.availableRooms.map((room) => {
@@ -268,11 +320,7 @@ export const Home = (props) => {
 				</div>
 			)}
 			{props.userType === "hotelAdministration" && (
-				<Container className="mt-5 mb-5">
-					<Row>
-						<RenderAvailableRooms availableRooms={props.availableRooms} />
-					</Row>
-				</Container>
+				<RenderAdmin rooms={props.hotelRooms} receptionists={props.receptionists} />
 			)}
 			{props.userType === "maintainer" && (
 				<MaintainerHotels
@@ -282,7 +330,7 @@ export const Home = (props) => {
 					deleteHotel={props.deleteHotel}
 				/>
 			)}
-			{(props.userType == "customer" || !props.isLoggedin) && !nosearch && (
+			{(props.userType === "customer" || !props.isLoggedin) && !nosearch && (
 				<Search
 					hotels={sortedHotels}
 					hotelRoomTypes={sortedHotelRoomTypes}

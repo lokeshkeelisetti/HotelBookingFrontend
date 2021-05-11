@@ -26,7 +26,7 @@ const RenderHotels = ({ hotels, hotelRoomTypes, keyWord, isLoggedin }) => {
 					.indexOf(keyWord.toLowerCase()) != -1 ||
 				hotels[hotelRoomType.hotelId].address.city
 					.toLowerCase()
-					.indexOf(keyWord.toLowerCase()) != -1) && (
+					.indexOf(keyWord.toLowerCase()) !== -1) && (
 				<div className="col-sm-6" key={hotelRoomType._id}>
 					<Card>
 						<CardImg width="30%" src={hotelRoomType.imgURLs[0]} alt="hotelImage" />

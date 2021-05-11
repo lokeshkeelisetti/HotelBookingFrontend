@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import receptionists from "../shared/receptionists";
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from "reactstrap";
 import classnames from "classnames";
 import { Input, FormGroup, Form, Button, Container, Table } from "reactstrap";
 
-export const AdminReceptionists = () => {
+export const AdminReceptionists = ({receptionists}) => {
 	const [activeTab, setActiveTab] = useState("1");
 
 	const toggle = (tab) => {
