@@ -27,7 +27,7 @@ export const Main = () => {
 	const [hotels, sethotels] = useState([]);
 	const [hotelRoomTypes, sethotelRoomTypes] = useState([]);
 	const [hotelRooms, sethotelRooms] = useState([]);
-	const [receptionists,setreceptionists] = useState([]);
+	const [receptionists, setreceptionists] = useState([]);
 
 	useEffect(() => {
 		let userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -52,13 +52,13 @@ export const Main = () => {
 			let hotels = JSON.parse(localStorage.getItem("hotels"));
 			sethotelAdmins(hotelAdmins);
 			sethotels(hotels);
-		} else if(type === 'hotelAdministration'){
+		} else if (type === "hotelAdministration") {
 			sethotels(userDetails.hotel);
 			setuserInfo(userDetails.hotelAdminDetails);
 			sethotelRoomTypes(userDetails.hotelRoomTypes);
 			sethotelRooms(userDetails.hotelRooms);
 			setreceptionists(userDetails.receptionists);
-	 	} else {
+		} else {
 			setuserType("");
 			setuserId("");
 			setsecret("");
@@ -235,8 +235,8 @@ export const Main = () => {
 			url: baseUrl + "/maintainer/addNewHotel",
 			data: body,
 			headers: {
-				userType: this.state.userType,
-				usersecret: this.state.secret,
+				userType: userType,
+				usersecret: secret,
 			},
 		}).then((response) => {
 			console.log(response);
@@ -244,8 +244,8 @@ export const Main = () => {
 				method: "GET",
 				url: baseUrl + "/maintainer/hotelAdmin",
 				headers: {
-					userType: this.state.userType,
-					usersecret: this.state.secret,
+					userType: userType,
+					usersecret: secret,
 				},
 			});
 
@@ -253,8 +253,8 @@ export const Main = () => {
 				method: "GET",
 				url: baseUrl + "/maintainer/hotel",
 				headers: {
-					userType: this.state.userType,
-					usersecret: this.state.secret,
+					userType: userType,
+					usersecret: secret,
 				},
 			});
 			axios
@@ -280,8 +280,8 @@ export const Main = () => {
 			method: "delete",
 			url: baseUrl + "/maintainer/removeHotel/" + hotelId + "/?" + hotelId,
 			headers: {
-				usertype: this.state.userType,
-				usersecret: this.state.secret,
+				usertype: userType,
+				usersecret: secret,
 			},
 		})
 			.then((response) => {
@@ -290,8 +290,8 @@ export const Main = () => {
 					method: "GET",
 					url: baseUrl + "/maintainer/hotelAdmin",
 					headers: {
-						userType: this.state.userType,
-						usersecret: this.state.secret,
+						userType: userType,
+						usersecret: secret,
 					},
 				});
 
@@ -299,8 +299,8 @@ export const Main = () => {
 					method: "GET",
 					url: baseUrl + "/maintainer/hotel",
 					headers: {
-						userType: this.state.userType,
-						usersecret: this.state.secret,
+						userType: userType,
+						usersecret: secret,
 					},
 				});
 				axios
