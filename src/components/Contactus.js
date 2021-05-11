@@ -1,9 +1,9 @@
 import React from "react";
 import { Input, FormGroup, Form, Button } from "reactstrap";
 
-function Contactus() {
+export const Contactus = () => {
 	return (
-		<>
+		<div>
 			<br />
 			<br />
 			<br />
@@ -32,8 +32,6 @@ function Contactus() {
 					</Button>
 				</Form>
 			</div>
-		</>
+		</div>
 	);
-}
-
-export default Contactus;
+};
