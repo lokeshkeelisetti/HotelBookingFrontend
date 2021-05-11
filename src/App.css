@@ -118,24 +118,6 @@ a:hover {
 	margin: 3px;
 }
 
-
-.row Input{
-	background-color: rgb(236,23,81) !important;
-	color: white !important;
-	border-color:   rgb(236,23,81) !important;
-	border-bottom-color: white !important;
-
-}
-
-.row ::placeholder {
-  color: white !important;
-}
-
-.row button{
-	color: rgb(236,23,81) !important;
-	background-color: white;
-}
-
 address {
 	font-size: 80%;
 	margin: 0px;
