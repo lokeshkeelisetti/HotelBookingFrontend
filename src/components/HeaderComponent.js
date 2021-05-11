@@ -53,7 +53,8 @@ class Header extends Component{
     render(){
         return(
             <React.Fragment>
-                <Navbar color="dark" dark expand="md">
+                <Navbar color="dark" dark expand="md" className="fixed-top">
+                    {/*fixed-top is responsible for sticky*/}
                         <NavbarToggler onClick={this.toggleNav}/>
                         <NavbarBrand className="mr-auto ml-2" href="/">
                             <img src="/logo192.png" height="30" width="41"
