@@ -10,6 +10,16 @@ function Profile() {
         if(activeTab !== tab) setActiveTab(tab);
       }
 
+    let userInfo = JSON.parse(localStorage.getItem('userDetails'));
+    console.log(userInfo);
+
+    let name,email;
+
+    if(userInfo.type === 'maintainer'){
+      name = userInfo.maintainerDetails.name.firstName+' '+userInfo.maintainerDetails.name.lastName;
+      email = userInfo.maintainerDetails.email;
+    }
+
     return (
     <>
     <img src="assets/images/profile.jpeg" alt="profile" className="profile__image"/>
@@ -37,20 +47,20 @@ function Profile() {
           <Row>
             <Col sm="12">
                 <Table>
-                    <thead>
+                    {/* <thead>
                         <tr>
                             <th>Property</th>
                             <th>Value</th>
                         </tr>
-                    </thead>
+                    </thead> */}
                     <tbody>
                         <tr>
                             <td>Name</td>
-                            <td>God</td>
+                            <td>{name}</td>
                         </tr>
                         <tr>
                             <td>Email</td>
-                            <td>god@google.com</td>
+                            <td>{email}</td>
                         </tr>
                         
                     </tbody>

@@ -39,7 +39,6 @@ class Header extends Component{
 
     handleLoginTemp(event){
         event.preventDefault();
-        console.log(event);
         if(this.state.isLogin){
             this.props.handleLogin(event);
             
@@ -69,7 +68,7 @@ class Header extends Component{
                                 </NavLink>
                             </NavItem>
                         </Nav>
-                        {this.props.userType === 'Customer' && (
+                        {this.props.userType === 'customer' && (
                             <>
                                 <Nav navbar>
                                     <NavLink className="nav-link">

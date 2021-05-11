@@ -4,6 +4,7 @@ import { Carousel, CarouselItem , CarouselCaption,CarouselIndicators,CarouselCon
 import Rating from '@material-ui/lab/Rating';
 import { Link } from 'react-router-dom';
 import hotels from '../shared/hotels';
+import MaintainerHotels from './MaintainerHotels';
 
 function RenderAvailableRooms(props){
     return(
@@ -105,7 +106,7 @@ class Home extends Component{
 
         return(
             <React.Fragment>
-                {(this.props.userType === 'Customer' || !this.props.isLoggedin) && 
+                {(this.props.userType === 'customer' || !this.props.isLoggedin) && 
                     (<>
                         <Jumbotron>
                             <Container>
@@ -186,13 +187,11 @@ class Home extends Component{
                 }
                 {this.props.userType === 'maintainer' &&
                     (
-                        <Container className="mt-5 mb-5">
-                            <Row>
-                                <RenderAvailableRooms availableRooms={this.state.availableRooms} />
-                            </Row>
-                        </Container>
+                        <MaintainerHotels hoteladmins={this.props.hotelAdmins} hotels = {this.props.hotels}
+                            deleteHotel = {this.props.deleteHotel} addHotel={this.props.addHotel}/>
                     )
                 }
+                {console.log(this.props)}
             </React.Fragment>
         )
     }
