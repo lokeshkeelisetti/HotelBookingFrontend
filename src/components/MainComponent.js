@@ -11,7 +11,7 @@ import { Profile } from "./ProfileComponent";
 import { AdminReceptionists } from "./AdminReceptionists";
 import { MaintainerHotels } from "./MaintainerHotels";
 import { PreviousBookings } from "./PreviousBookingComponent";
-import UpcomingBooking from "./UpcomingBookingsComponent";
+import { UpcomingBooking } from "./UpcomingBookingsComponent";
 import { Contactus } from "./Contactus";
 
 export const Main = () => {
