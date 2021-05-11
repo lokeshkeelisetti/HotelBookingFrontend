@@ -11,14 +11,15 @@ export const MaintainerHotels = (props) => {
 
 	console.log(props);
 	return (
-		<>
-			<Nav tabs className="mt-5">
+		<div className="container-fluid">
+			<Nav tabs className="mt-5 pt-5">
 				<NavItem>
 					<NavLink
 						className={classnames({ active: activeTab === "1" })}
 						onClick={() => {
 							toggle("1");
 						}}
+						style={{ cursor: "pointer" }}
 					>
 						Info
 					</NavLink>
@@ -29,6 +30,7 @@ export const MaintainerHotels = (props) => {
 						onClick={() => {
 							toggle("2");
 						}}
+						style={{ cursor: "pointer" }}
 					>
 						Add new hotel
 					</NavLink>
@@ -38,7 +40,7 @@ export const MaintainerHotels = (props) => {
 				<TabPane tabId="1">
 					<Row>
 						<Col sm="12">
-							<Table className="col-md-8 offset-md-2">
+							<Table className="col-md-8 offset-md-2" responsive>
 								<thead>
 									<tr>
 										<th>Admin id</th>
@@ -82,8 +84,8 @@ export const MaintainerHotels = (props) => {
 					</Row>
 				</TabPane>
 				<TabPane tabId="2">
-					<Container>
-						<Form onSubmit={props.addHotel}>
+					<Container className="pb-5">
+						<Form onSubmit={props.addHotel} className="pb-5">
 							<br />
 							<FormGroup>
 								<Input
@@ -169,6 +171,6 @@ export const MaintainerHotels = (props) => {
 					</Container>
 				</TabPane>
 			</TabContent>
-		</>
+		</div>
 	);
 };
