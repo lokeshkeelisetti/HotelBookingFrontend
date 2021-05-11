@@ -81,36 +81,9 @@ export const RenderRooms = ({ handleEdit, handleDelete, rooms, isEditing, handle
 	});
 };
 
-export const AdminRoom = () => {
-	[isEditing, setisEditing] = useState(null);
-	[isModalOpen, setisModalOpen] = useState(false);
-	[activeTab, setactiveTab] = useState("1");
-	[rooms, setrooms] = useState([
-		{
-			_id: 1,
-			roomNo: "room1",
-			status: "Available",
-			type: {
-				type: "wonder",
-				facilities: {
-					AC: true,
-					Wifi: true,
-				},
-			},
-		},
-		{
-			_id: 2,
-			roomNo: "room1",
-			status: "Available",
-			type: {
-				type: "wonder",
-				facilities: {
-					AC: true,
-					Wifi: true,
-				},
-			},
-		},
-	]);
+export const AdminRoom = ({rooms}) => {
+	const [isEditing, setisEditing] = useState(false);
+	const [activeTab, setactiveTab] = useState("1");
 
 	const handleAddRoom = (event) => {
 		event.preventDefault();
@@ -141,10 +114,6 @@ export const AdminRoom = () => {
 		if (tab !== activeTab) {
 			setactiveTab(tab);
 		}
-	};
-
-	const setModal = () => {
-		setisModalOpen(true);
 	};
 
 	return (

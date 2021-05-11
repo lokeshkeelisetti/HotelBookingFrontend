@@ -27,6 +27,7 @@ export const Main = () => {
 	const [hotels, sethotels] = useState([]);
 	const [hotelRoomTypes, sethotelRoomTypes] = useState([]);
 	const [hotelRooms, sethotelRooms] = useState([]);
+	const [receptionists,setreceptionists] = useState([]);
 
 	useEffect(() => {
 		let userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -51,7 +52,13 @@ export const Main = () => {
 			let hotels = JSON.parse(localStorage.getItem("hotels"));
 			sethotelAdmins(hotelAdmins);
 			sethotels(hotels);
-		} else {
+		} else if(type === 'hotelAdministration'){
+			sethotels(userDetails.hotel);
+			setuserInfo(userDetails.hotelAdminDetails);
+			sethotelRoomTypes(userDetails.hotelRoomTypes);
+			sethotelRooms(userDetails.hotelRooms);
+			setreceptionists(userDetails.receptionists);
+	 	} else {
 			setuserType("");
 			setuserId("");
 			setsecret("");
@@ -150,6 +157,17 @@ export const Main = () => {
 						sethotels(response.data.hotels);
 						sethotelRoomTypes(response.data.hotelRoomTypes);
 						sethotelRooms(response.data.hotelRooms);
+					} else if (userType1 === "hotelAdministration") {
+						setisLoggedin(true);
+						setuserType(userType1);
+						setuserId(userType1);
+						setuserId(userId1);
+						setsecret(secret1);
+						setuserInfo(response.data.hotelAdminDetails);
+						sethotels(response.data.hotel);
+						sethotelRoomTypes(response.data.hotelRoomTypes);
+						sethotelRooms(response.data.hotelRooms);
+						setreceptionists(response.data.receptionists);
 					}
 				} else if (response.data.error) {
 					console.log(response.data);
@@ -342,6 +360,7 @@ export const Main = () => {
 									addHotel={addHotel}
 									hotelRoomTypes={hotelRoomTypes}
 									hotelRooms={hotelRooms}
+									receptionists={receptionists}
 								/>
 							);
 						}}
