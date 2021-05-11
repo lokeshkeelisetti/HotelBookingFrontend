@@ -69,7 +69,7 @@ const RenderAdmin = (props) => {
 			</Nav>
 			<TabContent activeTab={activeTab}>
 				<TabPane tabId="1">
-					<AdminRoom rooms={props.rooms} />
+					<AdminRoom rooms={props.rooms} addRoomType={props.addRoomType} />
 				</TabPane>
 				<TabPane tabId="2">
 					<AdminReceptionists receptionists={props.receptionists} />
@@ -253,7 +253,7 @@ export const Home = (props) => {
 						</Container>
 					</Jumbotron>
 					{nosearch && (
-						<Container>
+						<Container className="pics">
 							<Carousel
 								className="mb-5"
 								activeIndex={activeIndex}
@@ -319,7 +319,11 @@ export const Home = (props) => {
 				</div>
 			)}
 			{props.userType === "hotelAdministration" && (
-				<RenderAdmin rooms={props.hotelRooms} receptionists={props.receptionists} />
+				<RenderAdmin
+					rooms={props.hotelRooms}
+					receptionists={props.receptionists}
+					addRoomType={props.addRoomType}
+				/>
 			)}
 			{props.userType === "maintainer" && (
 				<MaintainerHotels

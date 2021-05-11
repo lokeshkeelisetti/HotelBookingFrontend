@@ -102,15 +102,16 @@ a:hover {
 	bottom: -20px;
 	height: 200px;
 	width: 100%;
-	background-color: rgb(236, 23, 81);
+	background-color: white;
 	margin: 0px auto;
 	padding: 20px 0px 20px 0px;
-	color: white !important;
+	color: rgb(236, 23, 81) !important;
 	font-size: 1.2rem;
+
 }
 
 .footer a {
-	color: white !important;
+	color: black !important;
 	font-size: 1rem;
 }
 
@@ -147,4 +148,29 @@ input[type="date"]:after {
 
 .profile__image {
 	border-radius: 50%;
+}
+
+.pics{
+	margin-top: 70px;
+	margin-bottom: 100px;
+}
+
+
+
+.contactform{
+	margin: auto;
+	width: 40%;
+}
+
+.contactform Button{
+	background-color: white !important;
+	color:  rgb(236, 23, 81);
+	border-color: white;
+}
+
+.contactform Button:hover{
+	background-color: white  !important;
+	color:  rgb(236, 23, 81);
+	border-color: white;
+	border-bottom-color: rgb(236, 23, 81);
 }

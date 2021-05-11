@@ -81,18 +81,13 @@ export const RenderRooms = ({ handleEdit, handleDelete, rooms, isEditing, handle
 	});
 };
 
-export const AdminRoom = ({rooms}) => {
+export const AdminRoom = ({rooms,addRoomType}) => {
 	const [isEditing, setisEditing] = useState(false);
 	const [activeTab, setactiveTab] = useState("1");
 
 	const handleAddRoom = (event) => {
 		event.preventDefault();
 		console.log(event);
-	};
-
-	const handleAddRoomType = (event) => {
-		event.preventDefault();
-		console.log(event.target);
 	};
 
 	const handleEditSubmit = (event) => {
@@ -187,30 +182,22 @@ export const AdminRoom = ({rooms}) => {
 				</TabPane>
 				<TabPane tabId="3">
 					<Row>
-						<Form onSubmit={handleAddRoomType}>
+						<Form onSubmit={addRoomType}>
 							<FormGroup>
 								<Label htmlFor="newRoomType">Room Type Name</Label>
-								<Input type="text" id="newRoomType" />
+								<Input type="text" id="newRoomType" name="newRoomTyep"/>
 							</FormGroup>
 							<FormGroup>
 								<Label htmlFor="price">Price for type</Label>
-								<Input type="text" id="price" />
+								<Input type="text" id="price" name="price"/>
 							</FormGroup>
-							<FormGroup tag="fieldset">
-								<FormGroup check>
-									<Input type="radio" name="AC" value="AC" />
+							<FormGroup check>
+								<Input type="checkbox" name="AC" value="AC" />
 									AC
-								</FormGroup>
-								<FormGroup check>
-									<Input type="radio" name="AC" value="Non-AC" />
-									Non-AC
-								</FormGroup>
 							</FormGroup>
-							<FormGroup tag="fieldset">
-								<FormGroup check>
-									<Input type="radio" name="Wifi" value="Wifi" />
+							<FormGroup check>
+								<Input type="checkbox" name="Wifi" value="Wifi" />
 									Wifi
-								</FormGroup>
 							</FormGroup>
 							<FormGroup>
 								<Label htmlFor="noOfPeople">Number of People</Label>

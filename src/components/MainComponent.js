@@ -324,6 +324,39 @@ export const Main = () => {
 			});
 	};
 
+	const addRoomType = (event) => {
+		event.preventDefault();
+		let type = event.target.elements["newRoomType"].value;
+		let price = event.target.elements["price"].value;
+		let ac_or_not = event.target.elements["AC"].checked ? 1 : 0;
+		let wifi_or_not = event.target.elements["Wifi"].checked ? 1 : 0;
+		let max_no_of_people = event.target.elements["noOfPeople"].value;
+
+		let body = {
+			type: type,
+			price: price,
+			ac_or_not: ac_or_not,
+			wifi_or_not: wifi_or_not,
+			max_no_of_people: max_no_of_people,
+			hotelId: hotels._id,
+			hotelAdminId: userId,
+		};
+
+		axios({
+			method: "POST",
+			url: baseUrl + "/hotelAdministration/addHotelType",
+			headers: {
+				usertype: userType,
+				usersecret: secret,
+			},
+			data: body,
+		})
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((err) => console.log(err));
+	};
+
 	const hotelWithId = ({ match }) => {
 		return (
 			<Hotel
@@ -392,6 +425,7 @@ export const Main = () => {
 									hotelRooms={hotelRooms}
 									receptionists={receptionists}
 									bookRoom={bookRoom}
+									addRoomType={addRoomType}
 								/>
 							);
 						}}
