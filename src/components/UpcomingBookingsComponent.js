@@ -30,7 +30,6 @@ function RenderUpcomingBookings(props) {
 	});
 }
 
-<<<<<<< HEAD
 class UpcomingBooking extends Component{
 
     render(){
@@ -48,19 +47,6 @@ class UpcomingBooking extends Component{
             </Container>
         )
     }
-=======
-class UpcomingBooking extends Component {
-	render() {
-		return (
-			<Container>
-				<Row>
-					<RenderUpcomingBookings bookings={this.props.bookings} />
-					{this.props.bookings && <h1>No upcoming bookings</h1>}
-				</Row>
-			</Container>
-		);
-	}
->>>>>>> 3f35d2ff7caecf56f00ce9db088778d9081e5d6d
 }
 
 export default UpcomingBooking;

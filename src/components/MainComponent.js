@@ -118,41 +118,14 @@ class Main extends Component {
     handleSearchHotel(event){
         event.preventDefault();
         console.log(event);
-        let body = {};
         let startDate = event.target.elements["checkIn"].value;
         let endDate = event.target.elements["checkOut"].value;
-        if(event.target.elements["searchBy"].value === 'location'){
-            let city = event.target.elements["location"].value;
-            body = {
-                city : city,
-                startDate : startDate,
-                endDate : endDate
-            }
-        }
-        else{
-            let hotelName = event.target.elements["location"].value;
-            body = {
-                hotelName : hotelName,
-                startDate : startDate,
-                endDate : endDate
-            }
-        }
-        console.log(body);
-        axios({
-            method: "POST",
-            url : baseUrl + '/customer/findHotel',
-            headers : {
-                "Content-Type" : "application/json"
-            },
-            data : body
-        })
-        .then((response) => console.log(response))
-        .catch((err) => {
-            this.setState({
-                searchHotelResults : []
-            })
-            this.props.history.push('/searchResults');
-        })
+        let searchBy = event.target.elements["searchBy"].value;
+        let location = event.target.elements["location"].value;
+
+        console.log(typeof startDate);
+
+
     }
 
     handleLogout(){

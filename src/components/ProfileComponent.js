@@ -7,6 +7,8 @@ import baseUrl from '../shared/baseUrl';
 
 function Profile() {
 	const [activeTab, setActiveTab] = useState("1");
+  const [error,setError] = useState("");
+  const [success,setSuccess] = useState("");
 	const toggle = (tab) => {
 		if (activeTab !== tab) setActiveTab(tab);
 	};
@@ -14,8 +16,7 @@ function Profile() {
 	let userInfo = JSON.parse(localStorage.getItem("userDetails"));
 	console.log(userInfo);
 
-	let name, email;
-
+  let name,email;
 
     function changePassword(event){
       event.preventDefault();
@@ -76,7 +77,6 @@ function Profile() {
 
     }
 
-    let name,email;
 
     if(userInfo.type === 'maintainer'){
       name = userInfo.maintainerDetails.name.firstName+' '+userInfo.maintainerDetails.name.lastName;
