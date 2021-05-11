@@ -451,7 +451,6 @@ export const Main = () => {
 									addRoomType = {addRoomType}
 									addRoom = {addRoom}
 									bookRoom={bookRoom}
-									addRoomType={addRoomType}
 								/>
 							);
 						}}
