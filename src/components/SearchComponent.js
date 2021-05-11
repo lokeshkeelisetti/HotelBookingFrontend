@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import Rating from "@material-ui/lab/Rating";
 
-const RenderHotels = ({ hotels, hotelRoomTypes, keyWord }) => {
+const RenderHotels = ({ hotels, hotelRoomTypes, keyWord, isLoggedin }) => {
 	console.log("Hi");
 	console.log(hotelRoomTypes);
 	console.log(hotels);
@@ -41,9 +41,11 @@ const RenderHotels = ({ hotels, hotelRoomTypes, keyWord }) => {
 								{hotels[hotelRoomType.hotelId].address.street},
 								{hotels[hotelRoomType.hotelId].address.city}
 							</CardText>
-							<Link to={`/hotel/${hotelRoomType.id}`}>
-								<Button>Book a room</Button>
-							</Link>
+							{isLoggedin && (
+								<Link to={`/hotel/${hotelRoomType.id}`}>
+									<Button>Book a room</Button>
+								</Link>
+							)}
 						</CardBody>
 					</Card>
 				</div>
@@ -52,7 +54,7 @@ const RenderHotels = ({ hotels, hotelRoomTypes, keyWord }) => {
 	});
 };
 
-export const Search = ({ hotels, hotelRoomTypes, keyWord }) => {
+export const Search = ({ hotels, hotelRoomTypes, keyWord, isLoggedin }) => {
 	// console.log(hotels);
 	// let hotelDetails = {};
 	// var i = 0;
@@ -67,7 +69,12 @@ export const Search = ({ hotels, hotelRoomTypes, keyWord }) => {
 	return (
 		<Container>
 			<Row className="mb-2">
-				<RenderHotels hotels={hotels} hotelRoomTypes={hotelRoomTypes} keyWord={keyWord} />
+				<RenderHotels
+					hotels={hotels}
+					hotelRoomTypes={hotelRoomTypes}
+					keyWord={keyWord}
+					isLoggedin={isLoggedin}
+				/>
 			</Row>
 			{hotels.length === 0 && (
 				<h1 className="align-self-center">No hotel matched with the search</h1>

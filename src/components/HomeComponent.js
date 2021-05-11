@@ -287,6 +287,7 @@ export const Home = (props) => {
 					hotels={sortedHotels}
 					hotelRoomTypes={sortedHotelRoomTypes}
 					keyWord={keyWord}
+					isLoggedin={props.isLoggedin}
 				/>
 			)}
 		</React.Fragment>
