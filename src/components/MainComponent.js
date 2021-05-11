@@ -70,7 +70,6 @@ export const Main = () => {
 		console.log(event);
 		let startDate = event.target.elements["checkIn"].value;
 		let endDate = event.target.elements["checkOut"].value;
-		let searchBy = event.target.elements["searchBy"].value;
 		let location = event.target.elements["location"].value;
 
 		console.log(typeof startDate);

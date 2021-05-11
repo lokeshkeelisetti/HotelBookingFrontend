@@ -50,17 +50,6 @@ export const Search = ({ handleSearchHotel, hotels }) => {
 			<Jumbotron>
 				<Container>
 					<Form className="row" onSubmit={handleSearchHotel}>
-						<FormGroup className="col-5 col-md-3">
-							<Input
-								type="select"
-								id="searchBy"
-								name="searchBy"
-								defaultValue="searchBy"
-							>
-								<option value="location">location</option>
-								<option value="hotel">Hotel Name</option>
-							</Input>
-						</FormGroup>
 						<FormGroup className="col-7 col-md-7">
 							<Input
 								type="text"

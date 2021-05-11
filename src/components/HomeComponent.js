@@ -127,17 +127,6 @@ export const Home = (props) => {
 							>
 								<FormGroup>
 									<Input
-										type="select"
-										id="searchBy"
-										name="searchBy"
-										defaultValue="searchBy"
-									>
-										<option value="location">location</option>
-										<option value="hotel">Hotel Name</option>
-									</Input>
-								</FormGroup>
-								<FormGroup>
-									<Input
 										type="text"
 										id="location"
 										name="location"
