@@ -22,8 +22,11 @@ function Profile() {
 
     return (
     <>
-    <img src="assets/images/profile.jpeg" alt="profile" className="profile__image"/>
+    <div className="profile__image__div">
+      <img src="assets/images/profile.jpg" alt="profile" className="profile__image"/>
+    </div>
     <div>
+      <Container>
       <Nav tabs>
         <NavItem>
           <NavLink
@@ -42,17 +45,20 @@ function Profile() {
           </NavLink>
         </NavItem>
       </Nav>
+      </Container>
+
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
-                <Table>
-                    {/* <thead>
+              <Container>
+                <Table class="col-md-6">
+                    <thead>
                         <tr>
                             <th>Property</th>
                             <th>Value</th>
                         </tr>
-                    </thead> */}
+                    </thead>
                     <tbody>
                         <tr>
                             <td>Name</td>
@@ -65,6 +71,7 @@ function Profile() {
                         
                     </tbody>
                 </Table>
+                </Container>
             </Col>
           </Row>
         </TabPane>
@@ -73,12 +80,12 @@ function Profile() {
             <Form>
                 <br />
                 <FormGroup>
-                    <Input type="password" id="oldPassword" placeholder="Enter the old password" />
+                    <Input type="password" id="oldPassword" placeholder="Enter the old password" className="col-md-6"/>
                 </FormGroup>
                 <FormGroup>
-                    <Input type="password" id="newPassword" placeholder="Enter the new password" />
+                    <Input type="password" id="newPassword" placeholder="Enter the new password" className="col-md-6"/>
                 </FormGroup>
-                    <Input type="password" id="newConfirmPassword" placeholder="Confirm the new password" />
+                    <Input type="password" id="newConfirmPassword" placeholder="Confirm the new password" className="col-md-6"/>
                 <FormGroup>
                 </FormGroup>
                 <Button type="submit" value="submit" className="bg-primary" color="primary">Change Password</Button>
@@ -86,6 +93,7 @@ function Profile() {
         </Container>
         </TabPane>
       </TabContent>
+    <br />
     </div>
     </>
     )
