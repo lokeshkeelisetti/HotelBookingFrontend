@@ -17,15 +17,15 @@ export const Contactus = () => {
 				<br />
 				<br />
 				<p>write a query we will respond</p>
-				<Form className="col-md-8">
+				<Form className="col-md-8" className="contactform">
 					<br />
 					<FormGroup>
-						<Input type="text" id="namePerson" placeholder="please Enter your name" />
+						<Input type="text" id="namePerson" placeholder="Enter your name" />
 					</FormGroup>
 					<FormGroup>
-						<Input type="text" id="personEmail" placeholder="please Enter your Email" />
+						<Input type="text" id="personEmail" placeholder="Enter your Email" />
 					</FormGroup>
-					<Input type="password" id="query" placeholder="please enter your query" />
+					<Input type="password" id="query" placeholder="Enter your query" />
 					<FormGroup></FormGroup>
 					<Button type="submit" value="submit" className="bg-primary" color="primary">
 						Submit
