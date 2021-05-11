@@ -1,5 +1,5 @@
 import MaintainerHotels from "./MaintainerHotels";
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
 	Carousel,
 	CarouselItem,
@@ -23,7 +23,7 @@ import {
 } from "reactstrap";
 import Rating from "@material-ui/lab/Rating";
 import { Link } from "react-router-dom";
-import hotels from "../shared/hotels";
+import items from '../shared/HomepageItems';
 
 function RenderAvailableRooms(props) {
 	return (
@@ -53,88 +53,52 @@ function RenderAvailableRooms(props) {
 	);
 }
 
-const items = [
-	{
-		src: "assets/images/hotel1.jpeg",
-		altText: "Hotel",
-		caption: "Hotel",
-	},
-	{
-		src: "assets/images/hotel2.jpeg",
-		altText: "Another Hotel",
-		caption: "Another Hotel",
-	},
-	{
-		src: "assets/images/hotel3.jpeg",
-		altText: "Again Hotel",
-		caption: "Again Hotel",
-	},
-];
 
-class Home extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			activeIndex: 0,
-			animating: false,
-			rooms: [],
-			hotels: hotels,
-		};
-		this.setActiveIndex = this.setActiveIndex.bind(this);
-		this.setAnimating = this.setAnimating.bind(this);
-	}
 
-	setActiveIndex = (index) => {
-		this.setState({
-			activeIndex: index,
-		});
-	};
+function Home(props) {
+    const [activeIndex,setActiveIndex] = useState(0);
+    const [animating,setAnimating] = useState(false);
 
-	setAnimating = () => {
-		this.setState({
-			animating: !this.state.animating,
-		});
-	};
+    const next = () => {
+        if (animating) return;
+        let nextIndex =
+            activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+        setActiveIndex(nextIndex);
+    };
 
-	render() {
-		const next = () => {
-			if (this.state.animating) return;
-			let nextIndex =
-				this.state.activeIndex === items.length - 1 ? 0 : this.state.activeIndex + 1;
-			this.setActiveIndex(nextIndex);
-		};
-		const prev = () => {
-			if (this.state.animating) return;
-			let prevIndex =
-				this.state.activeIndex === 0 ? items.length - 1 : this.state.activeIndex - 1;
-			this.setActiveIndex(prevIndex);
-		};
+    const prev = () => {
+        if (animating) return;
+        let prevIndex =
+            activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+        setActiveIndex(prevIndex);
+    };
 
-		const goToIndex = (index) => {
-			if (this.state.animating) return;
-			this.setActiveIndex(index);
-		};
+    const goToIndex = (index) => {
+        if (animating) return;
+        setActiveIndex(index);
+    };
 
-		const slides = items.map((item) => {
-			return (
-				<CarouselItem
-					onExiting={() => this.setAnimating(true)}
-					onExited={() => this.setAnimating(false)}
-					key={process.env.PUBLIC_URL + item.src}
-				>
-					<img
-						style={{ width: "100vw", height: "50vh" }}
-						src={process.env.PUBLIC_URL + item.src}
-						alt={item.altText}
-					/>
-					<CarouselCaption captionText={item.caption} captionHeader={item.caption} />
-				</CarouselItem>
-			);
-		});
+    const slides = items.map((item) => {
+        return (
+            <CarouselItem
+                onExiting={() => setAnimating(true)}
+                onExited={() => setAnimating(false)}
+                key={process.env.PUBLIC_URL + item.src}
+            >
+                <img
+                    style={{ width: "100vw", height: "50vh" }}
+                    src={process.env.PUBLIC_URL + item.src}
+                    alt={item.altText}
+                />
+                <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+            </CarouselItem>
+        );
+    });
 
-		return (
-			<React.Fragment>
-				{(this.props.userType === "customer" || !this.props.isLoggedin) && (
+
+    return (
+        <React.Fragment>
+				{(props.userType === "customer" || !props.isLoggedin) && (
 					<div>
 						<Jumbotron
 							style={{
@@ -158,7 +122,7 @@ class Home extends Component {
 							>
 								<Form
 									className="row searchForm"
-									onSubmit={this.props.handleSearchHotel}
+									onSubmit={props.handleSearchHotel}
 									style={{
 										display: "flex",
 										flexWrap: "wrap",
@@ -183,7 +147,6 @@ class Home extends Component {
 											id="location"
 											name="location"
 											placeholder="Search by City or Hotel"
-											innerRef={(location) => (this.location = location)}
 										/>
 									</FormGroup>
 									<FormGroup>
@@ -192,7 +155,6 @@ class Home extends Component {
 											id="checkIn"
 											placeholder="check in"
 											name="checkIn"
-											innerRef={(checkIn) => (this.checkIn = checkIn)}
 										/>
 									</FormGroup>
 									<FormGroup>
@@ -201,7 +163,6 @@ class Home extends Component {
 											id="checkOut"
 											placeholder="check out"
 											name="checkOut"
-											innerRef={(checkOut) => (this.checkOut = checkOut)}
 										/>
 									</FormGroup>
 									<Button
@@ -218,13 +179,13 @@ class Home extends Component {
 						<Container>
 							<Carousel
 								className="mb-5"
-								activeIndex={this.state.activeIndex}
+								activeIndex={activeIndex}
 								next={next}
 								previous={prev}
 							>
 								<CarouselIndicators
 									items={items}
-									activeIndex={this.state.activeIndex}
+									activeIndex={activeIndex}
 									onClickHandler={goToIndex}
 								/>
 								{slides}
@@ -242,14 +203,14 @@ class Home extends Component {
 						</Container>
 					</div>
 				)}
-				{this.props.userType === "receptionist" && (
+				{props.userType === "receptionist" && (
 					<div>
 						<Jumbotron>
 							<Container>
 								<h3>Welcome to Hotel</h3>
 								<Form
 									className="w-50 offset-1"
-									onSubmit={this.props.handleCheckAvailability}
+									onSubmit={props.handleCheckAvailability}
 								>
 									<FormGroup>
 										<Label htmlFor="timeOfStay">Duration of Stay in days</Label>
@@ -257,9 +218,6 @@ class Home extends Component {
 											name="timeOfStay"
 											type="text"
 											id="timeOfStay"
-											innerRef={(timeOfStay) =>
-												(this.timeOfStay = timeOfStay)
-											}
 										/>
 									</FormGroup>
 									<FormGroup>
@@ -268,9 +226,6 @@ class Home extends Component {
 											name="typeOfRoom"
 											type="select"
 											id="typeOfRoom"
-											innerRef={(typeOfRoom) =>
-												(this.typeOfRoom = typeOfRoom)
-											}
 										>
 											<option selected value="AC Deluxe">
 												AC Deluxe
@@ -292,25 +247,24 @@ class Home extends Component {
 						</Jumbotron>
 						<Container style={{ minHeight: "30vh" }}>
 							<Row className="mt-5 mb-5">
-								<RenderAvailableRooms availableRooms={this.props.availableRooms} />
+								<RenderAvailableRooms availableRooms={props.availableRooms} />
 							</Row>
 						</Container>
 					</div>
 				)}
-				{this.props.userType === "hotelAdministration" && (
+				{props.userType === "hotelAdministration" && (
 					<Container className="mt-5 mb-5">
 						<Row>
-							<RenderAvailableRooms availableRooms={this.state.availableRooms} />
+							<RenderAvailableRooms availableRooms={props.availableRooms} />
 						</Row>
 					</Container>
 				)}
-				{this.props.userType === "maintainer" && (
-					<MaintainerHotels hoteladmins = {this.props.hotelAdmins} hotels = {this.props.hotels}
-                        addHotel={this.props.addHotel} deleteHotel={this.props.deleteHotel}/>
+				{props.userType === "maintainer" && (
+					<MaintainerHotels hoteladmins = {props.hotelAdmins} hotels = {props.hotels}
+                        addHotel={props.addHotel} deleteHotel={props.deleteHotel}/>
 				)}
 			</React.Fragment>
-		);
-	}
+    );
 }
 
 export default Home;
