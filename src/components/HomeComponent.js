@@ -288,7 +288,8 @@ class Home extends Component {
 					</Container>
 				)}
 				{this.props.userType === "maintainer" && (
-					<MaintainerHotels hoteladmins = {this.props.hotelAdmins} hotels = {this.props.hotels}/>
+					<MaintainerHotels hoteladmins = {this.props.hotelAdmins} hotels = {this.props.hotels}
+                        addHotel={this.props.addHotel} deleteHotel={this.props.deleteHotel}/>
 				)}
 			</React.Fragment>
 		);

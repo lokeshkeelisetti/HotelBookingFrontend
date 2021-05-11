@@ -174,6 +174,7 @@ class Main extends Component {
             "email":email,
             "password":password
         }
+        console.log(body);
         axios({
             method : 'POST',
             url : baseUrl + '/login',
@@ -228,8 +229,31 @@ class Main extends Component {
                     }))
                     .catch((err) => console.log(err));
                 }
+                else if(userType === 'customer'){
+                    userInfo = response.data.customerDetails;
+                    let previousBookings = response.data.pastBookings;
+                    let upcomingBookings = response.data.upcomingBookings;
+                    let hotels = response.data.hotels;
+                    let hotelRoomTypes = response.data.hotelRoomTypes;
+                    let hotelRooms = response.data.hotelRooms;
+                    
+                    this.setState({
+                        isLoggedin : true,
+                        userType : userType,
+                        userId : userId,
+                        secret : secret,
+                        userInfo : userInfo,
+                        previousBookings : previousBookings,
+                        upcomingBookings : upcomingBookings,
+                        hotels : hotels,
+                        hotelRoomTypes : hotelRoomTypes,
+                        hotelRooms : hotelRooms
+                    })
+
+                }
             }
             else if(response.data.error){
+                console.log(response.data);
                 alert(response.data.error);
             }
         })
@@ -271,7 +295,7 @@ class Main extends Component {
         let firstName = event.target.elements["firstName"].value;
         let lastName = event.target.elements["lastName"].value;
         let email = event.target.elements["email"].value;
-        let password = event.target.elements["email"].value;
+        let password = event.target.elements["password"].value;
         let street = event.target.elements["street"].value;
         let city = event.target.elements["city"].value;
         let pincode = event.target.elements["pincode"].value;
@@ -287,6 +311,8 @@ class Main extends Component {
             pinCode : pincode,
             hotelName : hotelName
         }
+
+        console.log(body);
 
         axios({
             method:"POST",
@@ -436,7 +462,7 @@ class Main extends Component {
                     handleRegister = {this.handleRegister}
                     handleLogout = {this.handleLogout}
                 />
-                <TransitionGroup className="mb-auto flex-grow-1">
+                <TransitionGroup className="mb-auto mt-5 flex-grow-1">
                     <Switch>
                         <Route exact path='/' component= {HomeWithDetails} />
                         <Route exact path='/profile' component= {LoadProfile} />

@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import {Input,FormGroup ,Form,Button, Container, Table} from 'reactstrap';
+import axios from 'axios';
+import baseUrl from '../shared/baseUrl';
 
 function Profile() {
 
     const [activeTab, setActiveTab] = useState('1');
+    const [error,setError] = useState('');
+    const [success,setSuccess] = useState('');
     const toggle = tab => {
         if(activeTab !== tab) setActiveTab(tab);
       }
@@ -13,11 +17,75 @@ function Profile() {
     let userInfo = JSON.parse(localStorage.getItem('userDetails'));
     console.log(userInfo);
 
+
+    function changePassword(event){
+      event.preventDefault();
+      let oldPassword = event.target.elements["oldPassword"].value;
+      let newPassword = event.target.elements["newPassword"].value;
+      let newConfirmPassword = event.target.elements["newConfirmPassword"].value;
+
+      if(newPassword !== newConfirmPassword){
+        setError("newpasswords don't match");
+      }
+      else{
+        let body = {
+          oldPassword : oldPassword,
+          newPassword : newPassword
+        }
+        
+        let url;
+        if(userInfo.type === 'maintainer'){
+          url = baseUrl + '/maintainer/changePassword';
+        }
+        else if(userInfo.type === 'customer'){
+          url = baseUrl + '/customer/changePassword';
+        }
+        else if(userInfo.type === 'receptionist'){
+          url = baseUrl + '/receptionist/changePassword';
+        }
+        else if(userInfo.type === 'hotelAdministration'){
+          url = baseUrl + '/hotelAdministration/changePassword';
+        }
+        
+        axios({
+          method : "POST",
+          url : url,
+          headers : {
+            usersecret : userInfo.secret,
+            usertype : userInfo.type,
+            hotelAdminId : userInfo.id,
+            receptionistId : userInfo.id,
+            customerId : userInfo.id,
+            maintainerId : userInfo.id
+          },
+          body
+        })
+        .then((response) => {
+            if(response.data.success){
+              setSuccess(response.data.success);
+              setError("");
+            }
+            else{
+              setError(response.data.failure);
+              setSuccess("");
+            }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
+
+    }
+
     let name,email;
 
     if(userInfo.type === 'maintainer'){
       name = userInfo.maintainerDetails.name.firstName+' '+userInfo.maintainerDetails.name.lastName;
       email = userInfo.maintainerDetails.email;
+    }
+    else if(userInfo.type === 'customer'){
+      name = userInfo.customerDetails.name.firstName+' '+userInfo.customerDetails.name.lastName;
+      email = userInfo.customerDetails.email
     }
 
     return (
@@ -52,7 +120,7 @@ function Profile() {
           <Row>
             <Col sm="12">
               <Container>
-                <Table class="col-md-6">
+                <Table className="col-md-6">
                     <thead>
                         <tr>
                             <th>Property</th>
@@ -77,18 +145,20 @@ function Profile() {
         </TabPane>
         <TabPane tabId="2">
         <Container>
-            <Form>
+            <Form onSubmit={changePassword}>
                 <br />
                 <FormGroup>
-                    <Input type="password" id="oldPassword" placeholder="Enter the old password" className="col-md-6"/>
+                    <Input type="password" id="oldPassword" name="oldPassword" placeholder="Enter the old password" className="col-md-6"/>
                 </FormGroup>
                 <FormGroup>
-                    <Input type="password" id="newPassword" placeholder="Enter the new password" className="col-md-6"/>
+                    <Input type="password" id="newPassword" name="newPassword" placeholder="Enter the new password" className="col-md-6"/>
                 </FormGroup>
-                    <Input type="password" id="newConfirmPassword" placeholder="Confirm the new password" className="col-md-6"/>
+                    <Input type="password" id="newConfirmPassword" name="newConfirmPassword" placeholder="Confirm the new password" className="col-md-6"/>
                 <FormGroup>
                 </FormGroup>
                 <Button type="submit" value="submit" className="bg-primary" color="primary">Change Password</Button>
+                <p style={{color:'red'}}>{error}</p>
+                <p style={{color:'green'}}>{success}</p>
             </Form>
         </Container>
         </TabPane>
