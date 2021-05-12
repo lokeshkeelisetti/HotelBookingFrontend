@@ -673,6 +673,29 @@ export const Main = () => {
 			.catch((err) => console.log(err));
 	};
 
+	const deleteReceptionist = (id) => {
+		console.log(userId,hotels._id);
+		axios({
+			method : "DELETE",
+			url : baseUrl + '/hotelAdministration/removeReceptionist/'+id+'/?id='+id,
+			headers : {
+				usertype : userType,
+				usersecret : secret,
+				hoteladminid : userId,
+				hotelId : hotels._id,
+			}
+		})
+		.then((response) => {
+			if(!response.data.failure){
+				alert(response.data);
+			}
+			else{
+				alert(response.data.failure);
+			}
+		})
+		.catch((err) => console.log(err))
+	}
+
 	const hotelWithId = ({ match }) => {
 		return (
 			<Hotel
@@ -763,10 +786,10 @@ export const Main = () => {
 									addRoomType={addRoomType}
 									addRoom={addRoom}
 									bookRoom={bookRoom}
-									editRoom={editRoom}
-									deleteRoom={deleteRoom}
-									addReceptionist={addReceptionist}
-									findMyDetails={findMyDetails}
+									editRoom = {editRoom}
+									deleteRoom = {deleteRoom}
+									addReceptionist = {addReceptionist}
+									deleteReceptionist = {deleteReceptionist}
 								/>
 							);
 						}}
