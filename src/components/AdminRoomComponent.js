@@ -18,19 +18,82 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 
-export const RenderRooms = ({
+export const RenderRoomTypes = ({
+	hotelRoomTypes,
 	handleEdit,
+	isEditing,
+	editRoomType}) => {
+		return hotelRoomTypes.map((hotelRoomType) => {
+			return (
+				<ListGroupItem key={hotelRoomType._id}>
+					<Media className="mr-2" left href="#">
+						<Media object src={hotelRoomType.imgURLs[0]} alt="hotelRoomType image" />
+					</Media>
+					{isEditing !== hotelRoomType._id ? (
+						<Media body>
+							<Media heading>HotelRoomType {hotelRoomType.type}</Media>
+							<h2>Facilities</h2>
+							<ul>
+								<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
+								{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li>}
+								<li>No.of People {hotelRoomType.facilities.max_no_of_people}</li>
+							</ul>
+							<Button
+								className="bg bg-warning ml-4"
+								color="warning"
+								onClick={() => handleEdit(hotelRoomType._id)}
+							>
+								<span className="fa fa-pencil"></span>Edit
+							</Button>
+						</Media>
+					): (
+						<Form onSubmit={editRoomType}>
+							<h3>{hotelRoomType.type}</h3>
+							<FormGroup>
+								<Label htmlFor="price">price</Label>
+								<Input type="text" id="price" name="price" />
+							</FormGroup>
+							<FormGroup>
+								<Input type="text" hidden id="hotelRoomTypeId" name="hotelRoomTypeId" value={hotelRoomType._id}/>
+							</FormGroup>
+							<FormGroup>
+								<Label htmlFor="NoOfPeople">No of People</Label>
+								<Input type="text" id="noOfPeople" name="noOfPeople"/>
+							</FormGroup>
+							<FormGroup check>
+								<Label htmlFor="AC">
+									<Input type="checkbox" id="AC" name="AC" />
+									AC
+								</Label>
+							</FormGroup>
+							<FormGroup check>
+								<Label htmlFor="Wifi">
+									<Input type="checkbox" id="Wifi" name="Wifi" />
+									Wifi
+								</Label>
+							</FormGroup>
+							<Button type="submit" className="btn btn-danger" color="danger">
+								Edit
+							</Button>
+							<Button className="btn" onClick={() => handleEdit(hotelRoomType._id)}>
+								Cancel
+							</Button>
+						</Form>
+					)}
+				</ListGroupItem>
+			)
+		})
+}
+
+export const RenderRooms = ({
 	deleteRoom,
 	rooms,
-	isEditing,
-	editRoom,
 	hotelRoomTypes,
 }) => {
 	return rooms.map((room) => {
 		let hotelRoomType = hotelRoomTypes.filter(
 			(hotelRoomType) => hotelRoomType._id === room.hotelRoomTypeId
 		)[0];
-		console.log(hotelRoomType);
 		return (
 			<ListGroupItem
 				key={room._id}
@@ -45,7 +108,7 @@ export const RenderRooms = ({
 							style={{ height: "300px", width: "500px" }}
 						/>
 					</Media>
-					{isEditing !== room._id ? (
+					{ (
 						<Media body>
 							<Media heading>Room No: {room.roomNo}</Media>
 							<p>Hotel Room type :{hotelRoomType.type}</p>
@@ -57,13 +120,6 @@ export const RenderRooms = ({
 							</ul>
 							<br />
 							<Button
-								className="bg bg-warning ml-4"
-								color="warning"
-								onClick={() => handleEdit(room._id)}
-							>
-								<span className="fa fa-pencil"></span>
-							</Button>
-							<Button
 								className="bg bg-danger ml-4"
 								color="danger"
 								onClick={() => deleteRoom(room._id)}
@@ -71,36 +127,7 @@ export const RenderRooms = ({
 								<span className="fa fa-trash"></span>
 							</Button>
 						</Media>
-					) : (
-						<Form onSubmit={editRoom}>
-							<h3>{room.roomNo}</h3>
-							<FormGroup>
-								<Label htmlFor="hotelRoomType">Room Type</Label>
-								<Input type="select" id="hotelRoomType" name="hotelRoomType">
-									{hotelRoomTypes.map((hotelRoomType) => {
-										return (
-											<option value={hotelRoomType._id}>
-												{hotelRoomType.type}
-											</option>
-										);
-									})}
-								</Input>
-								<Input
-									type="text"
-									hidden
-									id="room_id"
-									name="room_id"
-									value={room._id}
-								/>
-							</FormGroup>
-							<Button type="submit" className="btn btn-danger" color="danger">
-								Edit
-							</Button>
-							<Button className="btn" onClick={() => handleEdit(room._id)}>
-								Cancel
-							</Button>
-						</Form>
-					)}
+					) }
 				</Media>
 			</ListGroupItem>
 		);
@@ -112,7 +139,7 @@ export const AdminRoom = ({
 	addRoomType,
 	hotelRoomTypes,
 	addRoom,
-	editRoom,
+	editRoomType,
 	deleteRoom,
 }) => {
 	const [isEditing, setisEditing] = useState(false);
@@ -163,6 +190,16 @@ export const AdminRoom = ({
 						Add Room Type
 					</NavLink>
 				</NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
+					<NavLink
+						className={classnames({ active: activeTab === "4" })}
+						onClick={() => {
+							setActiveTab("4");
+						}}
+					>
+						Room Type Details
+					</NavLink>
+				</NavItem>
 			</Nav>
 			<TabContent activeTab={activeTab}>
 				<TabPane tabId="1">
@@ -171,9 +208,6 @@ export const AdminRoom = ({
 							<RenderRooms
 								rooms={rooms}
 								hotelRoomTypes={hotelRoomTypes}
-								isEditing={isEditing}
-								handleEdit={handleEdit}
-								editRoom={editRoom}
 								deleteRoom={deleteRoom}
 							/>
 						</ListGroup>
@@ -212,7 +246,7 @@ export const AdminRoom = ({
 						<Form onSubmit={addRoomType}>
 							<FormGroup>
 								<Label htmlFor="newRoomType">Room Type Name</Label>
-								<Input type="text" id="newRoomType" name="newRoomTyep" />
+								<Input type="text" id="newRoomType" name="newRoomType" />
 							</FormGroup>
 							<FormGroup>
 								<Label htmlFor="price">Price for type</Label>
@@ -234,6 +268,20 @@ export const AdminRoom = ({
 								Add Room Type
 							</Button>
 						</Form>
+					</Row>
+				</TabPane>
+				<TabPane tabId="4">
+					<Row>
+						<ListGroup>
+							<RenderRoomTypes
+								rooms={rooms}
+								hotelRoomTypes={hotelRoomTypes}
+								isEditing={isEditing}
+								handleEdit={handleEdit}
+								editRoomType={editRoomType}
+								deleteRoom={deleteRoom}
+							/>
+						</ListGroup>
 					</Row>
 				</TabPane>
 			</TabContent>
