@@ -201,6 +201,7 @@ export const Home = (props) => {
 							color: "#fff",
 						}}
 					>
+						<button onClick={props.findMyDetails}>Find</button>
 						<Container className="text-center mb-5">
 							<h3 className="font-ubuntu-700">Hotel Pedia</h3>
 							<h5 className="font-roboto">A place to find your every stay</h5>

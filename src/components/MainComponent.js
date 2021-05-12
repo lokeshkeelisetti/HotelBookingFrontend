@@ -183,202 +183,212 @@ export const Main = () => {
 			data: body,
 		})
 			.then((response) => {
-				if (response.data.type) {
-					localStorage.setItem("userDetails", JSON.stringify(response.data));
-					let userInfo1, userType1, userId1, secret1;
-					userType1 = response.data.type;
-					secret1 = response.data.secret;
-					userId1 = response.data.id;
-					if (userType1 === "maintainer") {
-						userInfo1 = response.data.maintainerDetails;
+				playWithData(response);
+			})
+			.catch((err) => console.log(err));
+	};
 
-						let req1 = axios({
-							method: "GET",
-							url: baseUrl + "/maintainer/hotelAdmin",
-							headers: {
-								userType: response.data.type,
-								usersecret: response.data.secret,
-							},
-						});
+	const playWithData = (response) => {
+		if (response.data.type) {
+			localStorage.setItem("userDetails", JSON.stringify(response.data));
+			let userInfo1, userType1, userId1, secret1;
+			userType1 = response.data.type;
+			secret1 = response.data.secret;
+			userId1 = response.data.id;
+			if (userType1 === "maintainer") {
+				userInfo1 = response.data.maintainerDetails;
 
-						let req2 = axios({
-							method: "GET",
-							url: baseUrl + "/maintainer/hotel",
-							headers: {
-								userType: response.data.type,
-								usersecret: response.data.secret,
-							},
-						});
-						axios
-							.all([req1, req2])
-							.then(
-								axios.spread((...response) => {
-									localStorage.setItem(
-										"hotelAdmins",
-										JSON.stringify(response[0].data)
-									);
-									localStorage.setItem(
-										"hotels",
-										JSON.stringify(response[1].data)
-									);
-									console.log(response);
+				let req1 = axios({
+					method: "GET",
+					url: baseUrl + "/maintainer/hotelAdmin",
+					headers: {
+						userType: response.data.type,
+						usersecret: response.data.secret,
+					},
+				});
 
-									setisLoggedin(true);
-									setuserType(userType1);
-									setuserId(userId1);
-									setsecret(secret1);
-									setuserInfo(userInfo1);
-									sethotelAdmins(response[0].data);
-									sethotels(response[1].data);
-								})
-							)
-							.catch((err) => console.log(err));
-					} else if (userType1 === "customer") {
-						setisLoggedin(true);
-						setuserType(userType1);
-						setuserId(userId1);
-						setsecret(secret1);
-						setuserInfo(response.data.customerDetails);
-						sethotels(response.data.hotels);
-						sethotelRoomTypes(response.data.hotelRoomTypes);
-						sethotelRooms(response.data.hotelRooms);
-						var hotelObj = {};
-						var hotelRoomObj = {};
-						var hotelRoomTypeObj = {};
+				let req2 = axios({
+					method: "GET",
+					url: baseUrl + "/maintainer/hotel",
+					headers: {
+						userType: response.data.type,
+						usersecret: response.data.secret,
+					},
+				});
+				axios
+					.all([req1, req2])
+					.then(
+						axios.spread((...response) => {
+							localStorage.setItem("hotelAdmins", JSON.stringify(response[0].data));
+							localStorage.setItem("hotels", JSON.stringify(response[1].data));
+							console.log(response);
 
-						var i = 0;
-						while (response.data.hotels[i]) {
-							hotelObj[response.data.hotels[i]._id] = {
-								name: response.data.hotels[i].hotelName,
-								address: response.data.hotels[i].address,
-							};
-							i++;
-						}
-						i = 0;
-						while (response.data.hotelRoomTypes[i]) {
-							hotelRoomTypeObj[response.data.hotelRoomTypes[i]._id] = {
-								type: response.data.hotelRoomTypes[i].type,
-								price: response.data.hotelRoomTypes[i].price,
-								facilities: response.data.hotelRoomTypes[i].facilities,
-								imgURLs: response.data.hotelRoomTypes[i].imgURLs,
-							};
-							i++;
-						}
-						i = 0;
-						while (response.data.hotelRooms[i]) {
-							hotelRoomObj[response.data.hotelRooms[i]._id] = {
-								hotelRoomTypeId: response.data.hotelRooms[i].hotelRoomTypeId,
-								roomNo: response.data.hotelRooms[i].roomNo,
-							};
-							i++;
-						}
+							setisLoggedin(true);
+							setuserType(userType1);
+							setuserId(userId1);
+							setsecret(secret1);
+							setuserInfo(userInfo1);
+							sethotelAdmins(response[0].data);
+							sethotels(response[1].data);
+						})
+					)
+					.catch((err) => console.log(err));
+			} else if (userType1 === "customer") {
+				setisLoggedin(true);
+				setuserType(userType1);
+				setuserId(userId1);
+				setsecret(secret1);
+				setuserInfo(response.data.customerDetails);
+				sethotels(response.data.hotels);
+				sethotelRoomTypes(response.data.hotelRoomTypes);
+				sethotelRooms(response.data.hotelRooms);
+				var hotelObj = {};
+				var hotelRoomObj = {};
+				var hotelRoomTypeObj = {};
 
-						var upbks = [];
-						var pbks = [];
-						var j = 0;
-						i = 0;
-						while (response.data.upcomingBookings[i]) {
-							if (response.data.upcomingBookings[i].status) {
-								pbks[j] = {
-									rating: response.data.upcomingBookings[i].rating,
-									id: response.data.upcomingBookings[i]._id,
-									hotelName:
-										hotelObj[response.data.upcomingBookings[i].hotelId].name,
-									hotelAddress:
-										hotelObj[response.data.upcomingBookings[i].hotelId].address,
-									roomNo: hotelRoomObj[
-										response.data.upcomingBookings[i].hotelRoomId
-									].roomNo,
-									duration: response.data.upcomingBookings[i].duration,
-									bookedOn: response.data.upcomingBookings[i].createdAt,
-									hotelRoomType:
-										hotelRoomTypeObj[
-											hotelRoomObj[
-												response.data.upcomingBookings[i].hotelRoomId
-											].hotelRoomTypeId
-										].type,
-									price: hotelRoomTypeObj[
-										hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
-											.hotelRoomTypeId
-									].price,
-									facilities:
-										hotelRoomTypeObj[
-											hotelRoomObj[
-												response.data.upcomingBookings[i].hotelRoomId
-											].hotelRoomTypeId
-										].facilities,
-									imgURLs:
-										hotelRoomTypeObj[
-											hotelRoomObj[
-												response.data.upcomingBookings[i].hotelRoomId
-											].hotelRoomTypeId
-										].imgURLs,
-								};
-								j++;
-							}
-							i++;
-						}
-
-						i = 0;
-						while (response.data.upcomingBookings[i]) {
-							if (!response.data.upcomingBookings[i].status) {
-								upbks[j] = {
-									rating: response.data.upcomingBookings[i].rating,
-									id: response.data.upcomingBookings[i]._id,
-									hotelName:
-										hotelObj[response.data.upcomingBookings[i].hotelId].name,
-									hotelAddress:
-										hotelObj[response.data.upcomingBookings[i].hotelId].address,
-									roomNo: hotelRoomObj[
-										response.data.upcomingBookings[i].hotelRoomId
-									].roomNo,
-									duration: response.data.upcomingBookings[i].duration,
-									bookedOn: response.data.upcomingBookings[i].createdAt,
-									hotelRoomType:
-										hotelRoomTypeObj[
-											hotelRoomObj[
-												response.data.upcomingBookings[i].hotelRoomId
-											].hotelRoomTypeId
-										].type,
-									price: hotelRoomTypeObj[
-										hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
-											.hotelRoomTypeId
-									].price,
-									facilities:
-										hotelRoomTypeObj[
-											hotelRoomObj[
-												response.data.upcomingBookings[i].hotelRoomId
-											].hotelRoomTypeId
-										].facilities,
-									imgURLs:
-										hotelRoomTypeObj[
-											hotelRoomObj[
-												response.data.upcomingBookings[i].hotelRoomId
-											].hotelRoomTypeId
-										].imgURLs,
-								};
-								j++;
-							}
-							i++;
-						}
-						setpreviousBookings(pbks);
-						setupcomingBookings(upbks);
-					} else if (userType1 === "hotelAdministration") {
-						setisLoggedin(true);
-						setuserType(userType1);
-						setuserId(userType1);
-						setuserId(userId1);
-						setsecret(secret1);
-						setuserInfo(response.data.hotelAdminDetails);
-						sethotels(response.data.hotel);
-						sethotelRoomTypes(response.data.hotelRoomTypes);
-						sethotelRooms(response.data.hotelRooms);
-						setreceptionists(response.data.receptionists);
-					}
-				} else if (response.data.error) {
-					console.log(response.data);
-					alert(response.data.error);
+				var i = 0;
+				while (response.data.hotels[i]) {
+					hotelObj[response.data.hotels[i]._id] = {
+						name: response.data.hotels[i].hotelName,
+						address: response.data.hotels[i].address,
+					};
+					i++;
 				}
+				i = 0;
+				while (response.data.hotelRoomTypes[i]) {
+					hotelRoomTypeObj[response.data.hotelRoomTypes[i]._id] = {
+						type: response.data.hotelRoomTypes[i].type,
+						price: response.data.hotelRoomTypes[i].price,
+						facilities: response.data.hotelRoomTypes[i].facilities,
+						imgURLs: response.data.hotelRoomTypes[i].imgURLs,
+					};
+					i++;
+				}
+				i = 0;
+				while (response.data.hotelRooms[i]) {
+					hotelRoomObj[response.data.hotelRooms[i]._id] = {
+						hotelRoomTypeId: response.data.hotelRooms[i].hotelRoomTypeId,
+						roomNo: response.data.hotelRooms[i].roomNo,
+					};
+					i++;
+				}
+
+				var upbks = [];
+				var pbks = [];
+				var j = 0;
+				i = 0;
+				while (response.data.upcomingBookings[i]) {
+					if (response.data.upcomingBookings[i].status) {
+						pbks[j] = {
+							rating: response.data.upcomingBookings[i].rating,
+							id: response.data.upcomingBookings[i]._id,
+							hotelName: hotelObj[response.data.upcomingBookings[i].hotelId].name,
+							hotelAddress:
+								hotelObj[response.data.upcomingBookings[i].hotelId].address,
+							roomNo: hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+								.roomNo,
+							duration: response.data.upcomingBookings[i].duration,
+							bookedOn: response.data.upcomingBookings[i].createdAt,
+							hotelRoomType:
+								hotelRoomTypeObj[
+									hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+										.hotelRoomTypeId
+								].type,
+							price: hotelRoomTypeObj[
+								hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+									.hotelRoomTypeId
+							].price,
+							facilities:
+								hotelRoomTypeObj[
+									hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+										.hotelRoomTypeId
+								].facilities,
+							imgURLs:
+								hotelRoomTypeObj[
+									hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+										.hotelRoomTypeId
+								].imgURLs,
+						};
+						j++;
+					}
+					i++;
+				}
+
+				i = 0;
+				while (response.data.upcomingBookings[i]) {
+					if (!response.data.upcomingBookings[i].status) {
+						upbks[j] = {
+							rating: response.data.upcomingBookings[i].rating,
+							id: response.data.upcomingBookings[i]._id,
+							hotelName: hotelObj[response.data.upcomingBookings[i].hotelId].name,
+							hotelAddress:
+								hotelObj[response.data.upcomingBookings[i].hotelId].address,
+							roomNo: hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+								.roomNo,
+							duration: response.data.upcomingBookings[i].duration,
+							bookedOn: response.data.upcomingBookings[i].createdAt,
+							hotelRoomType:
+								hotelRoomTypeObj[
+									hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+										.hotelRoomTypeId
+								].type,
+							price: hotelRoomTypeObj[
+								hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+									.hotelRoomTypeId
+							].price,
+							facilities:
+								hotelRoomTypeObj[
+									hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+										.hotelRoomTypeId
+								].facilities,
+							imgURLs:
+								hotelRoomTypeObj[
+									hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+										.hotelRoomTypeId
+								].imgURLs,
+						};
+						j++;
+					}
+					i++;
+				}
+				setpreviousBookings(pbks);
+				setupcomingBookings(upbks);
+			} else if (userType1 === "hotelAdministration") {
+				setisLoggedin(true);
+				setuserType(userType1);
+				setuserId(userType1);
+				setuserId(userId1);
+				setsecret(secret1);
+				setuserInfo(response.data.hotelAdminDetails);
+				sethotels(response.data.hotel);
+				sethotelRoomTypes(response.data.hotelRoomTypes);
+				sethotelRooms(response.data.hotelRooms);
+				setreceptionists(response.data.receptionists);
+			}
+		} else if (response.data.error) {
+			console.log(response.data);
+			alert(response.data.error);
+		}
+	};
+
+	const findMyDetails = () => {
+		var body = {
+			customerId: userId,
+		};
+		axios({
+			method: "POST",
+			url: baseUrl + "/customer/myDetails",
+			headers: {
+				"Content-Type": "application/json",
+				usertype: userType,
+				usersecret: secret,
+			},
+			data: body,
+		})
+			.then((response) => {
+				console.log("hi", response.data);
+				console.log("I am here");
+				if (response.data.success) playWithData(response);
 			})
 			.catch((err) => console.log(err));
 	};
@@ -686,6 +696,7 @@ export const Main = () => {
 			.then((response) => {
 				if (response.data.success) {
 					alert("Booking Cancelled Successfully!");
+					findMyDetails();
 				} else alert("Unable to cancel booking, please try again later.");
 				console.log(response.data);
 			})
@@ -716,6 +727,7 @@ export const Main = () => {
 			.then((response) => {
 				if (response.data.success) {
 					alert("Room Booked Successfully!");
+					findMyDetails();
 				} else alert("Sorry, Room Not Availabale");
 			})
 			.catch((err) => console.log(err));
@@ -754,6 +766,7 @@ export const Main = () => {
 									editRoom={editRoom}
 									deleteRoom={deleteRoom}
 									addReceptionist={addReceptionist}
+									findMyDetails={findMyDetails}
 								/>
 							);
 						}}
