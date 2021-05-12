@@ -229,7 +229,8 @@ export const Home = (props) => {
 										type="text"
 										id="location"
 										name="location"
-										placeholder="Search by City or Hotel"
+										placeholder="Search by City, Street or Hotel"
+										style={{ minWidth: "300px" }}
 									/>
 								</FormGroup>
 								<FormGroup>
