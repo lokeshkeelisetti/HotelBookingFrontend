@@ -73,10 +73,14 @@ const RenderAdmin = (props) => {
                             addRoomType = {props.addRoomType}
                             hotelRoomTypes = {props.hotelRoomTypes}
                             addRoom = {props.addRoom}
+							deleteRoom = {props.deleteRoom}
+							editRoom = {props.editRoom}
                         />
                     </TabPane>
                     <TabPane tabId="2">
-                        <AdminReceptionists receptionists={props.receptionists}/>
+                        <AdminReceptionists receptionists={props.receptionists}
+							addReceptionist = {props.addReceptionist}	
+						/>
                     </TabPane>
             </TabContent>
         </div>
@@ -328,6 +332,9 @@ export const Home = (props) => {
                     addRoomType={props.addRoomType}
                     hotelRoomTypes = {props.hotelRoomTypes}
                     addRoom = {props.addRoom}
+					editRoom = {props.editRoom}
+					deleteRoom = {props.deleteRoom}
+					addReceptionist = {props.addReceptionist}
                 />
 			)}
 			{props.userType === "maintainer" && (
