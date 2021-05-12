@@ -516,13 +516,13 @@ export const Main = () => {
 		event.preventDefault();
 		let hotelRoomTypeId = event.target.elements["roomType"].value;
 		let roomNo = event.target.elements["roomNo"].value;
-		if(hotelRoomTypeId !== 'none'){
+		if (hotelRoomTypeId !== "none") {
 			let body = {
-				hotelRoomTypeId : hotelRoomTypeId,
-				hotelId : hotels._id,
-				hotelAdminId : userId,
-				roomNo : roomNo
-			}
+				hotelRoomTypeId: hotelRoomTypeId,
+				hotelId: hotels._id,
+				hotelAdminId: userId,
+				roomNo: roomNo,
+			};
 			console.log(body);
 			axios({
 				method: "POST",
@@ -531,19 +531,18 @@ export const Main = () => {
 					usertype: userType,
 					usersecret: secret,
 				},
-				data : body
+				data: body,
 			})
-			.then((response) => {
-				if(response.data.success){
-					alert(response.data.success);
-				}
-				else{
-					alert(response.data.failure);
-				}
-			})
-			.catch((err) => {
+				.then((response) => {
+					if (response.data.success) {
+						alert(response.data.success);
+					} else {
+						alert(response.data.failure);
+					}
+				})
+				.catch((err) => {
 					console.log(err);
-			});
+				});
 		}
 	};
 
@@ -575,10 +574,9 @@ export const Main = () => {
 			data: body,
 		})
 			.then((response) => {
-				if(response.data.success){
+				if (response.data.success) {
 					alert(response.data.success);
-				}
-				else{
+				} else {
 					alert(response.data.failure);
 				}
 			})
@@ -589,30 +587,28 @@ export const Main = () => {
 		event.preventDefault();
 		// let hotelRoomTypeId = event.target.elements["hotelRoomType"].value;
 		// let roomId = event.target.elements["room_id"].value;
-	}
+	};
 
 	const deleteRoom = (roomId) => {
-		
 		axios({
-			method : "DELETE",
-			url : baseUrl + '/hotelAdministration/deleteRoom/'+roomId+'/?'+roomId,
-			headers : {
-				hotelId : hotels._id,
-				usertype : userType,
-				usersecret : secret,
-				hotelAdminId : userId
-			}
+			method: "DELETE",
+			url: baseUrl + "/hotelAdministration/deleteRoom/" + roomId + "/?" + roomId,
+			headers: {
+				hotelId: hotels._id,
+				usertype: userType,
+				usersecret: secret,
+				hotelAdminId: userId,
+			},
 		})
-		.then((response) => {
-			if(!response.data.failure){
-				alert(response.data);
-			}
-			else{
-				alert(response.data.failure);
-			}
-		})
-		.catch((error) => console.log(error));
-	}
+			.then((response) => {
+				if (!response.data.failure) {
+					alert(response.data);
+				} else {
+					alert(response.data.failure);
+				}
+			})
+			.catch((error) => console.log(error));
+	};
 
 	const addReceptionist = (event) => {
 		event.preventDefault();
@@ -622,34 +618,32 @@ export const Main = () => {
 		let password = event.target.elements["password"].value;
 
 		let body = {
-			firstName : firstname,
-			lastName : lastname,
-			email : email,
-			password : password,
-			hotelId : hotels._id,
-			hotelAdminId : userId
-		}
+			firstName: firstname,
+			lastName: lastname,
+			email: email,
+			password: password,
+			hotelId: hotels._id,
+			hotelAdminId: userId,
+		};
 
 		axios({
-			method : "POST",
-			url : baseUrl + '/hotelAdministration/addReceptionist',
-			headers : {
-				usertype : userType,
-				usersecret : secret,
+			method: "POST",
+			url: baseUrl + "/hotelAdministration/addReceptionist",
+			headers: {
+				usertype: userType,
+				usersecret: secret,
 			},
-			data : body
+			data: body,
 		})
-		.then((response) => {
-			if(response.data.success){
-				alert(response.data.success);
-			}
-			else{
-				alert(response.data.failure);
-			}
-		})
-		.catch((err) => console.log(err));
-
-	}
+			.then((response) => {
+				if (response.data.success) {
+					alert(response.data.success);
+				} else {
+					alert(response.data.failure);
+				}
+			})
+			.catch((err) => console.log(err));
+	};
 
 	const hotelWithId = ({ match }) => {
 		return (
@@ -704,8 +698,7 @@ export const Main = () => {
 			.then((response) => {
 				if (response.data.success) {
 					alert("Room Booked Successfully!");
-				}
-				console.log(response.data);
+				} else alert(response.data.failure);
 			})
 			.catch((err) => console.log(err));
 	};
@@ -740,9 +733,9 @@ export const Main = () => {
 									addRoomType={addRoomType}
 									addRoom={addRoom}
 									bookRoom={bookRoom}
-									editRoom = {editRoom}
-									deleteRoom = {deleteRoom}
-									addReceptionist = {addReceptionist}
+									editRoom={editRoom}
+									deleteRoom={deleteRoom}
+									addReceptionist={addReceptionist}
 								/>
 							);
 						}}
