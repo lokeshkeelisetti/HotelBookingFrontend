@@ -78,6 +78,18 @@ export const Profile = () => {
 		name =
 			userInfo.customerDetails.name.firstName + " " + userInfo.customerDetails.name.lastName;
 		email = userInfo.customerDetails.email;
+	} else if (userInfo.type === "receptionist") {
+		name =
+			userInfo.receptionistDetails.name.firstName +
+			" " +
+			userInfo.receptionistDetails.name.lastName;
+		email = userInfo.receptionistDetails.email;
+	} else if (userInfo.type === "hotelAdministration") {
+		name =
+			userInfo.hotelAdminDetails.name.firstName +
+			" " +
+			userInfo.hotelAdminDetails.name.lastName;
+		email = userInfo.hotelAdminDetails.email;
 	}
 
 	return (

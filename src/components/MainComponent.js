@@ -740,10 +740,9 @@ export const Main = () => {
 			}
 		})
 		.then((response) => {
-			console.log(response);
 			if(response.data.success){
 				findMyDetails();
-				console.log(response.data);
+				alert(response.data.success);
 			}
 			else{
 				alert(response.data.failure);

@@ -95,21 +95,30 @@ export const RenderRooms = ({
 			(hotelRoomType) => hotelRoomType._id === room.hotelRoomTypeId
 		)[0];
 		return (
-			<ListGroupItem key={room._id}>
+			<ListGroupItem
+				key={room._id}
+				style={{ margin: "10px", width: "100%", fontFamily: "Ubuntu" }}
+			>
 				<Media>
 					<Media className="mr-2" left href="#">
-						<Media object src={hotelRoomType.imgURLs[0]} alt="hotelRoomImage" />
+						<Media
+							object
+							src={hotelRoomType.imgURLs[0]}
+							alt="hotelRoomImage"
+							style={{ height: "300px", width: "500px" }}
+						/>
 					</Media>
 					{ (
 						<Media body>
 							<Media heading>Room No: {room.roomNo}</Media>
 							<p>Hotel Room type :{hotelRoomType.type}</p>
-							<h2>Facilities</h2>
+							<h4>Facilities</h4>
 							<ul>
 								<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
 								{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li>}
 								<li>No.of People {hotelRoomType.facilities.max_no_of_people}</li>
 							</ul>
+							<br />
 							<Button
 								className="bg bg-danger ml-4"
 								color="danger"

@@ -32,10 +32,10 @@ export const Footer = () => {
 						</address>
 					</div>
 					<div className="col-12 col-sm-4 align-self-center">
-						<div className="text-center" class="icons">
+						<div className="text-center" class="icons" style={{ color: "white"}}>
 							<a
 								className="btn btn-social-icon btn-facebook"
-								href="http://www.facebook.com/profile.php?id="
+								href="http://www.facebook.com/"
 							>
 								<i className="fa fa-facebook"></i>
 							</a>
