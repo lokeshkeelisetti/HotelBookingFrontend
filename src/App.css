@@ -7,7 +7,7 @@
 }
 
 .searchForm input {
-	border-radius: 0;
+	border-radius: 10px;
 }
 
 .userIcon {
@@ -178,4 +178,24 @@ input[type="date"]:after {
 .contactform Input{
 	border:none;
 	border-left: 2px solid rgb(236, 23, 81) !important;
+}
+
+
+#location{
+	position: relative;
+	left:-15px;
+}
+
+.searchForm Button{
+background-color: white !important;
+border-color: white !important;
+color: rgb(236, 23, 81) !important;
+position: relative;
+left:10px;
+border-radius: 10px;
+}
+
+.searchForm Button:hover{
+	background-color: rgb(236, 23, 81) !important;
+	color: white !important;
 }
