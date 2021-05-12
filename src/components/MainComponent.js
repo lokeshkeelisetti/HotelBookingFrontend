@@ -22,7 +22,7 @@ export const Main = () => {
 	const [previousBookings, setpreviousBookings] = useState([]);
 	const [upcomingBookings, setupcomingBookings] = useState([]);
 	const [availableRooms, setavailableRooms] = useState([]);
-	const [rooms, setrooms] = useState([]);
+	const [rooms] = useState([]);
 	const [hotelAdmins, sethotelAdmins] = useState([]);
 	const [hotels, sethotels] = useState([]);
 	const [hotelRoomTypes, sethotelRoomTypes] = useState([]);

@@ -1,16 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-	Card,
-	CardImg,
-	CardBody,
-	CardTitle,
-	CardSubtitle,
-	CardText,
-	Button,
-	Row,
-	Container,
-} from "reactstrap";
+// import { Link } from "react-router-dom";
+import { Card, CardImg, CardBody, CardTitle, CardText, Button, Row, Container } from "reactstrap";
 import Rating from "@material-ui/lab/Rating";
 import { BiRupee } from "react-icons/bi";
 import { BsPeopleFill } from "react-icons/bs";
@@ -30,11 +20,11 @@ const RenderHotels = ({
 	return hotelRoomTypes.map((hotelRoomType) => {
 		console.log(hotelRoomType.imgURLs);
 		return (
-			(hotels[hotelRoomType.hotelId].name.toLowerCase().indexOf(keyWord.toLowerCase()) !=
+			(hotels[hotelRoomType.hotelId].name.toLowerCase().indexOf(keyWord.toLowerCase()) !==
 				-1 ||
 				hotels[hotelRoomType.hotelId].address.street
 					.toLowerCase()
-					.indexOf(keyWord.toLowerCase()) != -1 ||
+					.indexOf(keyWord.toLowerCase()) !== -1 ||
 				hotels[hotelRoomType.hotelId].address.city
 					.toLowerCase()
 					.indexOf(keyWord.toLowerCase()) !== -1) && (
