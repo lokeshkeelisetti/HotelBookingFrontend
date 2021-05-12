@@ -31,7 +31,7 @@ export const RenderRoomTypes = ({
 					</Media>
 					{isEditing !== hotelRoomType._id ? (
 						<Media body>
-							<Media heading>HotelRoomType {hotelRoomType.type}</Media>
+							<Media heading> {hotelRoomType.type}</Media>
 							<h2>Facilities</h2>
 							<ul>
 								<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
@@ -111,7 +111,7 @@ export const RenderRooms = ({
 					{ (
 						<Media body>
 							<Media heading>Room No: {room.roomNo}</Media>
-							<p>Hotel Room type :{hotelRoomType.type}</p>
+							<p>{hotelRoomType.type}</p>
 							<h4>Facilities</h4>
 							<ul>
 								<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>

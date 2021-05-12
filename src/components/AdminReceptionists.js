@@ -121,7 +121,7 @@ export const AdminReceptionists = ({ receptionists, addReceptionist, deleteRecep
 								className="bg-primary"
 								color="primary"
 							>
-								Add hotel
+								Add Receptionist
 							</Button>
 						</Form>
 					</Container>
