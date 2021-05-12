@@ -54,3 +54,13 @@ Following technologies are used while making the project.
 
 ## Website Link
 The website is hosted at [website](https://hotel-booking-portal.netlify.app/)
+
+
+## Developers
+This project is developed by 
+1. [keelisetti lokesh](https://github.com/lokeshkeelisetti)
+2. [Satya Bhagavan](https://github.com/satyabhagavan)
+3. [Kushaan Gowda](https://github.com/kushaangowda)
+4. [Abhinav Reddy](https://github.com/)
+5. [Rohit Banga](https://github.com/RohitBanga3)
+5. [Nunemunthala Shiva](https://github.com/nunemunthalashiva)
