@@ -698,7 +698,7 @@ export const Main = () => {
 			.then((response) => {
 				if (response.data.success) {
 					alert("Room Booked Successfully!");
-				} else alert(response.data.failure);
+				} else alert("SOrry, Room Not Availabale");
 			})
 			.catch((err) => console.log(err));
 	};
