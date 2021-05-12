@@ -61,7 +61,7 @@ export const RenderRooms = ({
 								color="warning"
 								onClick={() => handleEdit(room._id)}
 							>
-								<span className="fa fa-pencil"></span>Edit
+								<span className="fa fa-pencil"></span>
 							</Button>
 							<Button
 								className="bg bg-danger ml-4"
