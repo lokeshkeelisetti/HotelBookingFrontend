@@ -374,7 +374,7 @@ export const Main = () => {
 				sethotelRoomTypes(response.data.hotelRoomTypes);
 				sethotelRooms(response.data.hotelRooms);
 				setreceptionists(response.data.receptionists);
-			} else if (userType1 == "receptionist"){
+			} else if (userType1 === "receptionist"){
 				setisLoggedin(true);
 				setuserType(userType1);
 				setuserId(userId1);
