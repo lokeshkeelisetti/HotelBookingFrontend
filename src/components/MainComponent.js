@@ -149,7 +149,10 @@ export const Main = () => {
 			sethotelRoomTypes(userDetails.hotelRoomTypes);
 			sethotelRooms(userDetails.hotelRooms);
 			setreceptionists(userDetails.receptionists);
-		} else {
+		} else if(type === "receptionist") {
+			setuserInfo(userDetails.receptionistDetails);
+		}
+		 else {
 			setuserType("");
 			setuserId("");
 			setsecret("");
@@ -364,7 +367,6 @@ export const Main = () => {
 			} else if (userType1 === "hotelAdministration") {
 				setisLoggedin(true);
 				setuserType(userType1);
-				setuserId(userType1);
 				setuserId(userId1);
 				setsecret(secret1);
 				setuserInfo(response.data.hotelAdminDetails);
@@ -372,6 +374,12 @@ export const Main = () => {
 				sethotelRoomTypes(response.data.hotelRoomTypes);
 				sethotelRooms(response.data.hotelRooms);
 				setreceptionists(response.data.receptionists);
+			} else if (userType1 == "receptionist"){
+				setisLoggedin(true);
+				setuserType(userType1);
+				setuserId(userId1);
+				setsecret(secret1);
+				setuserInfo(response.data.receptionistDetails);
 			}
 		} else if (response.data.failure) {
 			console.log(response.data);
