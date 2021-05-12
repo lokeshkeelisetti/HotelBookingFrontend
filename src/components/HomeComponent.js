@@ -13,7 +13,6 @@ import {
 	Form,
 	Button,
 	Table,
-	Row,
 	Nav,
 	NavLink,
 	NavItem,
@@ -82,73 +81,101 @@ const RenderAdmin = (props) => {
 	);
 };
 
-const RenderAvailableRooms = ({filter}) => {
+const RenderAvailableRooms = () => {
+	const [bookings, setBookings] = useState([]);
 
-	const [bookings,setBookings] = useState([]);
-
-	const [tempbookings,setTempBookings] = useState([]);
+	const [tempbookings, setTempBookings] = useState([]);
 
 	const getBookings = () => {
-		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+		let userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
 		axios({
-			method : "GET",
-			url : baseUrl + '/receptionist/getBookings',
-			headers : {
-				usertype : userDetails.type,
-				usersecret : userDetails.secret
+			method: "POST",
+			url: baseUrl + "/receptionist/getBookings",
+			headers: {
+				usertype: userDetails.type,
+				usersecret: userDetails.secret,
 			},
-			data : {
-				receptionistId : userDetails.id,
-				hotelId : userDetails.hotel._id
-			}
+			data: {
+				receptionistId: userDetails.id,
+				hotelId: userDetails.hotel._id,
+			},
 		})
-		.then((response) => {
-			if(!response.data.failure){
-				setBookings(response.data)
-			}
-		})
-		.catch((error) => {
-			console.log(error);
-		})
-	}
+			.then((response) => {
+				if (!response.data.failure) {
+					setBookings(response.data);
+					setTempBookings(response.data);
+					console.log(response.data);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 
 	useEffect(() => {
-
 		getBookings();
-	})
+	}, []);
 
 	const confirmBooking = (id) => {
-		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+		let userDetails = JSON.parse(localStorage.getItem("userDetails"));
+		console.log(userDetails.type);
+		console.log(userDetails.secret);
 		axios({
-			method : "PUT",
-			url : baseUrl + '/receptionist/updateStatus/'+id+'/?'+id,
-			headers : {
-				usertype : userDetails.type,
-				secret : userDetails.secret
+			method: "PUT",
+			url: baseUrl + "/receptionist/updateStatus/" + id,
+			headers: {
+				usertype: userDetails.type,
+				usersecret: userDetails.secret,
 			},
-			data : {
-				receptionistId : userDetails.id,
-				hotelId : userDetails.hotel._id
-			}
+			data: {
+				receptionistId: userDetails.id,
+				hotelId: userDetails.hotel._id,
+			},
 		})
-		.then((response) => {
-			if(response.data.success){
-				getBookings();
-			}
-			else{
-				alert(response.data.failure);
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-		})
-	}
+			.then((response) => {
+				if (response.data.success) {
+					getBookings();
+				} else {
+					alert(response.data.failure);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
-	setTempBookings(bookings.filter((booking) => booking._id.indexOf(filter)!== -1 || booking.customerId.indexOf(filter) !== -1),);
+	const handleTempBooking = (filter) => {
+		setTempBookings(
+			bookings.filter((booking) => {
+				return (
+					String(booking._id).indexOf(filter) !== -1 ||
+					String(booking.customerId).indexOf(filter) !== -1
+				);
+			})
+		);
+	};
 
 	return (
 		<div>
+			<Jumbotron>
+				<Container>
+					<h3>Welcome to Hotel</h3>
+					<Form>
+						<FormGroup>
+							<Input
+								type="text"
+								name="filterBy"
+								placeholder="Enter Customer ID or Booking ID"
+								onChange={(event) => {
+									console.log(event.target.value);
+									handleTempBooking(event.target.value);
+								}}
+							/>
+						</FormGroup>
+					</Form>
+				</Container>
+			</Jumbotron>
 			<Table responsive>
 				<thead>
 					<tr>
@@ -160,15 +187,33 @@ const RenderAvailableRooms = ({filter}) => {
 				</thead>
 				<tbody>
 					{tempbookings.map((booking) => {
-						return(
+						return (
 							<tr key={booking._id}>
 								<td>{booking._id}</td>
-								<td>{booking.customer_id}</td>
-								<td>{booking.duration}</td>
-								<td><Button className="btn btn-success" onClick={() => confirmBooking(booking._id)}><span class="fa fa-ticket"></span></Button></td>
+								<td>{booking.customerId}</td>
+								<td>
+									{String(booking.duration.startDate).slice(0, 10) +
+										" to " +
+										String(booking.duration.endDate).slice(0, 10)}
+								</td>
+								<td>
+									<Button
+										className="btn btn-success"
+										onClick={() => confirmBooking(booking._id)}
+									>
+										<span class="fa fa-ticket"></span>
+									</Button>
+								</td>
 							</tr>
-						)
+						);
 					})}
+					{tempbookings.length === 0 && (
+						<p>
+							<br />
+							<br />
+							No Bookings Available
+						</p>
+					)}
 				</tbody>
 			</Table>
 		</div>
@@ -220,7 +265,6 @@ export const Home = (props) => {
 	const [keyWord, setkeyWord] = useState("");
 	const [sortedHotelRoomTypes, setsortedHotelRoomTypes] = useState([]);
 	const [sortedHotels, setsortedHotels] = useState([]);
-	const [filter,setFilter] = useState("");
 
 	const handleSearchHotel = (event) => {
 		setNoSearch(false);
@@ -353,22 +397,9 @@ export const Home = (props) => {
 				</div>
 			)}
 			{props.userType === "receptionist" && (
-				<div className="mt-5">
-					<Jumbotron>
-						<Container>
-							<h3>Welcome to Hotel</h3>
-							<Form onSubmit={(event) => setFilter(event.target.elements["filterBy"].value)}>
-								<FormGroup>
-									<Input type="text" id="filterBy" name="filterBy" placeholder="enter customer id or booking id"/>
-								</FormGroup>
-								<Button type="submit">Check Booking</Button>
-							</Form>
-						</Container>
-					</Jumbotron>
+				<div className="mt-5 pt-5 pb-5">
 					<Container style={{ minHeight: "30vh" }}>
-						<Row className="mt-5 mb-5">
-							<RenderAvailableRooms filter={filter} />
-						</Row>
+						<RenderAvailableRooms />
 					</Container>
 				</div>
 			)}
