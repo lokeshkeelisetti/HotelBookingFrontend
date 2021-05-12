@@ -27,6 +27,7 @@ import baseUrl from "../shared/baseUrl";
 import classnames from "classnames";
 import { AdminRoom } from "./AdminRoomComponent";
 import { AdminReceptionists } from "./AdminReceptionists";
+import { get } from "jquery";
 
 const RenderAdmin = (props) => {
 	const [activeTab, setActiveTab] = useState("1");
@@ -86,7 +87,7 @@ const RenderAvailableRooms = () => {
 
 	const [bookings,setBookings] = useState([]);
 
-	useEffect(() => {
+	const getBookings = () => {
 		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
 		axios({
@@ -109,8 +110,39 @@ const RenderAvailableRooms = () => {
 		.catch((error) => {
 			console.log(error);
 		})
+	}
 
+	useEffect(() => {
+
+		getBookings();
 	})
+
+	const confirmBooking = (id) => {
+		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+		axios({
+			method : "PUT",
+			url : baseUrl + '/receptionist/updateStatus/'+id+'/?'+id,
+			headers : {
+				usertype : userDetails.type,
+				secret : userDetails.secret
+			},
+			data : {
+				receptionistId : userDetails.id,
+				hotelId : userDetails.hotel._id
+			}
+		})
+		.then((response) => {
+			if(response.data.success){
+				getBookings();
+			}
+			else{
+				alert(response.data.failure);
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+		})
+	}
 
 
 	return (
@@ -131,7 +163,7 @@ const RenderAvailableRooms = () => {
 								<td>{booking._id}</td>
 								<td>{booking.customer_id}</td>
 								<td>{booking.duration}</td>
-								<td><Button className="btn btn-success"><span class="fa fa-ticket"></span></Button></td>
+								<td><Button className="btn btn-success" onClick={() => confirmBooking(booking._id)}><span class="fa fa-ticket"></span></Button></td>
 							</tr>
 						)
 					})}
@@ -317,7 +349,7 @@ export const Home = (props) => {
 				</div>
 			)}
 			{props.userType === "receptionist" && (
-				<div>
+				<div className="mt-5">
 					<Jumbotron>
 						<Container>
 							<h3>Welcome to Hotel</h3>
@@ -331,7 +363,7 @@ export const Home = (props) => {
 					</Jumbotron>
 					<Container style={{ minHeight: "30vh" }}>
 						<Row className="mt-5 mb-5">
-							<RenderAvailableRooms bookings={props.previousBookings} />
+							<RenderAvailableRooms />
 						</Row>
 					</Container>
 				</div>
