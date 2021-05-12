@@ -202,6 +202,7 @@ export const Home = (props) => {
 				onExited={() => setAnimating(false)}
 				key={process.env.PUBLIC_URL + item.src}
 			>
+				{/* , */}
 				<img
 					style={{ width: "100%", height: "60vh" }}
 					src={process.env.PUBLIC_URL + item.src}
