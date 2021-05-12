@@ -668,7 +668,7 @@ export const Main = () => {
 			.then((response) => {
 				if (response.data.success) {
 					alert("Booking Cancelled Successfully!");
-				}
+				} else alert("Unable to cancel booking, please try again later.");
 				console.log(response.data);
 			})
 			.catch((err) => console.log(err));

@@ -54,7 +54,7 @@ export const RenderPreviousBookings = (props) => {
 
 export const PreviousBookings = (props) => {
 	return (
-		<Container className="mt-5 pt-5">
+		<Container className="mt-5 pt-5 pb-5">
 			<Row>
 				<RenderPreviousBookings bookings={props.bookings} />
 				{props.bookings.length === 0 && <h1>No previous Bookings</h1>}

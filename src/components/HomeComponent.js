@@ -67,25 +67,27 @@ const RenderAdmin = (props) => {
 					</NavLink>
 				</NavItem>
 			</Nav>
-            <TabContent activeTab={activeTab}>
-                    <TabPane tabId="1">
-                        <AdminRoom rooms={props.rooms}
-                            addRoomType = {props.addRoomType}
-                            hotelRoomTypes = {props.hotelRoomTypes}
-                            addRoom = {props.addRoom}
-							deleteRoom = {props.deleteRoom}
-							editRoom = {props.editRoom}
-                        />
-                    </TabPane>
-                    <TabPane tabId="2">
-                        <AdminReceptionists receptionists={props.receptionists}
-							addReceptionist = {props.addReceptionist}	
-						/>
-                    </TabPane>
-            </TabContent>
-        </div>
-    )
-}
+			<TabContent activeTab={activeTab}>
+				<TabPane tabId="1">
+					<AdminRoom
+						rooms={props.rooms}
+						addRoomType={props.addRoomType}
+						hotelRoomTypes={props.hotelRoomTypes}
+						addRoom={props.addRoom}
+						deleteRoom={props.deleteRoom}
+						editRoom={props.editRoom}
+					/>
+				</TabPane>
+				<TabPane tabId="2">
+					<AdminReceptionists
+						receptionists={props.receptionists}
+						addReceptionist={props.addReceptionist}
+					/>
+				</TabPane>
+			</TabContent>
+		</div>
+	);
+};
 
 const RenderAvailableRooms = (props) => {
 	return (
@@ -228,7 +230,8 @@ export const Home = (props) => {
 										type="text"
 										id="location"
 										name="location"
-										placeholder="Search by City or Hotel"
+										placeholder="Search by City, Street or Hotel"
+										style={{ minWidth: "300px" }}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -327,15 +330,16 @@ export const Home = (props) => {
 				</div>
 			)}
 			{props.userType === "hotelAdministration" && (
-				<RenderAdmin rooms={props.hotelRooms} 
-                    receptionists={props.receptionists} 
-                    addRoomType={props.addRoomType}
-                    hotelRoomTypes = {props.hotelRoomTypes}
-                    addRoom = {props.addRoom}
-					editRoom = {props.editRoom}
-					deleteRoom = {props.deleteRoom}
-					addReceptionist = {props.addReceptionist}
-                />
+				<RenderAdmin
+					rooms={props.hotelRooms}
+					receptionists={props.receptionists}
+					addRoomType={props.addRoomType}
+					hotelRoomTypes={props.hotelRoomTypes}
+					addRoom={props.addRoom}
+					editRoom={props.editRoom}
+					deleteRoom={props.deleteRoom}
+					addReceptionist={props.addReceptionist}
+				/>
 			)}
 			{props.userType === "maintainer" && (
 				<MaintainerHotels
