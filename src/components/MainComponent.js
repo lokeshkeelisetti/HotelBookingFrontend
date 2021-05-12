@@ -236,8 +236,8 @@ export const Main = () => {
 							setuserId(userId1);
 							setsecret(secret1);
 							setuserInfo(userInfo1);
-							sethotelAdmins(response[0].data);
 							sethotels(response[1].data);
+							sethotelAdmins(response[0].data);	
 						})
 					)
 					.catch((err) => console.log(err));
