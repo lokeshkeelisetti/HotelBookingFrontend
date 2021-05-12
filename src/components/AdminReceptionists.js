@@ -3,7 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from "reactstrap
 import classnames from "classnames";
 import { Input, FormGroup, Form, Button, Container, Table } from "reactstrap";
 
-export const AdminReceptionists = ({receptionists}) => {
+export const AdminReceptionists = ({receptionists,addReceptionist}) => {
 	const [activeTab, setActiveTab] = useState("1");
 
 	const toggle = (tab) => {
@@ -46,18 +46,18 @@ export const AdminReceptionists = ({receptionists}) => {
 										<th>receptionists id</th>
 										<th>Name</th>
 										<th>Email</th>
-										<th>Edit</th>
+										<th>Delete</th>
 									</tr>
 								</thead>
 								<tbody>
 									{receptionists.map((receptionist) => {
 										return (
 											<tr>
-												<td>{receptionist.id}</td>
-												<td>{receptionist.name}</td>
+												<td>{receptionist._id}</td>
+												<td>{receptionist.name.firstName}</td>
 												<td>{receptionist.email}</td>
 												<td>
-													<span class="fa fa-trash"></span>
+													<Button className="btn btn-danger"><span class="fa fa-trash"></span></Button>
 												</td>
 											</tr>
 										);
@@ -73,11 +73,12 @@ export const AdminReceptionists = ({receptionists}) => {
 						<br />
 						<br />
 						{/* Form for adding recpetionist */}
-						<Form>
+						<Form onSubmit={addReceptionist}>
 							<FormGroup>
 								<Input
 									type="text"
-									id="receptionistFirstName"
+									id="firstname"
+									name="firstname"
 									placeholder="enter first name of receptionist"
 									className="col-md-6"
 								/>
@@ -85,7 +86,7 @@ export const AdminReceptionists = ({receptionists}) => {
 							<FormGroup>
 								<Input
 									type="text"
-									id="receptionistLastName"
+									id="lastname"
 									placeholder="enter last name of receptionist"
 									className="col-md-6"
 								/>
@@ -93,7 +94,7 @@ export const AdminReceptionists = ({receptionists}) => {
 							<FormGroup>
 								<Input
 									type="email"
-									id="receptionistEmail"
+									id="email"
 									placeholder="enter email of receptionist"
 									className="col-md-6"
 								/>
@@ -101,7 +102,8 @@ export const AdminReceptionists = ({receptionists}) => {
 							<FormGroup>
 								<Input
 									type="password"
-									id="receptionistPassword"
+									id="password"
+									name="password"
 									placeholder="enter password for receptionist"
 									className="col-md-6"
 								/>

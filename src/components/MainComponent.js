@@ -514,16 +514,16 @@ export const Main = () => {
 
 	const addRoom = (event) => {
 		event.preventDefault();
-		let hotelRoomTypeId = event.target.elements["roomType"];
-		let roomNo = event.target.elements["roomNo"];
-		if (hotelRoomTypeId !== "none") {
+		let hotelRoomTypeId = event.target.elements["roomType"].value;
+		let roomNo = event.target.elements["roomNo"].value;
+		if(hotelRoomTypeId !== 'none'){
 			let body = {
-				hotelRoomTypeId: hotelRoomTypeId,
-				hotelId: hotels._id,
-				hotelAdminId: userId,
-				roomNo: roomNo,
-			};
-
+				hotelRoomTypeId : hotelRoomTypeId,
+				hotelId : hotels._id,
+				hotelAdminId : userId,
+				roomNo : roomNo
+			}
+			console.log(body);
 			axios({
 				method: "POST",
 				url: baseUrl + "/hotelAdministration/addRoom",
@@ -531,14 +531,19 @@ export const Main = () => {
 					usertype: userType,
 					usersecret: secret,
 				},
-				data: body,
+				data : body
 			})
-				.then((response) => {
-					console.log(response);
-				})
-				.catch((err) => {
+			.then((response) => {
+				if(response.data.success){
+					alert(response.data.success);
+				}
+				else{
+					alert(response.data.failure);
+				}
+			})
+			.catch((err) => {
 					console.log(err);
-				});
+			});
 		}
 	};
 
@@ -570,10 +575,81 @@ export const Main = () => {
 			data: body,
 		})
 			.then((response) => {
-				console.log(response);
+				if(response.data.success){
+					alert(response.data.success);
+				}
+				else{
+					alert(response.data.failure);
+				}
 			})
 			.catch((err) => console.log(err));
 	};
+
+	const editRoom = (event) => {
+		event.preventDefault();
+		// let hotelRoomTypeId = event.target.elements["hotelRoomType"].value;
+		// let roomId = event.target.elements["room_id"].value;
+	}
+
+	const deleteRoom = (roomId) => {
+		
+		axios({
+			method : "DELETE",
+			url : baseUrl + '/hotelAdministration/deleteRoom/'+roomId+'/?'+roomId,
+			headers : {
+				hotelId : hotels._id,
+				usertype : userType,
+				usersecret : secret,
+				hotelAdminId : userId
+			}
+		})
+		.then((response) => {
+			if(!response.data.failure){
+				alert(response.data);
+			}
+			else{
+				alert(response.data.failure);
+			}
+		})
+		.catch((error) => console.log(error));
+	}
+
+	const addReceptionist = (event) => {
+		event.preventDefault();
+		let firstname = event.target.elements["firstname"].value;
+		let lastname = event.target.elements["lastname"].value;
+		let email = event.target.elements["email"].value;
+		let password = event.target.elements["password"].value;
+
+		let body = {
+			firstName : firstname,
+			lastName : lastname,
+			email : email,
+			password : password,
+			hotelId : hotels._id,
+			hotelAdminId : userId
+		}
+
+		axios({
+			method : "POST",
+			url : baseUrl + '/hotelAdministration/addReceptionist',
+			headers : {
+				usertype : userType,
+				usersecret : secret,
+			},
+			data : body
+		})
+		.then((response) => {
+			if(response.data.success){
+				alert(response.data.success);
+			}
+			else{
+				alert(response.data.failure);
+			}
+		})
+		.catch((err) => console.log(err));
+
+	}
 
 	const hotelWithId = ({ match }) => {
 		return (
@@ -664,6 +740,9 @@ export const Main = () => {
 									addRoomType={addRoomType}
 									addRoom={addRoom}
 									bookRoom={bookRoom}
+									editRoom = {editRoom}
+									deleteRoom = {deleteRoom}
+									addReceptionist = {addReceptionist}
 								/>
 							);
 						}}
