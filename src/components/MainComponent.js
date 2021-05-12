@@ -348,7 +348,6 @@ export const Main = () => {
 					} else if (userType1 === "hotelAdministration") {
 						setisLoggedin(true);
 						setuserType(userType1);
-						setuserId(userType1);
 						setuserId(userId1);
 						setsecret(secret1);
 						setuserInfo(response.data.hotelAdminDetails);
@@ -652,15 +651,15 @@ export const Main = () => {
 	}
 
 	const deleteReceptionist = (id) => {
+		console.log(userId,hotels._id);
 		axios({
 			method : "DELETE",
-			url : baseUrl + '/hotelAdministration/removeReceptionist/'+id+'/?'+id,
+			url : baseUrl + '/hotelAdministration/removeReceptionist/'+id+'/?id='+id,
 			headers : {
 				usertype : userType,
 				usersecret : secret,
 				hoteladminid : userId,
 				hotelId : hotels._id,
-				hotelid : hotels._id
 			}
 		})
 		.then((response) => {
