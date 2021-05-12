@@ -3,11 +3,11 @@ import { CardText, Container, Row, Card, CardImg, CardBody, CardTitle, Button } 
 import { BiRupee } from "react-icons/bi";
 import { BsPeopleFill } from "react-icons/bs";
 
-export const UpcomingBooking = ({ bookings }) => {
+export const UpcomingBooking = ({ bookings, cancelBooking }) => {
 	console.log(bookings);
 	return (
 		<Container className="mt-5 pt-5 pb-5">
-			<h2>Upcoming Bookings</h2>
+			<h2 style={{ fontFamily: "Roboto" }}>Upcoming Bookings</h2>
 			<Row>
 				{bookings.map((booking, index) => {
 					return (
@@ -70,7 +70,14 @@ export const UpcomingBooking = ({ bookings }) => {
 								<CardText style={{ marginBottom: "0px" }}>
 									Don't Forgot to bring your id
 								</CardText>
-								<Button style={{ marginTop: "10px" }}>Cancel Booking</Button>
+								<Button
+									style={{ marginTop: "10px" }}
+									onClick={() => {
+										cancelBooking(booking.id);
+									}}
+								>
+									Cancel Booking
+								</Button>
 							</CardBody>
 						</Card>
 					);

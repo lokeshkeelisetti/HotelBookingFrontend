@@ -81,6 +81,7 @@ export const Main = () => {
 			i = 0;
 			while (userDetails.pastBookings[i]) {
 				pbks[i] = {
+					id: userDetails.pastBookings[i]._id,
 					hotelName: hotelObj[userDetails.pastBookings[i].hotelId].name,
 					hotelAddress: hotelObj[userDetails.pastBookings[i].hotelId].address,
 					roomNo: hotelRoomObj[userDetails.pastBookings[i].hotelRoomId].roomNo,
@@ -108,6 +109,7 @@ export const Main = () => {
 			i = 0;
 			while (userDetails.upcomingBookings[i]) {
 				upbks[i] = {
+					id: userDetails.upcomingBookings[i]._id,
 					hotelName: hotelObj[userDetails.upcomingBookings[i].hotelId].name,
 					hotelAddress: hotelObj[userDetails.upcomingBookings[i].hotelId].address,
 					roomNo: hotelRoomObj[userDetails.upcomingBookings[i].hotelRoomId].roomNo,
@@ -277,6 +279,7 @@ export const Main = () => {
 						i = 0;
 						while (response.data.pastBookings[i]) {
 							pbks[i] = {
+								id: response.data.pastBookings[i]._id,
 								hotelName: hotelObj[response.data.pastBookings[i].hotelId].name,
 								hotelAddress:
 									hotelObj[response.data.pastBookings[i].hotelId].address,
@@ -310,6 +313,7 @@ export const Main = () => {
 						i = 0;
 						while (response.data.upcomingBookings[i]) {
 							upbks[i] = {
+								id: response.data.upcomingBookings[i]._id,
 								hotelName: hotelObj[response.data.upcomingBookings[i].hotelId].name,
 								hotelAddress:
 									hotelObj[response.data.upcomingBookings[i].hotelId].address,
@@ -678,6 +682,27 @@ export const Main = () => {
 		);
 	};
 
+	const cancelBooking = (bookingId) => {
+		console.log(bookingId);
+		axios({
+			method: "DELETE",
+			url: baseUrl + "/customer/cancelBooking/" + bookingId,
+			headers: {
+				"Content-Type": "application/json",
+				usertype: userType,
+				usersecret: secret,
+				customerId: userId,
+			},
+		})
+			.then((response) => {
+				if (response.data.success) {
+					alert("Booking Cancelled Successfully!");
+				}
+				console.log(response.data);
+			})
+			.catch((err) => console.log(err));
+	};
+
 	const bookRoom = (startDate, endDate, hotelRoomTypeId, hotelId) => {
 		var body = {
 			startDate,
@@ -761,7 +786,12 @@ export const Main = () => {
 						exact
 						path="/customer/upcomingBookings"
 						component={() => {
-							return <UpcomingBooking bookings={upcomingBookings} />;
+							return (
+								<UpcomingBooking
+									bookings={upcomingBookings}
+									cancelBooking={cancelBooking}
+								/>
+							);
 						}}
 					/>
 					<Route exact path="/contactus" component={Contactus} />
