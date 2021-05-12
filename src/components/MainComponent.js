@@ -275,72 +275,90 @@ export const Main = () => {
 
 						var upbks = [];
 						var pbks = [];
-
+						var j = 0;
 						i = 0;
-						while (response.data.pastBookings[i]) {
-							pbks[i] = {
-								id: response.data.pastBookings[i]._id,
-								hotelName: hotelObj[response.data.pastBookings[i].hotelId].name,
-								hotelAddress:
-									hotelObj[response.data.pastBookings[i].hotelId].address,
-								roomNo: hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
-									.roomNo,
-								duration: response.data.pastBookings[i].duration,
-								bookedOn: response.data.pastBookings[i].createdAt,
-								hotelRoomType:
-									hotelRoomTypeObj[
-										hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
+						while (response.data.upcomingBookings[i]) {
+							if (response.data.upcomingBookings[i].status) {
+								pbks[j] = {
+									rating: response.data.upcomingBookings[i].rating,
+									id: response.data.upcomingBookings[i]._id,
+									hotelName:
+										hotelObj[response.data.upcomingBookings[i].hotelId].name,
+									hotelAddress:
+										hotelObj[response.data.upcomingBookings[i].hotelId].address,
+									roomNo: hotelRoomObj[
+										response.data.upcomingBookings[i].hotelRoomId
+									].roomNo,
+									duration: response.data.upcomingBookings[i].duration,
+									bookedOn: response.data.upcomingBookings[i].createdAt,
+									hotelRoomType:
+										hotelRoomTypeObj[
+											hotelRoomObj[
+												response.data.upcomingBookings[i].hotelRoomId
+											].hotelRoomTypeId
+										].type,
+									price: hotelRoomTypeObj[
+										hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
 											.hotelRoomTypeId
-									].type,
-								price: hotelRoomTypeObj[
-									hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
-										.hotelRoomTypeId
-								].price,
-								facilities:
-									hotelRoomTypeObj[
-										hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
-											.hotelRoomTypeId
-									].facilities,
-								imgURLs:
-									hotelRoomTypeObj[
-										hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
-											.hotelRoomTypeId
-									].imgURLs,
-							};
+									].price,
+									facilities:
+										hotelRoomTypeObj[
+											hotelRoomObj[
+												response.data.upcomingBookings[i].hotelRoomId
+											].hotelRoomTypeId
+										].facilities,
+									imgURLs:
+										hotelRoomTypeObj[
+											hotelRoomObj[
+												response.data.upcomingBookings[i].hotelRoomId
+											].hotelRoomTypeId
+										].imgURLs,
+								};
+								j++;
+							}
 							i++;
 						}
 
 						i = 0;
 						while (response.data.upcomingBookings[i]) {
-							upbks[i] = {
-								id: response.data.upcomingBookings[i]._id,
-								hotelName: hotelObj[response.data.upcomingBookings[i].hotelId].name,
-								hotelAddress:
-									hotelObj[response.data.upcomingBookings[i].hotelId].address,
-								roomNo: hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
-									.roomNo,
-								duration: response.data.upcomingBookings[i].duration,
-								bookedOn: response.data.upcomingBookings[i].createdAt,
-								hotelRoomType:
-									hotelRoomTypeObj[
+							if (!response.data.upcomingBookings[i].status) {
+								upbks[j] = {
+									rating: response.data.upcomingBookings[i].rating,
+									id: response.data.upcomingBookings[i]._id,
+									hotelName:
+										hotelObj[response.data.upcomingBookings[i].hotelId].name,
+									hotelAddress:
+										hotelObj[response.data.upcomingBookings[i].hotelId].address,
+									roomNo: hotelRoomObj[
+										response.data.upcomingBookings[i].hotelRoomId
+									].roomNo,
+									duration: response.data.upcomingBookings[i].duration,
+									bookedOn: response.data.upcomingBookings[i].createdAt,
+									hotelRoomType:
+										hotelRoomTypeObj[
+											hotelRoomObj[
+												response.data.upcomingBookings[i].hotelRoomId
+											].hotelRoomTypeId
+										].type,
+									price: hotelRoomTypeObj[
 										hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
 											.hotelRoomTypeId
-									].type,
-								price: hotelRoomTypeObj[
-									hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
-										.hotelRoomTypeId
-								].price,
-								facilities:
-									hotelRoomTypeObj[
-										hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
-											.hotelRoomTypeId
-									].facilities,
-								imgURLs:
-									hotelRoomTypeObj[
-										hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
-											.hotelRoomTypeId
-									].imgURLs,
-							};
+									].price,
+									facilities:
+										hotelRoomTypeObj[
+											hotelRoomObj[
+												response.data.upcomingBookings[i].hotelRoomId
+											].hotelRoomTypeId
+										].facilities,
+									imgURLs:
+										hotelRoomTypeObj[
+											hotelRoomObj[
+												response.data.upcomingBookings[i].hotelRoomId
+											].hotelRoomTypeId
+										].imgURLs,
+								};
+								j++;
+							}
 							i++;
 						}
 						setpreviousBookings(pbks);
