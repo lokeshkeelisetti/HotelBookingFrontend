@@ -373,11 +373,11 @@ export const Main = () => {
 
 	const findMyDetails = () => {
 		var body = {
-			customerId: userId,
+			id: userId,
 		};
 		axios({
 			method: "POST",
-			url: baseUrl + "/customer/myDetails",
+			url: baseUrl + "/" + userType + "/myDetails",
 			headers: {
 				"Content-Type": "application/json",
 				usertype: userType,
@@ -674,27 +674,26 @@ export const Main = () => {
 	};
 
 	const deleteReceptionist = (id) => {
-		console.log(userId,hotels._id);
+		console.log(userId, hotels._id);
 		axios({
-			method : "DELETE",
-			url : baseUrl + '/hotelAdministration/removeReceptionist/'+id+'/?id='+id,
-			headers : {
-				usertype : userType,
-				usersecret : secret,
-				hoteladminid : userId,
-				hotelId : hotels._id,
-			}
+			method: "DELETE",
+			url: baseUrl + "/hotelAdministration/removeReceptionist/" + id + "/?id=" + id,
+			headers: {
+				usertype: userType,
+				usersecret: secret,
+				hoteladminid: userId,
+				hotelId: hotels._id,
+			},
 		})
-		.then((response) => {
-			if(!response.data.failure){
-				alert(response.data);
-			}
-			else{
-				alert(response.data.failure);
-			}
-		})
-		.catch((err) => console.log(err))
-	}
+			.then((response) => {
+				if (!response.data.failure) {
+					alert(response.data);
+				} else {
+					alert(response.data.failure);
+				}
+			})
+			.catch((err) => console.log(err));
+	};
 
 	const hotelWithId = ({ match }) => {
 		return (
@@ -786,10 +785,10 @@ export const Main = () => {
 									addRoomType={addRoomType}
 									addRoom={addRoom}
 									bookRoom={bookRoom}
-									editRoom = {editRoom}
-									deleteRoom = {deleteRoom}
-									addReceptionist = {addReceptionist}
-									deleteReceptionist = {deleteReceptionist}
+									editRoom={editRoom}
+									deleteRoom={deleteRoom}
+									addReceptionist={addReceptionist}
+									deleteReceptionist={deleteReceptionist}
 								/>
 							);
 						}}
