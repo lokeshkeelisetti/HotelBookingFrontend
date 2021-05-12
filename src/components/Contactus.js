@@ -25,8 +25,9 @@ export const Contactus = () => {
 					<FormGroup>
 						<Input type="text" id="personEmail" placeholder="Enter your Email" />
 					</FormGroup>
-					<Input type="password" id="query" placeholder="Enter your query" />
-					<FormGroup></FormGroup>
+					<FormGroup>
+						<Input type="text" id="query" placeholder="Enter your query" />
+					</FormGroup>
 					<Button type="submit" value="submit" className="bg-primary" color="primary">
 						Submit
 					</Button>
