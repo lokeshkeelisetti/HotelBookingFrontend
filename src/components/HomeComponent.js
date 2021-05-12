@@ -67,7 +67,7 @@ const RenderAdmin = (props) => {
 						hotelRoomTypes={props.hotelRoomTypes}
 						addRoom={props.addRoom}
 						deleteRoom={props.deleteRoom}
-						editRoom={props.editRoom}
+						editRoomType={props.editRoomType}
 					/>
 				</TabPane>
 				<TabPane tabId="2">
@@ -82,17 +82,16 @@ const RenderAdmin = (props) => {
 	);
 };
 
-const RenderAvailableRooms = ({filter}) => {
+const RenderAvailableRooms = () => {
 
 	const [bookings,setBookings] = useState([]);
 
-	const [tempbookings,setTempBookings] = useState([]);
 
 	const getBookings = () => {
 		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
 		axios({
-			method : "GET",
+			method : "POST",
 			url : baseUrl + '/receptionist/getBookings',
 			headers : {
 				usertype : userDetails.type,
@@ -145,7 +144,6 @@ const RenderAvailableRooms = ({filter}) => {
 		})
 	}
 
-	setTempBookings(bookings.filter((booking) => booking._id.indexOf(filter)!== -1 || booking.customerId.indexOf(filter) !== -1),);
 
 	return (
 		<div>
@@ -159,7 +157,7 @@ const RenderAvailableRooms = ({filter}) => {
 					</tr>
 				</thead>
 				<tbody>
-					{tempbookings.map((booking) => {
+					{bookings.map((booking) => {
 						return(
 							<tr key={booking._id}>
 								<td>{booking._id}</td>
@@ -379,10 +377,10 @@ export const Home = (props) => {
 					addRoomType={props.addRoomType}
 					hotelRoomTypes={props.hotelRoomTypes}
 					addRoom={props.addRoom}
-					editRoom={props.editRoom}
 					deleteRoom={props.deleteRoom}
 					addReceptionist={props.addReceptionist}
 					deleteReceptionist={props.deleteReceptionist}
+					editRoomType = {props.editRoomType}
 				/>
 			)}
 			{props.userType === "maintainer" && (

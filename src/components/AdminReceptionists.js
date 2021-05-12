@@ -52,7 +52,7 @@ export const AdminReceptionists = ({ receptionists, addReceptionist, deleteRecep
 								<tbody>
 									{receptionists.map((receptionist) => {
 										return (
-											<tr>
+											<tr key={receptionist._id}>
 												<td>{receptionist._id}</td>
 												<td>{receptionist.name.firstName}</td>
 												<td>{receptionist.email}</td>

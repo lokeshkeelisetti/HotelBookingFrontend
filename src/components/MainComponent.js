@@ -711,6 +711,48 @@ export const Main = () => {
 			.catch((err) => console.log(err));
 	};
 
+	const editRoomType = (event) => {
+		console.log(event);
+		event.preventDefault();
+		let price = event.target.elements["price"].value;
+		let ac_or_not =  event.target.elements["AC"].checked ? '1' : '0' ;
+		let wifi_or_not = event.target.elements["Wifi"].checked ? '1' : '0';
+		let max_no_of_people = event.target.elements["noOfPeople"].checked ? '1' : '0' ;
+		let roomTypeId = event.target.elements["hotelRoomTypeId"].value;
+
+		console.log(roomTypeId);
+
+		axios({
+			method : "PUT",
+			url : baseUrl + '/hotelAdministration/updateHotelRoomType/'+roomTypeId,
+			headers : {
+				usertype : userType,
+				usersecret : secret
+			},
+			data : {
+				price : price,
+				ac_or_not : ac_or_not,
+				wifi_or_not : wifi_or_not,
+				max_no_of_people : max_no_of_people,
+				hotelId : hotels._id,
+				hotelAdminId : userId,
+				imgURLs : []
+			}
+		})
+		.then((response) => {
+			console.log(response);
+			if(response.data.success){
+				findMyDetails();
+				console.log(response.data);
+			}
+			else{
+				alert(response.data.failure);
+			}
+		})
+		.catch((error) => console.log(error))
+
+	}
+
 	const hotelWithId = ({ match }) => {
 		return (
 			<Hotel
@@ -804,6 +846,7 @@ export const Main = () => {
 									deleteRoom={deleteRoom}
 									addReceptionist={addReceptionist}
 									deleteReceptionist={deleteReceptionist}
+									editRoomType={editRoomType}
 								/>
 							);
 						}}
