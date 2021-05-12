@@ -647,6 +647,29 @@ export const Main = () => {
 
 	}
 
+	const deleteReceptionist = (id) => {
+		axios({
+			method : "DELETE",
+			url : baseUrl + '/hotelAdministration/removeReceptionist/'+id+'/?'+id,
+			headers : {
+				usertype : userType,
+				usersecret : secret,
+				hoteladminid : userId,
+				hotelId : hotels._id,
+				hotelid : hotels._id
+			}
+		})
+		.then((response) => {
+			if(!response.data.failure){
+				alert(response.data);
+			}
+			else{
+				alert(response.data.failure);
+			}
+		})
+		.catch((err) => console.log(err))
+	}
+
 	const hotelWithId = ({ match }) => {
 		return (
 			<Hotel
@@ -718,6 +741,7 @@ export const Main = () => {
 									editRoom = {editRoom}
 									deleteRoom = {deleteRoom}
 									addReceptionist = {addReceptionist}
+									deleteReceptionist = {deleteReceptionist}
 								/>
 							);
 						}}

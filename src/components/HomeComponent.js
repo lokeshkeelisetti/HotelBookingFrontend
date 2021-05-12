@@ -79,7 +79,8 @@ const RenderAdmin = (props) => {
                     </TabPane>
                     <TabPane tabId="2">
                         <AdminReceptionists receptionists={props.receptionists}
-							addReceptionist = {props.addReceptionist}	
+							addReceptionist = {props.addReceptionist}
+							deleteReceptionist = {props.deleteReceptionist}	
 						/>
                     </TabPane>
             </TabContent>
@@ -335,6 +336,7 @@ export const Home = (props) => {
 					editRoom = {props.editRoom}
 					deleteRoom = {props.deleteRoom}
 					addReceptionist = {props.addReceptionist}
+					deleteReceptionist = {props.deleteReceptionist}
                 />
 			)}
 			{props.userType === "maintainer" && (

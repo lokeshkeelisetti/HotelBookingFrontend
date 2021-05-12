@@ -3,7 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from "reactstrap
 import classnames from "classnames";
 import { Input, FormGroup, Form, Button, Container, Table } from "reactstrap";
 
-export const AdminReceptionists = ({receptionists,addReceptionist}) => {
+export const AdminReceptionists = ({receptionists,addReceptionist,deleteReceptionist}) => {
 	const [activeTab, setActiveTab] = useState("1");
 
 	const toggle = (tab) => {
@@ -57,7 +57,7 @@ export const AdminReceptionists = ({receptionists,addReceptionist}) => {
 												<td>{receptionist.name.firstName}</td>
 												<td>{receptionist.email}</td>
 												<td>
-													<Button className="btn btn-danger"><span class="fa fa-trash"></span></Button>
+													<Button className="btn btn-danger" onClick={() => deleteReceptionist(receptionist._id)}><span class="fa fa-trash"></span></Button>
 												</td>
 											</tr>
 										);
