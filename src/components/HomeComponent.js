@@ -27,7 +27,6 @@ import baseUrl from "../shared/baseUrl";
 import classnames from "classnames";
 import { AdminRoom } from "./AdminRoomComponent";
 import { AdminReceptionists } from "./AdminReceptionists";
-import { get } from "jquery";
 
 const RenderAdmin = (props) => {
 	const [activeTab, setActiveTab] = useState("1");
@@ -117,7 +116,6 @@ const RenderAvailableRooms = ({filter}) => {
 	useEffect(() => {
 
 		getBookings();
-		setTempBookings(bookings.filter((booking) => booking._id.indexOf(filter)!== -1 || booking.customerId.indexOf(filter) !== -1));
 	})
 
 	const confirmBooking = (id) => {
@@ -146,6 +144,9 @@ const RenderAvailableRooms = ({filter}) => {
 			console.log(err);
 		})
 	}
+
+	setTempBookings(bookings.filter((booking) => booking._id.indexOf(filter)!== -1 || booking.customerId.indexOf(filter) !== -1),);
+
 	return (
 		<div>
 			<Table responsive>
