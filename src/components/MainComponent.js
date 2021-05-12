@@ -149,7 +149,10 @@ export const Main = () => {
 			sethotelRoomTypes(userDetails.hotelRoomTypes);
 			sethotelRooms(userDetails.hotelRooms);
 			setreceptionists(userDetails.receptionists);
-		} else {
+		} else if(type === "receptionist") {
+			setuserInfo(userDetails.receptionistDetails);
+		}
+		 else {
 			setuserType("");
 			setuserId("");
 			setsecret("");
@@ -183,7 +186,15 @@ export const Main = () => {
 			data: body,
 		})
 			.then((response) => {
-				playWithData(response);
+				if(response.data.failure){
+					alert(response.data.failure);
+				}
+				else if(response.data.error){
+					alert(response.data.error);
+				}
+				else{
+					playWithData(response);
+				}
 			})
 			.catch((err) => console.log(err));
 	};
@@ -228,8 +239,8 @@ export const Main = () => {
 							setuserId(userId1);
 							setsecret(secret1);
 							setuserInfo(userInfo1);
-							sethotelAdmins(response[0].data);
 							sethotels(response[1].data);
+							sethotelAdmins(response[0].data);	
 						})
 					)
 					.catch((err) => console.log(err));
@@ -356,7 +367,6 @@ export const Main = () => {
 			} else if (userType1 === "hotelAdministration") {
 				setisLoggedin(true);
 				setuserType(userType1);
-				setuserId(userType1);
 				setuserId(userId1);
 				setsecret(secret1);
 				setuserInfo(response.data.hotelAdminDetails);
@@ -364,10 +374,16 @@ export const Main = () => {
 				sethotelRoomTypes(response.data.hotelRoomTypes);
 				sethotelRooms(response.data.hotelRooms);
 				setreceptionists(response.data.receptionists);
+			} else if (userType1 == "receptionist"){
+				setisLoggedin(true);
+				setuserType(userType1);
+				setuserId(userId1);
+				setsecret(secret1);
+				setuserInfo(response.data.receptionistDetails);
 			}
-		} else if (response.data.error) {
+		} else if (response.data.failure) {
 			console.log(response.data);
-			alert(response.data.error);
+			alert(response.data.failure);
 		}
 	};
 
@@ -488,7 +504,7 @@ export const Main = () => {
 					})
 				)
 				.catch((err) => console.log(err));
-		});
+		}).catch((err) => console.log(err));
 	};
 
 	const deleteHotel = (hotelId) => {
@@ -563,6 +579,7 @@ export const Main = () => {
 			})
 				.then((response) => {
 					if (response.data.success) {
+						findMyDetails();
 						alert(response.data.success);
 					} else {
 						alert(response.data.failure);
@@ -603,6 +620,7 @@ export const Main = () => {
 		})
 			.then((response) => {
 				if (response.data.success) {
+					findMyDetails();
 					alert(response.data.success);
 				} else {
 					alert(response.data.failure);
@@ -611,11 +629,6 @@ export const Main = () => {
 			.catch((err) => console.log(err));
 	};
 
-	const editRoom = (event) => {
-		event.preventDefault();
-		// let hotelRoomTypeId = event.target.elements["hotelRoomType"].value;
-		// let roomId = event.target.elements["room_id"].value;
-	};
 
 	const deleteRoom = (roomId) => {
 		axios({
@@ -630,6 +643,7 @@ export const Main = () => {
 		})
 			.then((response) => {
 				if (!response.data.failure) {
+					findMyDetails();
 					alert(response.data);
 				} else {
 					alert(response.data.failure);
@@ -666,6 +680,7 @@ export const Main = () => {
 			.then((response) => {
 				if (response.data.success) {
 					alert(response.data.success);
+					findMyDetails();
 				} else {
 					alert(response.data.failure);
 				}
@@ -687,6 +702,7 @@ export const Main = () => {
 		})
 			.then((response) => {
 				if (!response.data.failure) {
+					findMyDetails();
 					alert(response.data);
 				} else {
 					alert(response.data.failure);
@@ -785,7 +801,6 @@ export const Main = () => {
 									addRoomType={addRoomType}
 									addRoom={addRoom}
 									bookRoom={bookRoom}
-									editRoom={editRoom}
 									deleteRoom={deleteRoom}
 									addReceptionist={addReceptionist}
 									deleteReceptionist={deleteReceptionist}

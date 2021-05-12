@@ -1,5 +1,5 @@
 import { MaintainerHotels } from "./MaintainerHotels";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Carousel,
 	CarouselItem,
@@ -12,22 +12,14 @@ import {
 	FormGroup,
 	Form,
 	Button,
-	Label,
+	Table,
 	Row,
-	Card,
-	CardBody,
-	CardImg,
-	CardTitle,
-	CardSubtitle,
-	CardText,
 	Nav,
 	NavLink,
 	NavItem,
 	TabContent,
 	TabPane,
 } from "reactstrap";
-import Rating from "@material-ui/lab/Rating";
-import { Link } from "react-router-dom";
 import items from "../shared/HomepageItems";
 import { Search } from "./SearchComponent";
 import axios from "axios";
@@ -90,30 +82,61 @@ const RenderAdmin = (props) => {
 	);
 };
 
-const RenderAvailableRooms = (props) => {
+const RenderAvailableRooms = () => {
+
+	const [bookings,setBookings] = useState([]);
+
+	useEffect(() => {
+		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+
+		axios({
+			method : "GET",
+			url : baseUrl + '/receptionist/getBookings',
+			headers : {
+				usertype : userDetails.type,
+				usersecret : userDetails.secret
+			},
+			data : {
+				receptionistId : userDetails.id,
+				hotelId : userDetails.hotel._id
+			}
+		})
+		.then((response) => {
+			if(!response.data.failure){
+				setBookings(response.data)
+			}
+		})
+		.catch((error) => {
+			console.log(error);
+		})
+
+	})
+
+
 	return (
 		<div>
-			{props.availableRooms.map((room) => {
-				return (
-					<Card key={room.id} className="col-12 col-sm-3">
-						<CardImg width="50%" src={room.image} alt="hotelImage" />
-						<CardBody>
-							<CardTitle tag="h5">{room.name}</CardTitle>
-							<Rating name="read-only" value={room.rating} readOnly />
-							<CardSubtitle tag="h6" className="mb-2 text-muted">
-								Card subtitle
-							</CardSubtitle>
-							<CardText>
-								Some quick example text to build on the card title and make up the
-								bulk of the card's content.
-							</CardText>
-							<Link to={`/hotel/${room.id}`}>
-								<Button>Book a room</Button>
-							</Link>
-						</CardBody>
-					</Card>
-				);
-			})}
+			<Table responsive>
+				<thead>
+					<tr>
+						<th>Booking id</th>
+						<th>Customer Id</th>
+						<th>Duration</th>
+						<th>Confirm Booking</th>
+					</tr>
+				</thead>
+				<tbody>
+					{bookings.map((booking) => {
+						return(
+							<tr key={booking._id}>
+								<td>{booking._id}</td>
+								<td>{booking.customer_id}</td>
+								<td>{booking.duration}</td>
+								<td><Button className="btn btn-success"><span class="fa fa-ticket"></span></Button></td>
+							</tr>
+						)
+					})}
+				</tbody>
+			</Table>
 		</div>
 	);
 };
@@ -298,34 +321,17 @@ export const Home = (props) => {
 					<Jumbotron>
 						<Container>
 							<h3>Welcome to Hotel</h3>
-							<Form
-								className="w-50 offset-1"
-								onSubmit={props.handleCheckAvailability}
-							>
+							<Form>
 								<FormGroup>
-									<Label htmlFor="timeOfStay">Duration of Stay in days</Label>
-									<Input name="timeOfStay" type="text" id="timeOfStay" />
+									<Input type="text" id="filterBy" name="filterBy" placeholder="enter customer id or booking id"/>
 								</FormGroup>
-								<FormGroup>
-									<Label htmlFor="typeOfRoom">Type Of Room</Label>
-									<Input name="typeOfRoom" type="select" id="typeOfRoom">
-										<option selected value="AC Deluxe">
-											AC Deluxe
-										</option>
-										<option selected value="Non AC Deluxe">
-											Non AC Deluxe
-										</option>
-									</Input>
-								</FormGroup>
-								<Button type="submit" className="btn btn-primary" color="primary">
-									Check Availabilty
-								</Button>
+								<Button type="submit">Check Booking</Button>
 							</Form>
 						</Container>
 					</Jumbotron>
 					<Container style={{ minHeight: "30vh" }}>
 						<Row className="mt-5 mb-5">
-							<RenderAvailableRooms availableRooms={props.availableRooms} />
+							<RenderAvailableRooms bookings={props.previousBookings} />
 						</Row>
 					</Container>
 				</div>
