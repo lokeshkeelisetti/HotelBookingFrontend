@@ -1,4 +1,4 @@
-# Hotel Booking Portal
+# Hotel Booking Portal (Frontend)
 
 ## Group P007
 
