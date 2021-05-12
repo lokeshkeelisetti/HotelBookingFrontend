@@ -183,7 +183,15 @@ export const Main = () => {
 			data: body,
 		})
 			.then((response) => {
-				playWithData(response);
+				if(response.data.failure){
+					alert(response.data.failure);
+				}
+				else if(response.data.error){
+					alert(response.data.error);
+				}
+				else{
+					playWithData(response);
+				}
 			})
 			.catch((err) => console.log(err));
 	};
@@ -365,9 +373,9 @@ export const Main = () => {
 				sethotelRooms(response.data.hotelRooms);
 				setreceptionists(response.data.receptionists);
 			}
-		} else if (response.data.error) {
+		} else if (response.data.failure) {
 			console.log(response.data);
-			alert(response.data.error);
+			alert(response.data.failure);
 		}
 	};
 
@@ -488,7 +496,7 @@ export const Main = () => {
 					})
 				)
 				.catch((err) => console.log(err));
-		});
+		}).catch((err) => console.log(err));
 	};
 
 	const deleteHotel = (hotelId) => {
@@ -563,6 +571,7 @@ export const Main = () => {
 			})
 				.then((response) => {
 					if (response.data.success) {
+						findMyDetails();
 						alert(response.data.success);
 					} else {
 						alert(response.data.failure);
@@ -603,6 +612,7 @@ export const Main = () => {
 		})
 			.then((response) => {
 				if (response.data.success) {
+					findMyDetails();
 					alert(response.data.success);
 				} else {
 					alert(response.data.failure);
@@ -611,11 +621,6 @@ export const Main = () => {
 			.catch((err) => console.log(err));
 	};
 
-	const editRoom = (event) => {
-		event.preventDefault();
-		// let hotelRoomTypeId = event.target.elements["hotelRoomType"].value;
-		// let roomId = event.target.elements["room_id"].value;
-	};
 
 	const deleteRoom = (roomId) => {
 		axios({
@@ -630,6 +635,7 @@ export const Main = () => {
 		})
 			.then((response) => {
 				if (!response.data.failure) {
+					findMyDetails();
 					alert(response.data);
 				} else {
 					alert(response.data.failure);
@@ -666,6 +672,7 @@ export const Main = () => {
 			.then((response) => {
 				if (response.data.success) {
 					alert(response.data.success);
+					findMyDetails();
 				} else {
 					alert(response.data.failure);
 				}
@@ -687,6 +694,7 @@ export const Main = () => {
 		})
 			.then((response) => {
 				if (!response.data.failure) {
+					findMyDetails();
 					alert(response.data);
 				} else {
 					alert(response.data.failure);
@@ -785,7 +793,6 @@ export const Main = () => {
 									addRoomType={addRoomType}
 									addRoom={addRoom}
 									bookRoom={bookRoom}
-									editRoom={editRoom}
 									deleteRoom={deleteRoom}
 									addReceptionist={addReceptionist}
 									deleteReceptionist={deleteReceptionist}
