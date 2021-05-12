@@ -83,9 +83,11 @@ const RenderAdmin = (props) => {
 	);
 };
 
-const RenderAvailableRooms = () => {
+const RenderAvailableRooms = ({filter}) => {
 
 	const [bookings,setBookings] = useState([]);
+
+	const [tempbookings,setTempBookings] = useState([]);
 
 	const getBookings = () => {
 		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
@@ -115,6 +117,7 @@ const RenderAvailableRooms = () => {
 	useEffect(() => {
 
 		getBookings();
+		setTempBookings(bookings.filter((booking) => booking._id.indexOf(filter)!== -1 || booking.customerId.indexOf(filter) !== -1));
 	})
 
 	const confirmBooking = (id) => {
@@ -143,8 +146,6 @@ const RenderAvailableRooms = () => {
 			console.log(err);
 		})
 	}
-
-
 	return (
 		<div>
 			<Table responsive>
@@ -157,7 +158,7 @@ const RenderAvailableRooms = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{bookings.map((booking) => {
+					{tempbookings.map((booking) => {
 						return(
 							<tr key={booking._id}>
 								<td>{booking._id}</td>
@@ -217,6 +218,7 @@ export const Home = (props) => {
 	const [keyWord, setkeyWord] = useState("");
 	const [sortedHotelRoomTypes, setsortedHotelRoomTypes] = useState([]);
 	const [sortedHotels, setsortedHotels] = useState([]);
+	const [filter,setFilter] = useState("");
 
 	const handleSearchHotel = (event) => {
 		setNoSearch(false);
@@ -353,7 +355,7 @@ export const Home = (props) => {
 					<Jumbotron>
 						<Container>
 							<h3>Welcome to Hotel</h3>
-							<Form>
+							<Form onSubmit={(event) => setFilter(event.target.elements["filterBy"].value)}>
 								<FormGroup>
 									<Input type="text" id="filterBy" name="filterBy" placeholder="enter customer id or booking id"/>
 								</FormGroup>
@@ -363,7 +365,7 @@ export const Home = (props) => {
 					</Jumbotron>
 					<Container style={{ minHeight: "30vh" }}>
 						<Row className="mt-5 mb-5">
-							<RenderAvailableRooms />
+							<RenderAvailableRooms filter={filter} />
 						</Row>
 					</Container>
 				</div>
