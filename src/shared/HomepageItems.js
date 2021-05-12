@@ -1,16 +1,16 @@
 let items = [
 	{
-		src: "assets/images/hotel1.jpeg",
+		src: "assets/images/hotel6.jpeg",
 		altText: "Hotel",
-		caption: "Hotel",
+		caption: "Hotel Hightech",
 	},
 	{
-		src: "assets/images/hotel2.jpeg",
-		altText: "Another Hotel",
-		caption: "Another Hotel",
+		src: "assets/images/hotel5.jpeg",
+		altText: "Hotel",
+		caption: "Hotel Taj",
 	},
 	{
-		src: "assets/images/hotel3.jpeg",
+		src: "assets/images/hotel7.jpeg",
 		altText: "Again Hotel",
 		caption: "Again Hotel",
 	},

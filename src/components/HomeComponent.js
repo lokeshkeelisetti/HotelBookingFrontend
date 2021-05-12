@@ -146,8 +146,9 @@ export const Home = (props) => {
 				onExited={() => setAnimating(false)}
 				key={process.env.PUBLIC_URL + item.src}
 			>
+				{/* , */}
 				<img
-					style={{ width: "100vw", height: "50vh" }}
+					style={{width: "80vw" ,height: "60vh" }}
 					src={process.env.PUBLIC_URL + item.src}
 					alt={item.altText}
 				/>
