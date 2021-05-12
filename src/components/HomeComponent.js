@@ -35,7 +35,7 @@ const RenderAdmin = (props) => {
 	};
 
 	return (
-		<div className="pb-5 pt-5">
+		<div className="pb-5 pt-5 container-fluid">
 			<Nav tabs className="mt-5">
 				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink

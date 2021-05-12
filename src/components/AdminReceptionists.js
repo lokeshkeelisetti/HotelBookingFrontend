@@ -11,7 +11,7 @@ export const AdminReceptionists = ({ receptionists, addReceptionist, deleteRecep
 	};
 
 	return (
-		<div>
+		<div className="container pt-5 pb-5">
 			{/* Using tabs for navigation of details and editing receptionists */}
 			<Nav tabs className="mt-5">
 				<NavItem style={{ cursor: "pointer" }}>
