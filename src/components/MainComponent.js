@@ -26,6 +26,7 @@ export const Main = () => {
 	const [hotelRoomTypes, sethotelRoomTypes] = useState([]);
 	const [hotelRooms, sethotelRooms] = useState([]);
 	const [receptionists, setreceptionists] = useState([]);
+	// const [bookedHotelDetails, setbookedHotelDetails] = useState([]);
 
 	useEffect(() => {
 		let userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -40,11 +41,101 @@ export const Main = () => {
 		}
 		if (type === "customer") {
 			setuserInfo(userDetails.customerDetails);
-			setpreviousBookings(userDetails.pastBookings);
-			setupcomingBookings(userDetails.upcomingBookings);
 			sethotels(userDetails.hotels);
 			sethotelRoomTypes(userDetails.hotelRoomTypes);
 			sethotelRooms(userDetails.hotelRooms);
+			var hotelObj = {};
+			var hotelRoomObj = {};
+			var hotelRoomTypeObj = {};
+
+			var i = 0;
+			while (userDetails.hotels[i]) {
+				hotelObj[userDetails.hotels[i]._id] = {
+					name: userDetails.hotels[i].hotelName,
+					address: userDetails.hotels[i].address,
+				};
+				i++;
+			}
+			i = 0;
+			while (userDetails.hotelRoomTypes[i]) {
+				hotelRoomTypeObj[userDetails.hotelRoomTypes[i]._id] = {
+					type: userDetails.hotelRoomTypes[i].type,
+					price: userDetails.hotelRoomTypes[i].price,
+					facilities: userDetails.hotelRoomTypes[i].facilities,
+					imgURLs: userDetails.hotelRoomTypes[i].imgURLs,
+				};
+				i++;
+			}
+			i = 0;
+			while (userDetails.hotelRooms[i]) {
+				hotelRoomObj[userDetails.hotelRooms[i]._id] = {
+					hotelRoomTypeId: userDetails.hotelRooms[i].hotelRoomTypeId,
+					roomNo: userDetails.hotelRooms[i].roomNo,
+				};
+				i++;
+			}
+
+			var upbks = [];
+			var pbks = [];
+
+			i = 0;
+			while (userDetails.pastBookings[i]) {
+				pbks[i] = {
+					hotelName: hotelObj[userDetails.pastBookings[i].hotelId].name,
+					hotelAddress: hotelObj[userDetails.pastBookings[i].hotelId].address,
+					roomNo: hotelRoomObj[userDetails.pastBookings[i].hotelRoomId].roomNo,
+					duration: userDetails.pastBookings[i].duration,
+					bookedOn: userDetails.pastBookings[i].createdAt,
+					hotelRoomType:
+						hotelRoomTypeObj[
+							hotelRoomObj[userDetails.pastBookings[i].hotelRoomId].hotelRoomTypeId
+						].type,
+					price: hotelRoomTypeObj[
+						hotelRoomObj[userDetails.pastBookings[i].hotelRoomId].hotelRoomTypeId
+					].price,
+					facilities:
+						hotelRoomTypeObj[
+							hotelRoomObj[userDetails.pastBookings[i].hotelRoomId].hotelRoomTypeId
+						].facilities,
+					imgURLs:
+						hotelRoomTypeObj[
+							hotelRoomObj[userDetails.pastBookings[i].hotelRoomId].hotelRoomTypeId
+						].imgURLs,
+				};
+				i++;
+			}
+
+			i = 0;
+			while (userDetails.upcomingBookings[i]) {
+				upbks[i] = {
+					hotelName: hotelObj[userDetails.upcomingBookings[i].hotelId].name,
+					hotelAddress: hotelObj[userDetails.upcomingBookings[i].hotelId].address,
+					roomNo: hotelRoomObj[userDetails.upcomingBookings[i].hotelRoomId].roomNo,
+					duration: userDetails.upcomingBookings[i].duration,
+					bookedOn: userDetails.upcomingBookings[i].createdAt,
+					hotelRoomType:
+						hotelRoomTypeObj[
+							hotelRoomObj[userDetails.upcomingBookings[i].hotelRoomId]
+								.hotelRoomTypeId
+						].type,
+					price: hotelRoomTypeObj[
+						hotelRoomObj[userDetails.upcomingBookings[i].hotelRoomId].hotelRoomTypeId
+					].price,
+					facilities:
+						hotelRoomTypeObj[
+							hotelRoomObj[userDetails.upcomingBookings[i].hotelRoomId]
+								.hotelRoomTypeId
+						].facilities,
+					imgURLs:
+						hotelRoomTypeObj[
+							hotelRoomObj[userDetails.upcomingBookings[i].hotelRoomId]
+								.hotelRoomTypeId
+						].imgURLs,
+				};
+				i++;
+			}
+			setpreviousBookings(pbks);
+			setupcomingBookings(upbks);
 		} else if (type === "maintainer") {
 			let hotelAdmins = JSON.parse(localStorage.getItem("hotelAdmins"));
 			let hotels = JSON.parse(localStorage.getItem("hotels"));
@@ -63,7 +154,6 @@ export const Main = () => {
 			setisLoggedin(false);
 		}
 	}, []);
-
 
 	const handleLogout = () => {
 		setisLoggedin(false);
@@ -147,11 +237,110 @@ export const Main = () => {
 						setuserId(userId1);
 						setsecret(secret1);
 						setuserInfo(response.data.customerDetails);
-						setpreviousBookings(response.data.pastBookings);
-						setupcomingBookings(response.data.upcomingBookings);
 						sethotels(response.data.hotels);
 						sethotelRoomTypes(response.data.hotelRoomTypes);
 						sethotelRooms(response.data.hotelRooms);
+						var hotelObj = {};
+						var hotelRoomObj = {};
+						var hotelRoomTypeObj = {};
+
+						var i = 0;
+						while (response.data.hotels[i]) {
+							hotelObj[response.data.hotels[i]._id] = {
+								name: response.data.hotels[i].hotelName,
+								address: response.data.hotels[i].address,
+							};
+							i++;
+						}
+						i = 0;
+						while (response.data.hotelRoomTypes[i]) {
+							hotelRoomTypeObj[response.data.hotelRoomTypes[i]._id] = {
+								type: response.data.hotelRoomTypes[i].type,
+								price: response.data.hotelRoomTypes[i].price,
+								facilities: response.data.hotelRoomTypes[i].facilities,
+								imgURLs: response.data.hotelRoomTypes[i].imgURLs,
+							};
+							i++;
+						}
+						i = 0;
+						while (response.data.hotelRooms[i]) {
+							hotelRoomObj[response.data.hotelRooms[i]._id] = {
+								hotelRoomTypeId: response.data.hotelRooms[i].hotelRoomTypeId,
+								roomNo: response.data.hotelRooms[i].roomNo,
+							};
+							i++;
+						}
+
+						var upbks = [];
+						var pbks = [];
+
+						i = 0;
+						while (response.data.pastBookings[i]) {
+							pbks[i] = {
+								hotelName: hotelObj[response.data.pastBookings[i].hotelId].name,
+								hotelAddress:
+									hotelObj[response.data.pastBookings[i].hotelId].address,
+								roomNo: hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
+									.roomNo,
+								duration: response.data.pastBookings[i].duration,
+								bookedOn: response.data.pastBookings[i].createdAt,
+								hotelRoomType:
+									hotelRoomTypeObj[
+										hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
+											.hotelRoomTypeId
+									].type,
+								price: hotelRoomTypeObj[
+									hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
+										.hotelRoomTypeId
+								].price,
+								facilities:
+									hotelRoomTypeObj[
+										hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
+											.hotelRoomTypeId
+									].facilities,
+								imgURLs:
+									hotelRoomTypeObj[
+										hotelRoomObj[response.data.pastBookings[i].hotelRoomId]
+											.hotelRoomTypeId
+									].imgURLs,
+							};
+							i++;
+						}
+
+						i = 0;
+						while (response.data.upcomingBookings[i]) {
+							upbks[i] = {
+								hotelName: hotelObj[response.data.upcomingBookings[i].hotelId].name,
+								hotelAddress:
+									hotelObj[response.data.upcomingBookings[i].hotelId].address,
+								roomNo: hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+									.roomNo,
+								duration: response.data.upcomingBookings[i].duration,
+								bookedOn: response.data.upcomingBookings[i].createdAt,
+								hotelRoomType:
+									hotelRoomTypeObj[
+										hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+											.hotelRoomTypeId
+									].type,
+								price: hotelRoomTypeObj[
+									hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+										.hotelRoomTypeId
+								].price,
+								facilities:
+									hotelRoomTypeObj[
+										hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+											.hotelRoomTypeId
+									].facilities,
+								imgURLs:
+									hotelRoomTypeObj[
+										hotelRoomObj[response.data.upcomingBookings[i].hotelRoomId]
+											.hotelRoomTypeId
+									].imgURLs,
+							};
+							i++;
+						}
+						setpreviousBookings(pbks);
+						setupcomingBookings(upbks);
 					} else if (userType1 === "hotelAdministration") {
 						setisLoggedin(true);
 						setuserType(userType1);
@@ -332,11 +521,11 @@ export const Main = () => {
 			}
 			console.log(body);
 			axios({
-				method : "POST",
-				url : baseUrl + '/hotelAdministration/addRoom',
-				headers : {
-					usertype : userType,
-					usersecret : secret
+				method: "POST",
+				url: baseUrl + "/hotelAdministration/addRoom",
+				headers: {
+					usertype: userType,
+					usersecret: secret,
 				},
 				data : body
 			})
@@ -349,11 +538,10 @@ export const Main = () => {
 				}
 			})
 			.catch((err) => {
-				console.log(err);
-			})
-
+					console.log(err);
+			});
 		}
-	}
+	};
 
 	const addRoomType = (event) => {
 		event.preventDefault();
@@ -524,8 +712,8 @@ export const Main = () => {
 									hotelRoomTypes={hotelRoomTypes}
 									hotelRooms={hotelRooms}
 									receptionists={receptionists}
-									addRoomType = {addRoomType}
-									addRoom = {addRoom}
+									addRoomType={addRoomType}
+									addRoom={addRoom}
 									bookRoom={bookRoom}
 									editRoom = {editRoom}
 									deleteRoom = {deleteRoom}
