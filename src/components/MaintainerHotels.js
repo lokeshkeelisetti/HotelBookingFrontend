@@ -44,11 +44,11 @@ export const MaintainerHotels = (props) => {
 								<thead>
 									<tr>
 										<th>Admin id</th>
-										<th>Name</th>
+										<th>Admin Name</th>
 										<th>Hotel Name</th>
 										<th>Hotel location</th>
 										<th>Email</th>
-										<th>Edit</th>
+										<th>Delete</th>
 									</tr>
 								</thead>
 								<tbody>

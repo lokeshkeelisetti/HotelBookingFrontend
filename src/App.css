@@ -22,6 +22,15 @@
 	background-color: var(--my-red) !important;
 }
 
+.carousel-caption {
+	background-color: rgba(0, 0, 0, 0.6);
+	max-width: 100%;
+	bottom: 0px;
+	right: 0;
+	left: 0;
+	font-family: Ubuntu;
+}
+
 .form-control:focus {
 	border-color: var(--my-red);
 	box-shadow: 0 0 0 0.2rem rgba(236, 23, 81, 0.25);
@@ -107,7 +116,6 @@ a:hover {
 	padding: 20px 0px 20px 0px;
 	color: rgb(236, 23, 81) !important;
 	font-size: 1.2rem;
-
 }
 
 .footer a {
@@ -150,32 +158,29 @@ input[type="date"]:after {
 	border-radius: 50%;
 }
 
-.pics{
+.pics {
 	margin-top: 70px;
 	margin-bottom: 100px;
 }
 
-
-
-.contactform{
+.contactform {
 	margin: auto;
 	width: 40%;
 }
 
-.contactform Button{
+.contactform Button {
 	background-color: white !important;
-	color:  rgb(236, 23, 81);
+	color: rgb(236, 23, 81);
 	border-color: white;
 }
 
-.contactform Button:hover{
-	background-color: rgb(236, 23, 81)  !important;
-	color:  white;
-  border-color: white;
+.contactform Button:hover {
+	background-color: rgb(236, 23, 81) !important;
+	color: white;
+	border-color: white;
 }
 
-
-.contactform Input{
-	border:none;
+.contactform Input {
+	border: none;
 	border-left: 2px solid rgb(236, 23, 81) !important;
 }
