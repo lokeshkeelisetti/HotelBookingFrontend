@@ -33,9 +33,24 @@ You will also see any lint errors in the console.
 # 2. Usage
 The application is to make the hotel booking easy.
 In this app there are three types of users.\
-    1. users to book rooms. \
-    2. administrator of hotel. \
-    3. Maintainer of website. \
+1. users to book rooms. 
+2. administrator of hotel. 
+3. Maintainer of website.
 
 *Maintainer* will add the hotels to the database by approving.
 
+# Tech Stack
+
+Following technologies are used while making the project.
+1. Front end: React.js, Bootstrap
+2. Backend: Node.js, Expressjs
+3. Database: MongoDB
+
+# Dependencies
+1. Various Node modules by npm to create React APP  
+2. MongoDB atlas to host database
+3. Heroku for free hosting the backend.
+4. To deploy the website used netlify to host the website.
+
+## Website Link
+The website is hosted at [website](https://hotel-booking-portal.netlify.app/)
