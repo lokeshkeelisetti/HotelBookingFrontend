@@ -44,9 +44,9 @@ const RenderAdmin = (props) => {
 	};
 
 	return (
-		<div>
+		<div className="pb-5 pt-5">
 			<Nav tabs className="mt-5">
-				<NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
 						className={classnames({ active: activeTab === "1" })}
 						onClick={() => {
@@ -56,7 +56,7 @@ const RenderAdmin = (props) => {
 						Hotel Rooms Section
 					</NavLink>
 				</NavItem>
-				<NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
 						className={classnames({ active: activeTab === "2" })}
 						onClick={() => {
