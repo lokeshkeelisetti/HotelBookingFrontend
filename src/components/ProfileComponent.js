@@ -83,11 +83,7 @@ export const Profile = () => {
 	return (
 		<>
 			<div className="profile__image__div">
-<<<<<<< HEAD
-				<img src="assets/images/profile.png" alt="profile" className="profile__image" />
-=======
 				<img src="assets/images/profile_2.jpeg" alt="profile" className="profile__image" />
->>>>>>> ebba1661f28c064f0c793c7c2c26f86117a5244f
 			</div>
 			<div>
 				<Container>
