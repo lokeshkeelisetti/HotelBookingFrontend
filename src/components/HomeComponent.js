@@ -82,11 +82,13 @@ const RenderAdmin = (props) => {
 	);
 };
 
-const RenderAvailableRooms = () => {
+const RenderAvailableRooms = ({filter}) => {
 
 	const [bookings,setBookings] = useState([]);
 
-	useEffect(() => {
+	const [tempbookings,setTempBookings] = useState([]);
+
+	const getBookings = () => {
 		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
 		axios({
@@ -109,9 +111,41 @@ const RenderAvailableRooms = () => {
 		.catch((error) => {
 			console.log(error);
 		})
+	}
 
+	useEffect(() => {
+
+		getBookings();
 	})
 
+	const confirmBooking = (id) => {
+		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+		axios({
+			method : "PUT",
+			url : baseUrl + '/receptionist/updateStatus/'+id+'/?'+id,
+			headers : {
+				usertype : userDetails.type,
+				secret : userDetails.secret
+			},
+			data : {
+				receptionistId : userDetails.id,
+				hotelId : userDetails.hotel._id
+			}
+		})
+		.then((response) => {
+			if(response.data.success){
+				getBookings();
+			}
+			else{
+				alert(response.data.failure);
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+		})
+	}
+
+	setTempBookings(bookings.filter((booking) => booking._id.indexOf(filter)!== -1 || booking.customerId.indexOf(filter) !== -1),);
 
 	return (
 		<div>
@@ -125,13 +159,13 @@ const RenderAvailableRooms = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{bookings.map((booking) => {
+					{tempbookings.map((booking) => {
 						return(
 							<tr key={booking._id}>
 								<td>{booking._id}</td>
 								<td>{booking.customer_id}</td>
 								<td>{booking.duration}</td>
-								<td><Button className="btn btn-success"><span class="fa fa-ticket"></span></Button></td>
+								<td><Button className="btn btn-success" onClick={() => confirmBooking(booking._id)}><span class="fa fa-ticket"></span></Button></td>
 							</tr>
 						)
 					})}
@@ -169,6 +203,7 @@ export const Home = (props) => {
 				onExited={() => setAnimating(false)}
 				key={process.env.PUBLIC_URL + item.src}
 			>
+				{/* , */}
 				<img
 					style={{ width: "100%", height: "60vh" }}
 					src={process.env.PUBLIC_URL + item.src}
@@ -185,6 +220,7 @@ export const Home = (props) => {
 	const [keyWord, setkeyWord] = useState("");
 	const [sortedHotelRoomTypes, setsortedHotelRoomTypes] = useState([]);
 	const [sortedHotels, setsortedHotels] = useState([]);
+	const [filter,setFilter] = useState("");
 
 	const handleSearchHotel = (event) => {
 		setNoSearch(false);
@@ -317,11 +353,11 @@ export const Home = (props) => {
 				</div>
 			)}
 			{props.userType === "receptionist" && (
-				<div>
+				<div className="mt-5">
 					<Jumbotron>
 						<Container>
 							<h3>Welcome to Hotel</h3>
-							<Form>
+							<Form onSubmit={(event) => setFilter(event.target.elements["filterBy"].value)}>
 								<FormGroup>
 									<Input type="text" id="filterBy" name="filterBy" placeholder="enter customer id or booking id"/>
 								</FormGroup>
@@ -331,7 +367,7 @@ export const Home = (props) => {
 					</Jumbotron>
 					<Container style={{ minHeight: "30vh" }}>
 						<Row className="mt-5 mb-5">
-							<RenderAvailableRooms bookings={props.previousBookings} />
+							<RenderAvailableRooms filter={filter} />
 						</Row>
 					</Container>
 				</div>
