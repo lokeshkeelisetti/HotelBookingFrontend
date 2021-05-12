@@ -30,17 +30,18 @@ export const Profile = () => {
 			let body = {
 				oldPassword: oldPassword,
 				newPassword: newPassword,
+				id: userInfo.id,
 			};
-
-			let url;
+			console.log(body);
+			let url = baseUrl;
 			if (userInfo.type === "maintainer") {
-				url = baseUrl + "/maintainer/changePassword";
+				url = url + "/maintainer/changePassword";
 			} else if (userInfo.type === "customer") {
-				url = baseUrl + "/customer/changePassword";
+				url = url + "/customer/changePassword";
 			} else if (userInfo.type === "receptionist") {
-				url = baseUrl + "/receptionist/changePassword";
+				url = url + "/receptionist/changePassword";
 			} else if (userInfo.type === "hotelAdministration") {
-				url = baseUrl + "/hotelAdministration/changePassword";
+				url = url + "/hotelAdministration/changePassword";
 			}
 
 			axios({
@@ -49,12 +50,8 @@ export const Profile = () => {
 				headers: {
 					usersecret: userInfo.secret,
 					usertype: userInfo.type,
-					hotelAdminId: userInfo.id,
-					receptionistId: userInfo.id,
-					customerId: userInfo.id,
-					maintainerId: userInfo.id,
 				},
-				body,
+				data: body,
 			})
 				.then((response) => {
 					if (response.data.success) {

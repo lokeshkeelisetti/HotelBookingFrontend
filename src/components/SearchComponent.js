@@ -1,14 +1,6 @@
 import React from "react";
-import {
-	Card,
-	CardImg,
-	CardBody,
-	CardTitle,
-	CardText,
-	Button,
-	Row,
-	Container,
-} from "reactstrap";
+// import { Link } from "react-router-dom";
+import { Card, CardImg, CardBody, CardTitle, CardText, Button, Row, Container } from "reactstrap";
 import Rating from "@material-ui/lab/Rating";
 import { BiRupee } from "react-icons/bi";
 import { BsPeopleFill } from "react-icons/bs";

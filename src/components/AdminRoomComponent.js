@@ -18,50 +18,60 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 
-export const RenderRooms = ({ handleEdit, handleDelete, rooms, isEditing, handleEditSubmit }) => {
+export const RenderRooms = ({ handleEdit, deleteRoom, rooms, isEditing, editRoom,hotelRoomTypes }) => {
 	return rooms.map((room) => {
+		let hotelRoomType = hotelRoomTypes.filter((hotelRoomType) => hotelRoomType._id === room.hotelRoomTypeId)[0];
+		console.log(hotelRoomType);
 		return (
-			<ListGroupItem>
+			<ListGroupItem key={room._id}>
 				<Media>
 					<Media className="mr-2" left href="#">
 						<Media
 							object
-							src="assets/images/hotel1.jpeg"
-							alt="Generic placeholder image"
+							src={hotelRoomType.imgURLs[0]}
+							alt="hotelRoomImage"
 						/>
 					</Media>
 					{isEditing !== room._id ? (
 						<Media body>
 							<Media heading>
-								{room.type.type}
-								<Button
+								Room No: {room.roomNo}
+							</Media>
+							<p>Hotel Room type :{hotelRoomType.type}</p>
+							<h2>Facilities</h2>
+							<ul>
+								<li>{hotelRoomType.facilities.ac_or_not ? 'AC' : 'Non-AC'}</li>
+								{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li> }
+								<li>No.of People {hotelRoomType.facilities.max_no_of_people}</li>
+							</ul>
+							<Button
 									className="bg bg-warning ml-4"
 									color="warning"
 									onClick={() => handleEdit(room._id)}
 								>
 									<span className="fa fa-pencil"></span>Edit
-								</Button>
-								<Button
-									className="bg bg-danger ml-4"
-									color="danger"
-									onClick={() => handleDelete(room._id)}
-								>
-									<span className="fa fa-trash"></span>
-								</Button>
-							</Media>
-							<p>{room.roomNo}</p>
+							</Button>
+							<Button
+								className="bg bg-danger ml-4"
+								color="danger"
+								onClick={() => deleteRoom(room._id)}
+							>
+								<span className="fa fa-trash"></span>
+							</Button>
 						</Media>
 					) : (
-						<Form onSubmit={handleEditSubmit}>
+						<Form onSubmit={editRoom}>
 							<h3>{room.roomNo}</h3>
 							<FormGroup>
-								<Label htmlFor={`roomType${room._id}`}>Room Type</Label>
-								<Input type="select" id={`roomNo${room._id}`}>
-									<option selected value="Face">
-										Face
-									</option>
+								<Label htmlFor="hotelRoomType">Room Type</Label>
+								<Input type="select" id="hotelRoomType" name="hotelRoomType">
+									{hotelRoomTypes.map((hotelRoomType) => {
+										return(
+											<option value={hotelRoomType._id}>{hotelRoomType.type}</option>
+										)
+									})}
 								</Input>
-								<Input type="text" hidden id="room_id" value={room._id} />
+								<Input type="text" hidden id="room_id" name="room_id" value={room._id} />
 							</FormGroup>
 							<Button type="submit" className="btn btn-danger" color="danger">
 								Edit
@@ -77,19 +87,9 @@ export const RenderRooms = ({ handleEdit, handleDelete, rooms, isEditing, handle
 	});
 };
 
-export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom}) => {
+export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom,editRoom,deleteRoom}) => {
 	const [isEditing, setisEditing] = useState(false);
 	const [activeTab, setactiveTab] = useState("1");
-
-
-	const handleEditSubmit = (event) => {
-		event.preventDefault();
-		console.log(event);
-	};
-
-	const handleDelete = (id) => {
-		console.log(id);
-	};
 
 	const handleEdit = (id) => {
 		console.log(isEditing, id);
@@ -143,10 +143,11 @@ export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom}) => {
 						<ListGroup>
 							<RenderRooms
 								rooms={rooms}
+								hotelRoomTypes = {hotelRoomTypes}
 								isEditing={isEditing}
-								handleDelete={handleDelete}
 								handleEdit={handleEdit}
-								handleEditSubmit={handleEditSubmit}
+								editRoom = {editRoom}
+								deleteRoom = {deleteRoom}
 							/>
 						</ListGroup>
 					</Row>
