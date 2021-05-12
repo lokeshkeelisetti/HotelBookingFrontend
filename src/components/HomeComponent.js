@@ -67,17 +67,21 @@ const RenderAdmin = (props) => {
 					</NavLink>
 				</NavItem>
 			</Nav>
-			<TabContent activeTab={activeTab}>
-				<TabPane tabId="1">
-					<AdminRoom rooms={props.rooms} addRoomType={props.addRoomType} />
-				</TabPane>
-				<TabPane tabId="2">
-					<AdminReceptionists receptionists={props.receptionists} />
-				</TabPane>
-			</TabContent>
-		</div>
-	);
-};
+            <TabContent activeTab={activeTab}>
+                    <TabPane tabId="1">
+                        <AdminRoom rooms={props.rooms}
+                            addRoomType = {props.addRoomType}
+                            hotelRoomTypes = {props.hotelRoomTypes}
+                            addRoom = {props.addRoom}
+                        />
+                    </TabPane>
+                    <TabPane tabId="2">
+                        <AdminReceptionists receptionists={props.receptionists}/>
+                    </TabPane>
+            </TabContent>
+        </div>
+    )
+}
 
 const RenderAvailableRooms = (props) => {
 	return (
@@ -160,8 +164,8 @@ export const Home = (props) => {
 		setendDate(event.target.elements["checkOut"].value);
 		setkeyWord(event.target.elements["location"].value);
 		var body = {
-			startDate: event.target.elements["checkIn"].value,
-			endDate: event.target.elements["checkOut"].value,
+			startDate: startDate,
+			endDate: endDate,
 		};
 		axios({
 			method: "POST",
@@ -319,11 +323,12 @@ export const Home = (props) => {
 				</div>
 			)}
 			{props.userType === "hotelAdministration" && (
-				<RenderAdmin
-					rooms={props.hotelRooms}
-					receptionists={props.receptionists}
-					addRoomType={props.addRoomType}
-				/>
+				<RenderAdmin rooms={props.hotelRooms} 
+                    receptionists={props.receptionists} 
+                    addRoomType={props.addRoomType}
+                    hotelRoomTypes = {props.hotelRoomTypes}
+                    addRoom = {props.addRoom}
+                />
 			)}
 			{props.userType === "maintainer" && (
 				<MaintainerHotels

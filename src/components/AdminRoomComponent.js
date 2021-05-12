@@ -50,10 +50,6 @@ export const RenderRooms = ({ handleEdit, handleDelete, rooms, isEditing, handle
 								</Button>
 							</Media>
 							<p>{room.roomNo}</p>
-							Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-							ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-							tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-							fringilla. Donec lacinia congue felis in faucibus.
 						</Media>
 					) : (
 						<Form onSubmit={handleEditSubmit}>
@@ -81,14 +77,10 @@ export const RenderRooms = ({ handleEdit, handleDelete, rooms, isEditing, handle
 	});
 };
 
-export const AdminRoom = ({rooms,addRoomType}) => {
+export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom}) => {
 	const [isEditing, setisEditing] = useState(false);
 	const [activeTab, setactiveTab] = useState("1");
 
-	const handleAddRoom = (event) => {
-		event.preventDefault();
-		console.log(event);
-	};
 
 	const handleEditSubmit = (event) => {
 		event.preventDefault();
@@ -161,16 +153,21 @@ export const AdminRoom = ({rooms,addRoomType}) => {
 				</TabPane>
 				<TabPane tabId="2">
 					<Row>
-						<Form onSubmit={handleAddRoom}>
+						<Form onSubmit={addRoom}>
 							<FormGroup>
 								<Label htmlFor="roomNo">Room Number</Label>
-								<Input type="text" id="roomNo" />
+								<Input type="text" id="roomNo" name="roomNo" />
 							</FormGroup>
 							<FormGroup>
 								<Label htmlFor="roomType">Room Types</Label>
-								<Input type="select" id="roomType">
-									<option selected value="something">
-										Something
+								<Input type="select" id="roomType" name="roomType">
+									{hotelRoomTypes.map((hotelRoomType) => {
+										return(
+											<option value={hotelRoomType._id}>{hotelRoomType.type}</option>
+										)
+									})}
+									<option selected value="none">
+										make a new room type
 									</option>
 								</Input>
 							</FormGroup>

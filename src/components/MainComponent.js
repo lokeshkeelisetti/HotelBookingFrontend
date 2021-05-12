@@ -21,8 +21,6 @@ export const Main = () => {
 	const [userInfo, setuserInfo] = useState("");
 	const [previousBookings, setpreviousBookings] = useState([]);
 	const [upcomingBookings, setupcomingBookings] = useState([]);
-	const [availableRooms, setavailableRooms] = useState([]);
-	const [rooms] = useState([]);
 	const [hotelAdmins, sethotelAdmins] = useState([]);
 	const [hotels, sethotels] = useState([]);
 	const [hotelRoomTypes, sethotelRoomTypes] = useState([]);
@@ -65,10 +63,6 @@ export const Main = () => {
 			setisLoggedin(false);
 		}
 	}, []);
-
-	const handleCheckAvailability = () => {
-		setavailableRooms(rooms);
-	};
 
 	const handleLogout = () => {
 		setisLoggedin(false);
@@ -324,6 +318,36 @@ export const Main = () => {
 			});
 	};
 
+	const addRoom = (event) => {
+		event.preventDefault();
+		let hotelRoomTypeId = event.target.elements["roomType"];
+		let roomNo = event.target.elements["roomNo"];
+		if (hotelRoomTypeId !== "none") {
+			let body = {
+				hotelRoomTypeId: hotelRoomTypeId,
+				hotelId: hotels._id,
+				hotelAdminId: userId,
+				roomNo: roomNo,
+			};
+
+			axios({
+				method: "POST",
+				url: baseUrl + "/hotelAdministration/addRoom",
+				headers: {
+					usertype: userType,
+					usersecret: secret,
+				},
+				data: body,
+			})
+				.then((response) => {
+					console.log(response);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	};
+
 	const addRoomType = (event) => {
 		event.preventDefault();
 		let type = event.target.elements["newRoomType"].value;
@@ -415,8 +439,6 @@ export const Main = () => {
 									isLoggedin={isLoggedin}
 									userInfo={userInfo}
 									userType={userType}
-									availableRooms={availableRooms}
-									handleCheckAvailability={handleCheckAvailability}
 									deleteHotel={deleteHotel}
 									hotelAdmins={hotelAdmins}
 									hotels={hotels}
@@ -424,8 +446,9 @@ export const Main = () => {
 									hotelRoomTypes={hotelRoomTypes}
 									hotelRooms={hotelRooms}
 									receptionists={receptionists}
-									bookRoom={bookRoom}
 									addRoomType={addRoomType}
+									addRoom={addRoom}
+									bookRoom={bookRoom}
 								/>
 							);
 						}}
