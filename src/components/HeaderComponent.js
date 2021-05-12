@@ -199,8 +199,11 @@ export const Header = (props) => {
 							<Button
 								type="submit"
 								value="submit"
-								className="bg-primary"
-								color="primary"
+								style={{
+									color: "#fff",
+									backgroundColor: "var(--my-red)",
+									borderColor: "var(--my-red)",
+								}}
 							>
 								Register
 							</Button>
@@ -208,6 +211,7 @@ export const Header = (props) => {
 								color="link"
 								className="btn btn-link"
 								onClick={() => setisLogin(!isLogin)}
+								style={{ color: "var(--my-red)" }}
 							>
 								Already have a account
 							</Button>
