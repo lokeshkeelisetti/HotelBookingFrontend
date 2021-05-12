@@ -37,9 +37,9 @@ const RenderAdmin = (props) => {
 	};
 
 	return (
-		<div>
+		<div className="pb-5 pt-5">
 			<Nav tabs className="mt-5">
-				<NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
 						className={classnames({ active: activeTab === "1" })}
 						onClick={() => {
@@ -49,7 +49,7 @@ const RenderAdmin = (props) => {
 						Hotel Rooms Section
 					</NavLink>
 				</NavItem>
-				<NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
 						className={classnames({ active: activeTab === "2" })}
 						onClick={() => {
@@ -202,11 +202,11 @@ export const Home = (props) => {
 				key={process.env.PUBLIC_URL + item.src}
 			>
 				<img
-					style={{ width: "100vw", height: "50vh" }}
+					style={{ width: "100%", height: "60vh" }}
 					src={process.env.PUBLIC_URL + item.src}
 					alt={item.altText}
 				/>
-				<CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+				<CarouselCaption captionHeader={item.caption} />
 			</CarouselItem>
 		);
 	});

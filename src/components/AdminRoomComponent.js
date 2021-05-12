@@ -18,38 +18,41 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 
-export const RenderRooms = ({ handleEdit, deleteRoom, rooms, isEditing, editRoom,hotelRoomTypes }) => {
+export const RenderRooms = ({
+	handleEdit,
+	deleteRoom,
+	rooms,
+	isEditing,
+	editRoom,
+	hotelRoomTypes,
+}) => {
 	return rooms.map((room) => {
-		let hotelRoomType = hotelRoomTypes.filter((hotelRoomType) => hotelRoomType._id === room.hotelRoomTypeId)[0];
+		let hotelRoomType = hotelRoomTypes.filter(
+			(hotelRoomType) => hotelRoomType._id === room.hotelRoomTypeId
+		)[0];
 		console.log(hotelRoomType);
 		return (
 			<ListGroupItem key={room._id}>
 				<Media>
 					<Media className="mr-2" left href="#">
-						<Media
-							object
-							src={hotelRoomType.imgURLs[0]}
-							alt="hotelRoomImage"
-						/>
+						<Media object src={hotelRoomType.imgURLs[0]} alt="hotelRoomImage" />
 					</Media>
 					{isEditing !== room._id ? (
 						<Media body>
-							<Media heading>
-								Room No: {room.roomNo}
-							</Media>
+							<Media heading>Room No: {room.roomNo}</Media>
 							<p>Hotel Room type :{hotelRoomType.type}</p>
 							<h2>Facilities</h2>
 							<ul>
-								<li>{hotelRoomType.facilities.ac_or_not ? 'AC' : 'Non-AC'}</li>
-								{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li> }
+								<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
+								{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li>}
 								<li>No.of People {hotelRoomType.facilities.max_no_of_people}</li>
 							</ul>
 							<Button
-									className="bg bg-warning ml-4"
-									color="warning"
-									onClick={() => handleEdit(room._id)}
-								>
-									<span className="fa fa-pencil"></span>Edit
+								className="bg bg-warning ml-4"
+								color="warning"
+								onClick={() => handleEdit(room._id)}
+							>
+								<span className="fa fa-pencil"></span>Edit
 							</Button>
 							<Button
 								className="bg bg-danger ml-4"
@@ -66,12 +69,20 @@ export const RenderRooms = ({ handleEdit, deleteRoom, rooms, isEditing, editRoom
 								<Label htmlFor="hotelRoomType">Room Type</Label>
 								<Input type="select" id="hotelRoomType" name="hotelRoomType">
 									{hotelRoomTypes.map((hotelRoomType) => {
-										return(
-											<option value={hotelRoomType._id}>{hotelRoomType.type}</option>
-										)
+										return (
+											<option value={hotelRoomType._id}>
+												{hotelRoomType.type}
+											</option>
+										);
 									})}
 								</Input>
-								<Input type="text" hidden id="room_id" name="room_id" value={room._id} />
+								<Input
+									type="text"
+									hidden
+									id="room_id"
+									name="room_id"
+									value={room._id}
+								/>
 							</FormGroup>
 							<Button type="submit" className="btn btn-danger" color="danger">
 								Edit
@@ -87,7 +98,14 @@ export const RenderRooms = ({ handleEdit, deleteRoom, rooms, isEditing, editRoom
 	});
 };
 
-export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom,editRoom,deleteRoom}) => {
+export const AdminRoom = ({
+	rooms,
+	addRoomType,
+	hotelRoomTypes,
+	addRoom,
+	editRoom,
+	deleteRoom,
+}) => {
 	const [isEditing, setisEditing] = useState(false);
 	const [activeTab, setactiveTab] = useState("1");
 
@@ -106,7 +124,7 @@ export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom,editRoom,del
 	return (
 		<Container className="mt-5 mb-5">
 			<Nav tabs>
-				<NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
 						onClick={() => {
 							setActiveTab("1");
@@ -116,7 +134,7 @@ export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom,editRoom,del
 						Room Details
 					</NavLink>
 				</NavItem>
-				<NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
 						onClick={() => {
 							setActiveTab("2");
@@ -126,7 +144,7 @@ export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom,editRoom,del
 						Add Room
 					</NavLink>
 				</NavItem>
-				<NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
 						className={classnames({ active: activeTab === "3" })}
 						onClick={() => {
@@ -143,11 +161,11 @@ export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom,editRoom,del
 						<ListGroup>
 							<RenderRooms
 								rooms={rooms}
-								hotelRoomTypes = {hotelRoomTypes}
+								hotelRoomTypes={hotelRoomTypes}
 								isEditing={isEditing}
 								handleEdit={handleEdit}
-								editRoom = {editRoom}
-								deleteRoom = {deleteRoom}
+								editRoom={editRoom}
+								deleteRoom={deleteRoom}
 							/>
 						</ListGroup>
 					</Row>
@@ -163,9 +181,11 @@ export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom,editRoom,del
 								<Label htmlFor="roomType">Room Types</Label>
 								<Input type="select" id="roomType" name="roomType">
 									{hotelRoomTypes.map((hotelRoomType) => {
-										return(
-											<option value={hotelRoomType._id}>{hotelRoomType.type}</option>
-										)
+										return (
+											<option value={hotelRoomType._id}>
+												{hotelRoomType.type}
+											</option>
+										);
 									})}
 									<option selected value="none">
 										make a new room type
@@ -183,19 +203,19 @@ export const AdminRoom = ({rooms,addRoomType,hotelRoomTypes,addRoom,editRoom,del
 						<Form onSubmit={addRoomType}>
 							<FormGroup>
 								<Label htmlFor="newRoomType">Room Type Name</Label>
-								<Input type="text" id="newRoomType" name="newRoomTyep"/>
+								<Input type="text" id="newRoomType" name="newRoomTyep" />
 							</FormGroup>
 							<FormGroup>
 								<Label htmlFor="price">Price for type</Label>
-								<Input type="text" id="price" name="price"/>
+								<Input type="text" id="price" name="price" />
 							</FormGroup>
 							<FormGroup check>
 								<Input type="checkbox" name="AC" value="AC" />
-									AC
+								AC
 							</FormGroup>
 							<FormGroup check>
 								<Input type="checkbox" name="Wifi" value="Wifi" />
-									Wifi
+								Wifi
 							</FormGroup>
 							<FormGroup>
 								<Label htmlFor="noOfPeople">Number of People</Label>

@@ -3,7 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from "reactstrap
 import classnames from "classnames";
 import { Input, FormGroup, Form, Button, Container, Table } from "reactstrap";
 
-export const AdminReceptionists = ({receptionists,addReceptionist,deleteReceptionist}) => {
+export const AdminReceptionists = ({ receptionists, addReceptionist, deleteReceptionist }) => {
 	const [activeTab, setActiveTab] = useState("1");
 
 	const toggle = (tab) => {
@@ -14,7 +14,7 @@ export const AdminReceptionists = ({receptionists,addReceptionist,deleteReceptio
 		<div>
 			{/* Using tabs for navigation of details and editing receptionists */}
 			<Nav tabs className="mt-5">
-				<NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
 						className={classnames({ active: activeTab === "1" })}
 						onClick={() => {
@@ -24,7 +24,7 @@ export const AdminReceptionists = ({receptionists,addReceptionist,deleteReceptio
 						Info
 					</NavLink>
 				</NavItem>
-				<NavItem>
+				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
 						className={classnames({ active: activeTab === "2" })}
 						onClick={() => {
@@ -57,7 +57,14 @@ export const AdminReceptionists = ({receptionists,addReceptionist,deleteReceptio
 												<td>{receptionist.name.firstName}</td>
 												<td>{receptionist.email}</td>
 												<td>
-													<Button className="btn btn-danger" onClick={() => deleteReceptionist(receptionist._id)}><span class="fa fa-trash"></span></Button>
+													<Button
+														className="btn btn-danger"
+														onClick={() =>
+															deleteReceptionist(receptionist._id)
+														}
+													>
+														<span class="fa fa-trash"></span>
+													</Button>
 												</td>
 											</tr>
 										);
