@@ -36,7 +36,7 @@ const RenderAdmin = (props) => {
 	};
 
 	return (
-		<div className="pb-5 pt-5">
+		<div className="pb-5 pt-5 container-fluid">
 			<Nav tabs className="mt-5">
 				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
@@ -83,67 +83,62 @@ const RenderAdmin = (props) => {
 };
 
 const RenderAvailableRooms = () => {
-
-	const [bookings,setBookings] = useState([]);
-
+	const [bookings, setBookings] = useState([]);
 
 	const getBookings = () => {
-		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+		let userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
 		axios({
-			method : "POST",
-			url : baseUrl + '/receptionist/getBookings',
-			headers : {
-				usertype : userDetails.type,
-				usersecret : userDetails.secret
+			method: "POST",
+			url: baseUrl + "/receptionist/getBookings",
+			headers: {
+				usertype: userDetails.type,
+				usersecret: userDetails.secret,
 			},
-			data : {
-				receptionistId : userDetails.id,
-				hotelId : userDetails.hotel._id
-			}
+			data: {
+				receptionistId: userDetails.id,
+				hotelId: userDetails.hotel._id,
+			},
 		})
-		.then((response) => {
-			if(!response.data.failure){
-				setBookings(response.data)
-			}
-		})
-		.catch((error) => {
-			console.log(error);
-		})
-	}
+			.then((response) => {
+				if (!response.data.failure) {
+					setBookings(response.data);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 
 	useEffect(() => {
-
 		getBookings();
-	})
+	});
 
 	const confirmBooking = (id) => {
-		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+		let userDetails = JSON.parse(localStorage.getItem("userDetails"));
 		axios({
-			method : "PUT",
-			url : baseUrl + '/receptionist/updateStatus/'+id+'/?'+id,
-			headers : {
-				usertype : userDetails.type,
-				secret : userDetails.secret
+			method: "PUT",
+			url: baseUrl + "/receptionist/updateStatus/" + id + "/?" + id,
+			headers: {
+				usertype: userDetails.type,
+				secret: userDetails.secret,
 			},
-			data : {
-				receptionistId : userDetails.id,
-				hotelId : userDetails.hotel._id
-			}
+			data: {
+				receptionistId: userDetails.id,
+				hotelId: userDetails.hotel._id,
+			},
 		})
-		.then((response) => {
-			if(response.data.success){
-				getBookings();
-			}
-			else{
-				alert(response.data.failure);
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-		})
-	}
-
+			.then((response) => {
+				if (response.data.success) {
+					getBookings();
+				} else {
+					alert(response.data.failure);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	return (
 		<div>
@@ -158,14 +153,21 @@ const RenderAvailableRooms = () => {
 				</thead>
 				<tbody>
 					{bookings.map((booking) => {
-						return(
+						return (
 							<tr key={booking._id}>
 								<td>{booking._id}</td>
 								<td>{booking.customer_id}</td>
 								<td>{booking.duration}</td>
-								<td><Button className="btn btn-success" onClick={() => confirmBooking(booking._id)}><span class="fa fa-ticket"></span></Button></td>
+								<td>
+									<Button
+										className="btn btn-success"
+										onClick={() => confirmBooking(booking._id)}
+									>
+										<span class="fa fa-ticket"></span>
+									</Button>
+								</td>
 							</tr>
-						)
+						);
 					})}
 				</tbody>
 			</Table>
@@ -218,7 +220,7 @@ export const Home = (props) => {
 	const [keyWord, setkeyWord] = useState("");
 	const [sortedHotelRoomTypes, setsortedHotelRoomTypes] = useState([]);
 	const [sortedHotels, setsortedHotels] = useState([]);
-	const [filter,setFilter] = useState("");
+	const [filter, setFilter] = useState("");
 
 	const handleSearchHotel = (event) => {
 		setNoSearch(false);
@@ -355,9 +357,18 @@ export const Home = (props) => {
 					<Jumbotron>
 						<Container>
 							<h3>Welcome to Hotel</h3>
-							<Form onSubmit={(event) => setFilter(event.target.elements["filterBy"].value)}>
+							<Form
+								onSubmit={(event) =>
+									setFilter(event.target.elements["filterBy"].value)
+								}
+							>
 								<FormGroup>
-									<Input type="text" id="filterBy" name="filterBy" placeholder="enter customer id or booking id"/>
+									<Input
+										type="text"
+										id="filterBy"
+										name="filterBy"
+										placeholder="enter customer id or booking id"
+									/>
 								</FormGroup>
 								<Button type="submit">Check Booking</Button>
 							</Form>
@@ -380,7 +391,7 @@ export const Home = (props) => {
 					deleteRoom={props.deleteRoom}
 					addReceptionist={props.addReceptionist}
 					deleteReceptionist={props.deleteReceptionist}
-					editRoomType = {props.editRoomType}
+					editRoomType={props.editRoomType}
 				/>
 			)}
 			{props.userType === "maintainer" && (

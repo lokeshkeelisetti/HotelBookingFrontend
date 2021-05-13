@@ -21,17 +21,24 @@ import classnames from "classnames";
 export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoomType }) => {
 	return hotelRoomTypes.map((hotelRoomType) => {
 		return (
-			<ListGroupItem key={hotelRoomType._id} style={{ margin: "10px", fontFamily: "Ubuntu" }}>
-				<Media left>
-					<Media
-						object
+			<div
+				key={hotelRoomType._id}
+				style={{
+					margin: "10px",
+					fontFamily: "Ubuntu",
+					border: "1px solid gray",
+					padding: "10px",
+				}}
+			>
+				<div>
+					<img
 						src={hotelRoomType.imgURLs[0]}
 						alt="hotelRoomType image"
 						style={{ height: "280px", width: "370px" }}
 					/>
-				</Media>
+				</div>
 				{isEditing !== hotelRoomType._id ? (
-					<Media body className="mt-2">
+					<div className="mt-2">
 						<h3>
 							<strong> {hotelRoomType.type}</strong>
 						</h3>
@@ -48,10 +55,12 @@ export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoo
 						>
 							<span className="fa fa-pencil"></span>
 						</Button>
-					</Media>
+					</div>
 				) : (
-					<Form onSubmit={editRoomType}>
-						<h3>{hotelRoomType.type}</h3>
+					<Form onSubmit={editRoomType} className="mt-2">
+						<h3>
+							<strong> {hotelRoomType.type}</strong>
+						</h3>
 						<FormGroup>
 							<Label htmlFor="price">price</Label>
 							<Input type="text" id="price" name="price" />
@@ -89,7 +98,7 @@ export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoo
 						</Button>
 					</Form>
 				)}
-			</ListGroupItem>
+			</div>
 		);
 	});
 };
@@ -100,41 +109,42 @@ export const RenderRooms = ({ deleteRoom, rooms, hotelRoomTypes }) => {
 			(hotelRoomType) => hotelRoomType._id === room.hotelRoomTypeId
 		)[0];
 		return (
-			<ListGroupItem
+			<div
 				key={room._id}
-				style={{ margin: "10px", width: "100%", fontFamily: "Ubuntu" }}
+				style={{
+					margin: "10px",
+					fontFamily: "Ubuntu",
+					border: "1px solid gray",
+					padding: "10px",
+				}}
 			>
-				<Media>
-					<Media className="mr-2" left href="#">
-						<Media
-							object
+				<div>
+					<div>
+						<img
 							src={hotelRoomType.imgURLs[0]}
 							alt="hotelRoomImage"
-							style={{ height: "300px", width: "500px" }}
+							style={{ height: "280px", width: "370px" }}
 						/>
-					</Media>
-					{
-						<Media body>
-							<Media heading>Room No: {room.roomNo}</Media>
-							<p>{hotelRoomType.type}</p>
-							<h4>Facilities</h4>
-							<ul>
-								<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
-								{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li>}
-								<li>No.of People {hotelRoomType.facilities.max_no_of_people}</li>
-							</ul>
-							<br />
-							<Button
-								className="bg bg-danger ml-4"
-								color="danger"
-								onClick={() => deleteRoom(room._id)}
-							>
-								<span className="fa fa-trash"></span>
-							</Button>
-						</Media>
-					}
-				</Media>
-			</ListGroupItem>
+					</div>
+					<div className="mt-2">
+						<h3>Room No: {room.roomNo}</h3>
+						<p>{hotelRoomType.type}</p>
+						<h4>Facilities</h4>
+						<ul>
+							<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
+							{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li>}
+							<li>No.of People {hotelRoomType.facilities.max_no_of_people}</li>
+						</ul>
+						<Button
+							className="bg bg-danger ml-4"
+							color="danger"
+							onClick={() => deleteRoom(room._id)}
+						>
+							<span className="fa fa-trash"></span>
+						</Button>
+					</div>
+				</div>
+			</div>
 		);
 	});
 };
@@ -163,7 +173,7 @@ export const AdminRoom = ({
 	};
 
 	return (
-		<Container className="mt-5 mb-5">
+		<Container fluid className="mt-5 mb-5">
 			<Nav tabs>
 				<NavItem style={{ cursor: "pointer" }}>
 					<NavLink
@@ -209,13 +219,20 @@ export const AdminRoom = ({
 			<TabContent activeTab={activeTab}>
 				<TabPane tabId="1">
 					<Row>
-						<ListGroup>
+						<div
+							style={{
+								display: "flex",
+								flexWrap: "wrap",
+								justifyContent: "space-evenly",
+								alignItems: "center",
+							}}
+						>
 							<RenderRooms
 								rooms={rooms}
 								hotelRoomTypes={hotelRoomTypes}
 								deleteRoom={deleteRoom}
 							/>
-						</ListGroup>
+						</div>
 					</Row>
 				</TabPane>
 				<TabPane tabId="2">
@@ -281,7 +298,14 @@ export const AdminRoom = ({
 				</TabPane>
 				<TabPane tabId="4">
 					<Row>
-						<ListGroup>
+						<div
+							style={{
+								display: "flex",
+								flexWrap: "wrap",
+								justifyContent: "space-evenly",
+								alignItems: "center",
+							}}
+						>
 							<RenderRoomTypes
 								rooms={rooms}
 								hotelRoomTypes={hotelRoomTypes}
@@ -290,7 +314,7 @@ export const AdminRoom = ({
 								editRoomType={editRoomType}
 								deleteRoom={deleteRoom}
 							/>
-						</ListGroup>
+						</div>
 					</Row>
 				</TabPane>
 			</TabContent>
