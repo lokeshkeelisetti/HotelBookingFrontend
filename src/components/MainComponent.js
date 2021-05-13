@@ -715,10 +715,11 @@ export const Main = () => {
 		console.log(event);
 		event.preventDefault();
 		let price = event.target.elements["price"].value;
-		let ac_or_not =  event.target.elements["AC"].checked ? '1' : '0' ;
-		let wifi_or_not = event.target.elements["Wifi"].checked ? '1' : '0';
-		let max_no_of_people = event.target.elements["noOfPeople"].value ;
+		let ac_or_not = event.target.elements["AC"].checked ? "1" : "0";
+		let wifi_or_not = event.target.elements["Wifi"].checked ? "1" : "0";
+		let max_no_of_people = event.target.elements["noOfPeople"].value;
 		let roomTypeId = event.target.elements["hotelRoomTypeId"].value;
+		let imgURLs = event.target.elements["imgLink"].value;
 
 		console.log(roomTypeId);
 
@@ -736,7 +737,7 @@ export const Main = () => {
 				max_no_of_people: max_no_of_people,
 				hotelId: hotels._id,
 				hotelAdminId: userId,
-				imgURLs: [],
+				imgURLs: imgURLs,
 			},
 		})
 			.then((response) => {

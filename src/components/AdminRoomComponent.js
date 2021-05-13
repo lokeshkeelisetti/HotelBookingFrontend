@@ -39,6 +39,7 @@ export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoo
 						<h3>
 							<strong> {hotelRoomType.type}</strong>
 						</h3>
+						<h5>Price: {hotelRoomType.price}</h5>
 						<h4>Facilities</h4>
 						<ul>
 							<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
@@ -70,6 +71,10 @@ export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoo
 								name="hotelRoomTypeId"
 								value={hotelRoomType._id}
 							/>
+						</FormGroup>
+						<FormGroup>
+							<Label htmlFor="imgLink">Image URL</Label>
+							<Input type="text" id="imgLink" name="imgLink" />
 						</FormGroup>
 						<FormGroup>
 							<Label htmlFor="NoOfPeople">No of People</Label>
@@ -126,6 +131,7 @@ export const RenderRooms = ({ deleteRoom, rooms, hotelRoomTypes }) => {
 					<div className="mt-2">
 						<h3>Room No: {room.roomNo}</h3>
 						<p>{hotelRoomType.type}</p>
+						<p>Rs. {hotelRoomType.price}</p>
 						<h4>Facilities</h4>
 						<ul>
 							<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
