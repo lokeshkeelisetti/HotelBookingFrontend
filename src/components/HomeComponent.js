@@ -27,7 +27,6 @@ import baseUrl from "../shared/baseUrl";
 import classnames from "classnames";
 import { AdminRoom } from "./AdminRoomComponent";
 import { AdminReceptionists } from "./AdminReceptionists";
-import { event } from "jquery";
 
 const RenderAdmin = (props) => {
 	const [activeTab, setActiveTab] = useState("1");
