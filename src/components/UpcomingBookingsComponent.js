@@ -7,8 +7,8 @@ export const UpcomingBooking = ({ bookings, cancelBooking }) => {
 	console.log(bookings);
 	return (
 		<Container className="mt-5 pt-5 pb-5">
-			<h2 style={{ fontFamily: "Roboto" }}>Upcoming Bookings</h2>
-			<Row>
+			<h2 style={{ fontFamily: "Ubuntu", color: "var(--my-red)" }}>Upcoming Bookings</h2>
+			<Row className="mt-3 container-fluid">
 				{bookings.map((booking, index) => {
 					return (
 						<Card key={index} style={{ margin: "5px" }}>
@@ -17,7 +17,7 @@ export const UpcomingBooking = ({ bookings, cancelBooking }) => {
 								width="100%"
 								src={booking.imgURLs[0]}
 								alt="Card image cap"
-								style={{ height: "300px" }}
+								style={{ height: "280px", width: "370px" }}
 							/>
 							<CardBody>
 								<CardTitle tag="h4">
@@ -82,7 +82,7 @@ export const UpcomingBooking = ({ bookings, cancelBooking }) => {
 						</Card>
 					);
 				})}
-				{bookings.length === 0 && <h1>No upcoming bookings</h1>}
+				{bookings.length === 0 && <h5>No upcoming bookings</h5>}
 			</Row>
 		</Container>
 	);

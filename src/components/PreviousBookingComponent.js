@@ -26,7 +26,7 @@ export const RenderPreviousBookings = (props) => {
 					width="100%"
 					src={booking.imgURLs[0]}
 					alt="Card image cap"
-					style={{ height: "300px" }}
+					style={{ height: "280px", width: "370px" }}
 				/>
 				<CardBody>
 					<CardTitle tag="h4">
@@ -35,7 +35,15 @@ export const RenderPreviousBookings = (props) => {
 					{booking.rating && (
 						<p>
 							Your Review:{" "}
-							<Rating name="read-only" value={booking.rating.ratingValue} />
+							<Rating
+								name="read-only"
+								value={booking.ratingValue || 2}
+								readOnly
+								style={{
+									position: "relative",
+									top: "5px",
+								}}
+							/>
 						</p>
 					)}
 					<CardText style={{ marginBottom: "0px" }}>RoomNo: {booking.roomNo}</CardText>
@@ -81,13 +89,28 @@ export const RenderPreviousBookings = (props) => {
 						{"   " + booking.facilities.max_no_of_people}
 					</CardText>
 					{!booking.rating && (
-						<Form>
+						<Form onSubmit={props.addRating}>
 							<FormGroup style={{ marginBottom: "0", marginTop: "20px" }}>
-								<Rating name="rating" id={`rating${booking.id}`} value={null} />
+								<input type="Number" name="rating" />
 							</FormGroup>
 							<FormGroup>
 								<Label htmlFor={`comment${booking.id}`}>Comments</Label>
-								<Input type="textarea" id={`comment${booking.id}`} />
+								<Input type="textarea" id={`comment${booking.id}`} name="comment" />
+							</FormGroup>
+							<FormGroup
+								style={{ marginBottom: "0", marginTop: "20px", display: "none" }}
+							>
+								<input
+									type="text"
+									name="hotelId"
+									readOnly
+									value={booking.hotelId}
+								/>
+							</FormGroup>
+							<FormGroup
+								style={{ marginBottom: "0", marginTop: "20px", display: "none" }}
+							>
+								<input type="text" name="bookingId" readOnly value={booking.id} />
 							</FormGroup>
 							<Button type="submit">Submit Feedback</Button>
 						</Form>
@@ -101,10 +124,10 @@ export const RenderPreviousBookings = (props) => {
 export const PreviousBookings = (props) => {
 	return (
 		<Container className="mt-5 pt-5 pb-5">
-			<h2 style={{ fontFamily: "Roboto" }}>Previous Bookings</h2>
-			<Row>
-				<RenderPreviousBookings bookings={props.bookings} />
-				{props.bookings.length === 0 && <h1>No previous Bookings</h1>}
+			<h2 style={{ fontFamily: "Ubuntu", color: "var(--my-red)" }}>Previous Bookings</h2>
+			<Row className="container-fluid mt-3">
+				<RenderPreviousBookings bookings={props.bookings} addRating={props.addRating} />
+				{props.bookings.length === 0 && <h5>No previous Bookings</h5>}
 			</Row>
 		</Container>
 	);

@@ -83,6 +83,7 @@ export const Main = () => {
 				if (userDetails.upcomingBookings[i].status) {
 					pbks[k] = {
 						id: userDetails.upcomingBookings[i]._id,
+						hotelId: userDetails.upcomingBookings[i].hotelId,
 						hotelName: hotelObj[userDetails.upcomingBookings[i].hotelId].name,
 						hotelAddress: hotelObj[userDetails.upcomingBookings[i].hotelId].address,
 						roomNo: hotelRoomObj[userDetails.upcomingBookings[i].hotelRoomId].roomNo,
@@ -118,6 +119,7 @@ export const Main = () => {
 				if (!userDetails.upcomingBookings[i].status) {
 					upbks[k] = {
 						id: userDetails.upcomingBookings[i]._id,
+						hotelId: userDetails.upcomingBookings[i].hotelId,
 						hotelName: hotelObj[userDetails.upcomingBookings[i].hotelId].name,
 						hotelAddress: hotelObj[userDetails.upcomingBookings[i].hotelId].address,
 						roomNo: hotelRoomObj[userDetails.upcomingBookings[i].hotelRoomId].roomNo,
@@ -299,6 +301,7 @@ export const Main = () => {
 				while (response.data.upcomingBookings[i]) {
 					if (response.data.upcomingBookings[i].status) {
 						pbks[j] = {
+							hotelId: response.data.upcomingBookings[i].hotelId,
 							rating: response.data.upcomingBookings[i].rating,
 							id: response.data.upcomingBookings[i]._id,
 							hotelName: hotelObj[response.data.upcomingBookings[i].hotelId].name,
@@ -337,6 +340,7 @@ export const Main = () => {
 				while (response.data.upcomingBookings[i]) {
 					if (!response.data.upcomingBookings[i].status) {
 						upbks[j] = {
+							hotelId: response.data.upcomingBookings[i].hotelId,
 							rating: response.data.upcomingBookings[i].rating,
 							id: response.data.upcomingBookings[i]._id,
 							hotelName: hotelObj[response.data.upcomingBookings[i].hotelId].name,
@@ -393,6 +397,34 @@ export const Main = () => {
 			console.log(response.data);
 			alert(response.data.failure);
 		}
+	};
+
+	const addRating = (event) => {
+		event.preventDefault();
+		var body = {
+			customerId: userId,
+			ratingValue: event.target.elements["rating"].value,
+			hotelId: event.target.elements["hotelId"].value,
+			comment: event.target.elements["comment"].value,
+			bookingId: event.target.elements["bookingId"].value,
+		};
+		console.log(body);
+		axios({
+			method: "POST",
+			url: baseUrl + "/customer/addRating",
+			headers: {
+				"Content-Type": "application/json",
+				usertype: userType,
+				usersecret: secret,
+			},
+			data: body,
+		})
+			.then((response) => {
+				console.log(response.data);
+				if (response.data.success) alert("Added rating successfully");
+				findMyDetails();
+			})
+			.catch((err) => console.log(err));
 	};
 
 	const findMyDetails = () => {
@@ -874,7 +906,12 @@ export const Main = () => {
 						exact
 						path="/customer/previousBookings"
 						component={() => {
-							return <PreviousBookings bookings={previousBookings} />;
+							return (
+								<PreviousBookings
+									bookings={previousBookings}
+									addRating={addRating}
+								/>
+							);
 						}}
 					/>
 					<Route
