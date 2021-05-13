@@ -175,7 +175,6 @@ export const Main = () => {
 			email: email,
 			password: password,
 		};
-		console.log(body);
 		axios({
 			method: "POST",
 			url: baseUrl + "/login",
