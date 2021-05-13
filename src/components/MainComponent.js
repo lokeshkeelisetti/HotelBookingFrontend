@@ -149,10 +149,9 @@ export const Main = () => {
 			sethotelRoomTypes(userDetails.hotelRoomTypes);
 			sethotelRooms(userDetails.hotelRooms);
 			setreceptionists(userDetails.receptionists);
-		} else if(type === "receptionist") {
+		} else if (type === "receptionist") {
 			setuserInfo(userDetails.receptionistDetails);
-		}
-		 else {
+		} else {
 			setuserType("");
 			setuserId("");
 			setsecret("");
@@ -186,13 +185,11 @@ export const Main = () => {
 			data: body,
 		})
 			.then((response) => {
-				if(response.data.failure){
+				if (response.data.failure) {
 					alert(response.data.failure);
-				}
-				else if(response.data.error){
+				} else if (response.data.error) {
 					alert(response.data.error);
-				}
-				else{
+				} else {
 					playWithData(response);
 				}
 			})
@@ -240,7 +237,7 @@ export const Main = () => {
 							setsecret(secret1);
 							setuserInfo(userInfo1);
 							sethotels(response[1].data);
-							sethotelAdmins(response[0].data);	
+							sethotelAdmins(response[0].data);
 						})
 					)
 					.catch((err) => console.log(err));
@@ -374,7 +371,7 @@ export const Main = () => {
 				sethotelRoomTypes(response.data.hotelRoomTypes);
 				sethotelRooms(response.data.hotelRooms);
 				setreceptionists(response.data.receptionists);
-			} else if (userType1 === "receptionist"){
+			} else if (userType1 === "receptionist") {
 				setisLoggedin(true);
 				setuserType(userType1);
 				setuserId(userId1);
@@ -470,41 +467,43 @@ export const Main = () => {
 				userType: userType,
 				usersecret: secret,
 			},
-		}).then((response) => {
-			console.log(response);
-			let req1 = axios({
-				method: "GET",
-				url: baseUrl + "/maintainer/hotelAdmin",
-				headers: {
-					userType: userType,
-					usersecret: secret,
-				},
-			});
+		})
+			.then((response) => {
+				console.log(response);
+				let req1 = axios({
+					method: "GET",
+					url: baseUrl + "/maintainer/hotelAdmin",
+					headers: {
+						userType: userType,
+						usersecret: secret,
+					},
+				});
 
-			let req2 = axios({
-				method: "GET",
-				url: baseUrl + "/maintainer/hotel",
-				headers: {
-					userType: userType,
-					usersecret: secret,
-				},
-			});
-			axios
-				.all([req1, req2])
-				.then(
-					axios.spread((...response) => {
-						localStorage.setItem("hotelAdmins", JSON.stringify(response[0].data));
-						localStorage.setItem("hotels", JSON.stringify(response[1].data));
-						let hotelAdmins = response[0].data,
-							hotels = response[1].data;
-						console.log(response);
-						setisLoggedin(true);
-						sethotels(hotels);
-						sethotelAdmins(hotelAdmins);
-					})
-				)
-				.catch((err) => console.log(err));
-		}).catch((err) => console.log(err));
+				let req2 = axios({
+					method: "GET",
+					url: baseUrl + "/maintainer/hotel",
+					headers: {
+						userType: userType,
+						usersecret: secret,
+					},
+				});
+				axios
+					.all([req1, req2])
+					.then(
+						axios.spread((...response) => {
+							localStorage.setItem("hotelAdmins", JSON.stringify(response[0].data));
+							localStorage.setItem("hotels", JSON.stringify(response[1].data));
+							let hotelAdmins = response[0].data,
+								hotels = response[1].data;
+							console.log(response);
+							setisLoggedin(true);
+							sethotels(hotels);
+							sethotelAdmins(hotelAdmins);
+						})
+					)
+					.catch((err) => console.log(err));
+			})
+			.catch((err) => console.log(err));
 	};
 
 	const deleteHotel = (hotelId) => {
@@ -598,6 +597,7 @@ export const Main = () => {
 		let ac_or_not = event.target.elements["AC"].checked ? 1 : 0;
 		let wifi_or_not = event.target.elements["Wifi"].checked ? 1 : 0;
 		let max_no_of_people = event.target.elements["noOfPeople"].value;
+		let imgURL = event.target.elements["imgLink"].value;
 
 		let body = {
 			type: type,
@@ -607,6 +607,7 @@ export const Main = () => {
 			max_no_of_people: max_no_of_people,
 			hotelId: hotels._id,
 			hotelAdminId: userId,
+			imgURLs: imgURL,
 		};
 
 		axios({
@@ -628,7 +629,6 @@ export const Main = () => {
 			})
 			.catch((err) => console.log(err));
 	};
-
 
 	const deleteRoom = (roomId) => {
 		axios({
@@ -715,42 +715,40 @@ export const Main = () => {
 		console.log(event);
 		event.preventDefault();
 		let price = event.target.elements["price"].value;
-		let ac_or_not =  event.target.elements["AC"].checked ? '1' : '0' ;
-		let wifi_or_not = event.target.elements["Wifi"].checked ? '1' : '0';
-		let max_no_of_people = event.target.elements["noOfPeople"].checked ? '1' : '0' ;
+		let ac_or_not = event.target.elements["AC"].checked ? "1" : "0";
+		let wifi_or_not = event.target.elements["Wifi"].checked ? "1" : "0";
+		let max_no_of_people = event.target.elements["noOfPeople"].checked ? "1" : "0";
 		let roomTypeId = event.target.elements["hotelRoomTypeId"].value;
 
 		console.log(roomTypeId);
 
 		axios({
-			method : "PUT",
-			url : baseUrl + '/hotelAdministration/updateHotelRoomType/'+roomTypeId,
-			headers : {
-				usertype : userType,
-				usersecret : secret
+			method: "PUT",
+			url: baseUrl + "/hotelAdministration/updateHotelRoomType/" + roomTypeId,
+			headers: {
+				usertype: userType,
+				usersecret: secret,
 			},
-			data : {
-				price : price,
-				ac_or_not : ac_or_not,
-				wifi_or_not : wifi_or_not,
-				max_no_of_people : max_no_of_people,
-				hotelId : hotels._id,
-				hotelAdminId : userId,
-				imgURLs : []
-			}
+			data: {
+				price: price,
+				ac_or_not: ac_or_not,
+				wifi_or_not: wifi_or_not,
+				max_no_of_people: max_no_of_people,
+				hotelId: hotels._id,
+				hotelAdminId: userId,
+				imgURLs: [],
+			},
 		})
-		.then((response) => {
-			if(response.data.success){
-				findMyDetails();
-				alert(response.data.success);
-			}
-			else{
-				alert(response.data.failure);
-			}
-		})
-		.catch((error) => console.log(error))
-
-	}
+			.then((response) => {
+				if (response.data.success) {
+					findMyDetails();
+					alert(response.data.success);
+				} else {
+					alert(response.data.failure);
+				}
+			})
+			.catch((error) => console.log(error));
+	};
 
 	const hotelWithId = ({ match }) => {
 		return (
