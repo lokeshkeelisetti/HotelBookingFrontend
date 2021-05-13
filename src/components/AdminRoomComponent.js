@@ -39,7 +39,7 @@ export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoo
 						<h3>
 							<strong> {hotelRoomType.type}</strong>
 						</h3>
-						<h5>Price: {hotelRoomType.price}</h5>
+						<h5>Rs. {hotelRoomType.price}</h5>
 						<h4>Facilities</h4>
 						<ul>
 							<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
@@ -47,7 +47,7 @@ export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoo
 							<li>Max no. of People: {hotelRoomType.facilities.max_no_of_people}</li>
 						</ul>
 						<Button
-							className="bg bg-warning ml-4 mt-3"
+							className="bg bg-warning ml-4 mt-1"
 							color="warning"
 							onClick={() => handleEdit(hotelRoomType._id)}
 						>
@@ -92,7 +92,7 @@ export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoo
 								Wifi
 							</Label>
 						</FormGroup>
-						<Button type="submit" className="btn btn-danger" color="danger">
+						<Button type="submit" className="btn btn-danger mr-2" color="danger">
 							Edit
 						</Button>
 						<Button className="btn" onClick={() => handleEdit(hotelRoomType._id)}>
@@ -129,14 +129,13 @@ export const RenderRooms = ({ deleteRoom, rooms, hotelRoomTypes }) => {
 						/>
 					</div>
 					<div className="mt-2">
-						<h3>Room No: {room.roomNo}</h3>
-						<p>{hotelRoomType.type}</p>
-						<p>Rs. {hotelRoomType.price}</p>
-						<h4>Facilities</h4>
+						<h4>{room.roomNo + ": " + hotelRoomType.type}</h4>
+						<h5>Rs. {hotelRoomType.price}</h5>
+						<h5>Facilities</h5>
 						<ul>
 							<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
 							{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li>}
-							<li>No.of People {hotelRoomType.facilities.max_no_of_people}</li>
+							<li>Max no. of People: {hotelRoomType.facilities.max_no_of_people}</li>
 						</ul>
 						<Button
 							className="bg bg-danger ml-4"
@@ -221,26 +220,24 @@ export const AdminRoom = ({
 			</Nav>
 			<TabContent activeTab={activeTab}>
 				<TabPane tabId="1">
-					<Row>
-						<div
-							style={{
-								display: "flex",
-								flexWrap: "wrap",
-								justifyContent: "space-evenly",
-								alignItems: "center",
-							}}
-						>
-							<RenderRooms
-								rooms={rooms}
-								hotelRoomTypes={hotelRoomTypes}
-								deleteRoom={deleteRoom}
-							/>
-						</div>
-					</Row>
+					<div
+						style={{
+							display: "flex",
+							flexWrap: "wrap",
+							justifyContent: "space-evenly",
+							alignItems: "center",
+						}}
+					>
+						<RenderRooms
+							rooms={rooms}
+							hotelRoomTypes={hotelRoomTypes}
+							deleteRoom={deleteRoom}
+						/>
+					</div>
 				</TabPane>
 				<TabPane tabId="2">
 					<Row>
-						<Form onSubmit={addRoom}>
+						<Form onSubmit={addRoom} className="m-4">
 							<FormGroup>
 								<Label htmlFor="roomNo">Room Number</Label>
 								<Input type="text" id="roomNo" name="roomNo" />
@@ -268,7 +265,7 @@ export const AdminRoom = ({
 				</TabPane>
 				<TabPane tabId="3">
 					<Row>
-						<Form onSubmit={addRoomType}>
+						<Form onSubmit={addRoomType} className="m-4">
 							<FormGroup>
 								<Label htmlFor="newRoomType">Room Type Name</Label>
 								<Input type="text" id="newRoomType" name="newRoomType" />
@@ -289,7 +286,7 @@ export const AdminRoom = ({
 								<Input type="checkbox" name="Wifi" value="Wifi" />
 								Wifi
 							</FormGroup>
-							<FormGroup>
+							<FormGroup className="mt-2">
 								<Label htmlFor="noOfPeople">Number of People</Label>
 								<Input type="text" name="noOfPeople" id="noOfPeople" />
 							</FormGroup>
@@ -300,25 +297,23 @@ export const AdminRoom = ({
 					</Row>
 				</TabPane>
 				<TabPane tabId="4">
-					<Row>
-						<div
-							style={{
-								display: "flex",
-								flexWrap: "wrap",
-								justifyContent: "space-evenly",
-								alignItems: "center",
-							}}
-						>
-							<RenderRoomTypes
-								rooms={rooms}
-								hotelRoomTypes={hotelRoomTypes}
-								isEditing={isEditing}
-								handleEdit={handleEdit}
-								editRoomType={editRoomType}
-								deleteRoom={deleteRoom}
-							/>
-						</div>
-					</Row>
+					<div
+						style={{
+							display: "flex",
+							flexWrap: "wrap",
+							justifyContent: "space-evenly",
+							alignItems: "center",
+						}}
+					>
+						<RenderRoomTypes
+							rooms={rooms}
+							hotelRoomTypes={hotelRoomTypes}
+							isEditing={isEditing}
+							handleEdit={handleEdit}
+							editRoomType={editRoomType}
+							deleteRoom={deleteRoom}
+						/>
+					</div>
 				</TabPane>
 			</TabContent>
 		</Container>

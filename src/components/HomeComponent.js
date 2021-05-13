@@ -84,6 +84,7 @@ const RenderAdmin = (props) => {
 
 const RenderAvailableRooms = () => {
 	const [bookings, setBookings] = useState([]);
+	const [filter, setFilter] = useState("");
 
 	const getBookings = () => {
 		let userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -118,10 +119,10 @@ const RenderAvailableRooms = () => {
 		let userDetails = JSON.parse(localStorage.getItem("userDetails"));
 		axios({
 			method: "PUT",
-			url: baseUrl + "/receptionist/updateStatus/" + id + "/?" + id,
+			url: baseUrl + "/receptionist/updateStatus/" + id,
 			headers: {
 				usertype: userDetails.type,
-				secret: userDetails.secret,
+				usersecret: userDetails.secret,
 			},
 			data: {
 				receptionistId: userDetails.id,
@@ -142,6 +143,24 @@ const RenderAvailableRooms = () => {
 
 	return (
 		<div>
+			<Jumbotron>
+				<Container>
+					<h3>Welcome to Hotel</h3>
+					<Form>
+						<FormGroup>
+							<Input
+								type="text"
+								id="filterBy"
+								name="filterBy"
+								placeholder="Enter Customer ID or Booking ID"
+								onChange={(event) => {
+									setFilter(event.target.value);
+								}}
+							/>
+						</FormGroup>
+					</Form>
+				</Container>
+			</Jumbotron>
 			<Table responsive>
 				<thead>
 					<tr>
@@ -154,19 +173,26 @@ const RenderAvailableRooms = () => {
 				<tbody>
 					{bookings.map((booking) => {
 						return (
-							<tr key={booking._id}>
-								<td>{booking._id}</td>
-								<td>{booking.customer_id}</td>
-								<td>{booking.duration}</td>
-								<td>
-									<Button
-										className="btn btn-success"
-										onClick={() => confirmBooking(booking._id)}
-									>
-										<span class="fa fa-ticket"></span>
-									</Button>
-								</td>
-							</tr>
+							(String(booking._id).indexOf(filter) !== -1 ||
+								String(booking.customerId).indexOf(filter) !== -1) && (
+								<tr key={booking._id}>
+									<td>{booking._id}</td>
+									<td>{booking.customerId}</td>
+									<td>
+										{String(booking.duration.startDate).slice(0, 10) +
+											" to " +
+											String(booking.duration.endDate).slice(0, 10)}
+									</td>
+									<td>
+										<Button
+											className="btn btn-success"
+											onClick={() => confirmBooking(booking._id)}
+										>
+											<span class="fa fa-ticket"></span>
+										</Button>
+									</td>
+								</tr>
+							)
 						);
 					})}
 				</tbody>
@@ -220,7 +246,6 @@ export const Home = (props) => {
 	const [keyWord, setkeyWord] = useState("");
 	const [sortedHotelRoomTypes, setsortedHotelRoomTypes] = useState([]);
 	const [sortedHotels, setsortedHotels] = useState([]);
-	const [filter, setFilter] = useState("");
 
 	const handleSearchHotel = (event) => {
 		setNoSearch(false);
@@ -259,6 +284,7 @@ export const Home = (props) => {
 							backgroundColor: "rgb(236,23,81)",
 							paddingTop: "100px",
 							color: "#fff",
+							borderRadius: "0",
 						}}
 					>
 						<Container className="text-center mb-5">
@@ -286,7 +312,6 @@ export const Home = (props) => {
 							>
 								<FormGroup>
 									<Input
-										required
 										type="text"
 										id="location"
 										name="location"
@@ -354,29 +379,9 @@ export const Home = (props) => {
 			)}
 			{props.userType === "receptionist" && (
 				<div className="mt-5">
-					<Jumbotron>
-						<Container>
-							<h3>Welcome to Hotel</h3>
-							<Form
-								onSubmit={(event) =>
-									setFilter(event.target.elements["filterBy"].value)
-								}
-							>
-								<FormGroup>
-									<Input
-										type="text"
-										id="filterBy"
-										name="filterBy"
-										placeholder="enter customer id or booking id"
-									/>
-								</FormGroup>
-								<Button type="submit">Check Booking</Button>
-							</Form>
-						</Container>
-					</Jumbotron>
 					<Container style={{ minHeight: "30vh" }}>
 						<Row className="mt-5 mb-5">
-							<RenderAvailableRooms filter={filter} />
+							<RenderAvailableRooms />
 						</Row>
 					</Container>
 				</div>
