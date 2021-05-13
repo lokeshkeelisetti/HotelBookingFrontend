@@ -49,7 +49,7 @@ const RenderHotels = ({
 								<span className="fa fa-map-marker pr-2"></span>
 								{hotels[hotelRoomType.hotelId].address.street},
 								{hotels[hotelRoomType.hotelId].address.city} -
-								{hotels[hotelRoomType.hotelId].address.pinCode}
+								{" " + hotels[hotelRoomType.hotelId].address.pinCode}
 							</CardText>
 							<CardText>
 								{hotelRoomType.facilities.ac_or_not ? (
