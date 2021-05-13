@@ -715,9 +715,9 @@ export const Main = () => {
 		console.log(event);
 		event.preventDefault();
 		let price = event.target.elements["price"].value;
-		let ac_or_not = event.target.elements["AC"].checked ? "1" : "0";
-		let wifi_or_not = event.target.elements["Wifi"].checked ? "1" : "0";
-		let max_no_of_people = event.target.elements["noOfPeople"].checked ? "1" : "0";
+		let ac_or_not =  event.target.elements["AC"].checked ? '1' : '0' ;
+		let wifi_or_not = event.target.elements["Wifi"].checked ? '1' : '0';
+		let max_no_of_people = event.target.elements["noOfPeople"].value ;
 		let roomTypeId = event.target.elements["hotelRoomTypeId"].value;
 
 		console.log(roomTypeId);
