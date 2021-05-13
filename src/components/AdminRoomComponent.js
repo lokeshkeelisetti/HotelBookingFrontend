@@ -18,78 +18,83 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 
-export const RenderRoomTypes = ({
-	hotelRoomTypes,
-	handleEdit,
-	isEditing,
-	editRoomType}) => {
-		return hotelRoomTypes.map((hotelRoomType) => {
-			return (
-				<ListGroupItem key={hotelRoomType._id}>
-					<Media className="mr-2" left href="#">
-						<Media object src={hotelRoomType.imgURLs[0]} alt="hotelRoomType image" />
+export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoomType }) => {
+	return hotelRoomTypes.map((hotelRoomType) => {
+		return (
+			<ListGroupItem key={hotelRoomType._id} style={{ margin: "10px", fontFamily: "Ubuntu" }}>
+				<Media left>
+					<Media
+						object
+						src={hotelRoomType.imgURLs[0]}
+						alt="hotelRoomType image"
+						style={{ height: "280px", width: "370px" }}
+					/>
+				</Media>
+				{isEditing !== hotelRoomType._id ? (
+					<Media body className="mt-2">
+						<h3>
+							<strong> {hotelRoomType.type}</strong>
+						</h3>
+						<h4>Facilities</h4>
+						<ul>
+							<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
+							{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li>}
+							<li>Max no. of People: {hotelRoomType.facilities.max_no_of_people}</li>
+						</ul>
+						<Button
+							className="bg bg-warning ml-4 mt-3"
+							color="warning"
+							onClick={() => handleEdit(hotelRoomType._id)}
+						>
+							<span className="fa fa-pencil"></span>
+						</Button>
 					</Media>
-					{isEditing !== hotelRoomType._id ? (
-						<Media body>
-							<Media heading> {hotelRoomType.type}</Media>
-							<h2>Facilities</h2>
-							<ul>
-								<li>{hotelRoomType.facilities.ac_or_not ? "AC" : "Non-AC"}</li>
-								{hotelRoomType.facilities.wifi_or_not && <li>Wifi</li>}
-								<li>No.of People {hotelRoomType.facilities.max_no_of_people}</li>
-							</ul>
-							<Button
-								className="bg bg-warning ml-4"
-								color="warning"
-								onClick={() => handleEdit(hotelRoomType._id)}
-							>
-								<span className="fa fa-pencil"></span>Edit
-							</Button>
-						</Media>
-					): (
-						<Form onSubmit={editRoomType}>
-							<h3>{hotelRoomType.type}</h3>
-							<FormGroup>
-								<Label htmlFor="price">price</Label>
-								<Input type="text" id="price" name="price" />
-							</FormGroup>
-							<FormGroup>
-								<Input type="text" hidden id="hotelRoomTypeId" name="hotelRoomTypeId" value={hotelRoomType._id}/>
-							</FormGroup>
-							<FormGroup>
-								<Label htmlFor="NoOfPeople">No of People</Label>
-								<Input type="text" id="noOfPeople" name="noOfPeople"/>
-							</FormGroup>
-							<FormGroup check>
-								<Label htmlFor="AC">
-									<Input type="checkbox" id="AC" name="AC" />
-									AC
-								</Label>
-							</FormGroup>
-							<FormGroup check>
-								<Label htmlFor="Wifi">
-									<Input type="checkbox" id="Wifi" name="Wifi" />
-									Wifi
-								</Label>
-							</FormGroup>
-							<Button type="submit" className="btn btn-danger" color="danger">
-								Edit
-							</Button>
-							<Button className="btn" onClick={() => handleEdit(hotelRoomType._id)}>
-								Cancel
-							</Button>
-						</Form>
-					)}
-				</ListGroupItem>
-			)
-		})
-}
+				) : (
+					<Form onSubmit={editRoomType}>
+						<h3>{hotelRoomType.type}</h3>
+						<FormGroup>
+							<Label htmlFor="price">price</Label>
+							<Input type="text" id="price" name="price" />
+						</FormGroup>
+						<FormGroup>
+							<Input
+								type="text"
+								hidden
+								id="hotelRoomTypeId"
+								name="hotelRoomTypeId"
+								value={hotelRoomType._id}
+							/>
+						</FormGroup>
+						<FormGroup>
+							<Label htmlFor="NoOfPeople">No of People</Label>
+							<Input type="text" id="noOfPeople" name="noOfPeople" />
+						</FormGroup>
+						<FormGroup check>
+							<Label htmlFor="AC">
+								<Input type="checkbox" id="AC" name="AC" />
+								AC
+							</Label>
+						</FormGroup>
+						<FormGroup check>
+							<Label htmlFor="Wifi">
+								<Input type="checkbox" id="Wifi" name="Wifi" />
+								Wifi
+							</Label>
+						</FormGroup>
+						<Button type="submit" className="btn btn-danger" color="danger">
+							Edit
+						</Button>
+						<Button className="btn" onClick={() => handleEdit(hotelRoomType._id)}>
+							Cancel
+						</Button>
+					</Form>
+				)}
+			</ListGroupItem>
+		);
+	});
+};
 
-export const RenderRooms = ({
-	deleteRoom,
-	rooms,
-	hotelRoomTypes,
-}) => {
+export const RenderRooms = ({ deleteRoom, rooms, hotelRoomTypes }) => {
 	return rooms.map((room) => {
 		let hotelRoomType = hotelRoomTypes.filter(
 			(hotelRoomType) => hotelRoomType._id === room.hotelRoomTypeId
@@ -108,7 +113,7 @@ export const RenderRooms = ({
 							style={{ height: "300px", width: "500px" }}
 						/>
 					</Media>
-					{ (
+					{
 						<Media body>
 							<Media heading>Room No: {room.roomNo}</Media>
 							<p>{hotelRoomType.type}</p>
@@ -127,7 +132,7 @@ export const RenderRooms = ({
 								<span className="fa fa-trash"></span>
 							</Button>
 						</Media>
-					) }
+					}
 				</Media>
 			</ListGroupItem>
 		);
@@ -251,6 +256,10 @@ export const AdminRoom = ({
 							<FormGroup>
 								<Label htmlFor="price">Price for type</Label>
 								<Input type="text" id="price" name="price" />
+							</FormGroup>
+							<FormGroup>
+								<Label htmlFor="imgLink">Image Link</Label>
+								<Input type="text" id="imgLink" name="imgLink" />
 							</FormGroup>
 							<FormGroup check>
 								<Input type="checkbox" name="AC" value="AC" />
