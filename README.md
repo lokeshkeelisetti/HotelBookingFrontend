@@ -1,8 +1,10 @@
-# Hotel Booking Portal
+# Hotel Booking Portal (Frontend)
 
-## Satya Bhagavan, Lokesh, Kushaan, Shiva, Rohit, Abhinav Reddy
+## Group P007
 
 This project was done under Dr.Puneet Gupta and in observation of Anup Kumar Gupta under Software engineering course lab (CS258).
+
+Note: [Backend Repository Link](https://github.com/lokeshkeelisetti/HotelBookingBackend.git)
 
 # 1. Install
 
@@ -64,18 +66,23 @@ Following technologies are used while making the project.
 
 The website is hosted at [HotelPedia](https://hotel-booking-portal.netlify.app/)
 
-# 6. Developers
+# 6. Documents
+
+1. [Software Requirement Sheet](Software_Requirements_Specification.pdf)
+2. [Design Document](Software_Design_Document.pdf)
+
+# 7. Developers
 
 This project is developed by
 
-1. [keelisetti lokesh](https://github.com/lokeshkeelisetti)
-2. [Satya Bhagavan](https://github.com/satyabhagavan)
-3. [Kushaan Gowda](https://github.com/kushaangowda)
-4. [Abhinav Reddy](https://github.com/)
-5. [Rohit Banga](https://github.com/RohitBanga3)
-6. [Nunemunthala Shiva](https://github.com/nunemunthalashiva)
+1. [Abhinav Reddy (190001007)](https://github.com/pixelbullet)
+2. [keelisetti lokesh (190001022)](https://github.com/lokeshkeelisetti)
+3. [Kushaan Gowda (190001031)](https://github.com/kushaangowda)
+4. [Nunemunthala Shiva (190001041)](https://github.com/nunemunthalashiva)
+5. [Rohit Banga (190001053)](https://github.com/RohitBanga3)
+6. [Satya Bhagavan (190001055)](https://github.com/satyabhagavan)
 
-# 7. Feedback and Suggestions
+# 8. Feedback and Suggestions
 
 If you have any suggestions, or want to contribute:
 
