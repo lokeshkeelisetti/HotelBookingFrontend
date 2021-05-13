@@ -8,12 +8,9 @@ import {
 	TabPane,
 	Row,
 	Button,
-	ListGroup,
-	Media,
 	Form,
 	FormGroup,
 	Label,
-	ListGroupItem,
 	Input,
 } from "reactstrap";
 import classnames from "classnames";
@@ -33,7 +30,7 @@ export const RenderRoomTypes = ({ hotelRoomTypes, handleEdit, isEditing, editRoo
 				<div>
 					<img
 						src={hotelRoomType.imgURLs[0]}
-						alt="hotelRoomType image"
+						alt="hotelRoomType"
 						style={{ height: "280px", width: "370px" }}
 					/>
 				</div>
