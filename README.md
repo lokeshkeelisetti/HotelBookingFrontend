@@ -62,16 +62,16 @@ Following technologies are used while making the project.
 3. Heroku for free hosting (backend).
 4. Netlify for free hosting (frontend).
 
-# 5. Website Link
+<!-- # 5. Website Link -->
 
-The website is hosted at [HotelPedia](https://hotel-booking-portal.netlify.app/)
+<!-- The website is hosted at [HotelPedia](https://hotel-booking-portal.netlify.app/) -->
 
-# 6. Documents
+# 5. Documents
 
 1. [Software Requirement Sheet](Software_Requirements_Specification.pdf)
 2. [Design Document](Software_Design_Document.pdf)
 
-# 7. Developers
+# 6. Developers
 
 This project is developed by
 
@@ -82,7 +82,7 @@ This project is developed by
 5. [Rohit Banga (190001053)](https://github.com/RohitBanga3)
 6. [Satya Bhagavan (190001055)](https://github.com/satyabhagavan)
 
-# 8. Feedback and Suggestions
+# 7. Feedback and Suggestions
 
 If you have any suggestions, or want to contribute:
 
