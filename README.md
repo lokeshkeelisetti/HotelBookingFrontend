@@ -8,7 +8,7 @@ Note: [Backend Repository Link](https://github.com/lokeshkeelisetti/HotelBooking
 
 # 1. Install
 
-First clone repo using the fallowing command
+First clone repo using the following command
 
 ```bash
 git clone https://github.com/lokeshkeelisetti/HotelBookingFrontend.git
